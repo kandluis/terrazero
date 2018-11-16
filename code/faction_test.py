@@ -1,6 +1,6 @@
 import unittest
 
-from faction import Terrain, GameBoard
+from faction import *
 
 class TestModule(unittest.TestCase):
   def testEmptyLinesToMap(self):
@@ -94,6 +94,96 @@ class TestGameBoard(unittest.TestCase):
 
   def testDefaultGameBoardNeighborsMiddle(self):
     boad = self.default_board
+
+class TestHalflingFaction(unittest.TestCase):
+  def testCreation(self):
+    halfing = Halflings()
+
+class TestPlayer(unittest.TestCase):
+  def testPlayerGainingSinglePower(self):
+    faction = Halflings()
+    player = Player(faction)
+
+    # Starting configuration for the given class.
+    self.assertEqual(player.power, {
+      PowerBowl.I : 3, PowerBowl.II: 9, PowerBowl.III: 0
+      })
+    self.assertEqual(player.coins, 15)
+
+    self.assertIsNone(player.GainPower(1))
+    self.assertEqual(player.power, {
+      PowerBowl.I: 2, PowerBowl.II: 10, PowerBowl.III: 0
+      })
+    self.assertEqual(player.coins, 15)
+
+  def testPlayerGainingRolloverPower(self):
+    faction = Halflings()
+    player = Player(faction)
+
+    # Starting configuration for the given class.
+    self.assertEqual(player.power, {
+      PowerBowl.I: 3, PowerBowl.II: 9, PowerBowl.III: 0
+      })
+    self.assertEqual(player.coins, 15)
+
+    self.assertIsNone(player.GainPower(4))
+    self.assertEqual(player.power, {
+      PowerBowl.I: 0, PowerBowl.II: 11, PowerBowl.III: 1
+      })
+    self.assertEqual(player.coins, 15)
+
+  def testPlayerGainingMaxPower(self):
+    faction = Halflings()
+    player = Player(faction)
+
+    # Starting configuration for the given class.
+    self.assertEqual(player.power, {
+      PowerBowl.I : 3, PowerBowl.II: 9, PowerBowl.III: 0
+      })
+    self.assertEqual(player.coins, 15)
+
+    self.assertIsNone(player.GainPower(15))
+    self.assertEqual(player.power, {
+      PowerBowl.I: 0, PowerBowl.II: 0, PowerBowl.III: 12
+      })
+    self.assertEqual(player.coins, 15)
+
+  def testPlayerGainingMaxPowerPlusEvenValue(self):
+    faction = Halflings()
+    player = Player(faction)
+
+    # Starting configuration for the given class.
+    self.assertEqual(player.power, {
+      PowerBowl.I : 3, PowerBowl.II: 9, PowerBowl.III: 0
+      })
+    self.assertEqual(player.coins, 15)
+
+    # 15 gets us to max, the extra 4 power is converted into 2 coins.
+    self.assertIsNone(player.GainPower(19))
+    self.assertEqual(player.power, {
+      PowerBowl.I: 0, PowerBowl.II: 0, PowerBowl.III: 12
+      })
+    self.assertEqual(player.coins, 17)
+
+  def testPlayerGainingMaxPowerPlusOddValue(self):
+    faction = Halflings()
+    player = Player(faction)
+
+    # Starting configuration for the given class.
+    self.assertEqual(player.power, {
+      PowerBowl.I : 3, PowerBowl.II: 9, PowerBowl.III: 0
+      })
+    self.assertEqual(player.coins, 15)
+
+    # 15 gets us to max, the extra 3 power is converted into 2 coins.
+    # Even though this may not be optimal.
+    self.assertIsNone(player.GainPower(18))
+    self.assertEqual(player.power, {
+      PowerBowl.I: 0, PowerBowl.II: 1, PowerBowl.III: 11
+      })
+    self.assertEqual(player.coins, 17)
+
+
 
 if __name__ == '__main__':
   unittest.main()
