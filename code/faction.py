@@ -24,6 +24,25 @@ class CultTrack(Enum):
   EARTH = auto()
   AIR = auto()
 
+class CultBoard:
+  # Mapping from arriving cult track location which produces power
+  # to how much power is received.
+  ADDITIONAL_POWER: Dict[int, int] = {
+    3: 1, 5: 2, 7: 2, 10: 3
+  }
+  # Moving to this location
+  TOWN_KEY_REQUIRED = 10
+
+  def __init__(self):
+    # Mapping from cult track to list of availabler orders.
+    self.orders: Dict[CultTrack: List[int]] = {
+      CultTrack.FIRE: [3, 2, 2, 2], 
+      CultTrack.WATER: [3, 2, 2, 2],
+      CultTrack.EARTH: [3, 2, 2, 2],
+      CultTrack.AIR: [3, 2, 2, 2],
+    }
+
+
 class Building(Enum):
   DWELLING = auto()
   TRADING_HOUSE = auto()
@@ -113,7 +132,6 @@ class GameBoard:
     lines = []
     with open(self._TERRAIN_MAP_FILE) as f:
       lines = f.readlines()
-
     return GameBoard.LinesToMap(lines)
 
 
@@ -159,7 +177,7 @@ class Halflings(Faction):
   def StartingPower(self) -> Dict[PowerBowl, int]:
     return { PowerBowl.I : 3, PowerBowl.II : 9, PowerBowl.III : 0}
 
-  def StartingWorkeres(self) -> int:
+  def StartingWorkers(self) -> int:
     return 3
 
   def StartingCoins(self) -> int:
@@ -172,6 +190,53 @@ class Halflings(Faction):
     return 0
 
 class Player:
-  def __inti__(self, faction: Faction):
+  def __init__(self, faction: Faction):
     self.faction: Faction = faction 
-    self.power: Dict[PowerBowl, int] = {}
+    self.power: Dict[PowerBowl, int] = faction.StartingPower()
+    self.coins: int = faction.StartingCoins()
+    self.workers: int = faction.StartingWorkers()
+    self.shipping: int = faction.StartingShipping()
+
+
+  def GainPower(self, power: int) -> None:
+    # Gain the given amount of power. Overflowing power is automatically converted to coins.
+    remainingPower = power
+    assert remainingPower >= 0
+    if remainingPower == 0: return
+
+    if self.power[PowerBowl.I] > 0:
+      toMove = min(self.power[PowerBowl.I], remainingPower)
+      self.power[PowerBowl.I] -= toMove
+      self.power[PowerBowl.II] += toMove
+      remainingPower -= toMove
+  
+    if remainingPower == 0: return
+    
+    # If we still have power, power I bowl must be empty at this point.
+    # Otherwise, we have no power left.
+    assert self.power[PowerBowl.I] == 0
+    if self.power[PowerBowl.II] > 0:
+      toMove = min(self.power[PowerBowl.II], remainingPower)
+      self.power[PowerBowl.II] -= toMove
+      self.power[PowerBowl.III] += toMove
+      remainingPower -= toMove
+
+    if remainingPower == 0: return
+
+    # If we still have power, power II bowl must be empty at this point.
+    assert self.power[PowerBowl.II] == 0
+
+    # Spending an even amount of excess power always makes sense and is optimal. 
+    self.coins += int(remainingPower / 2)
+    # TODO(nautilik): We assume player will want to spend remaining 1 power,
+    # even if this means he'll end up with power stuck in PowerBowl.II.
+    if remainingPower % 2 == 1:
+      self.power[PowerBowl.III] -= 1
+      self.power[PowerBowl.II] += 1
+      self.coins += 1
+
+
+
+
+    
+
