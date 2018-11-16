@@ -53,7 +53,7 @@ TM is a fully-deterministic game whose complexity arises from the large branchin
 \label{subsection:input/output_of_system}
 In order to understand the inputs and outputs of our system, the game of TM must be fully understood. We lay out the important aspects of a given state below, according to the standard rules \cite{TMRules}..
 
-The game of TM consists of a terrain board that's split into $9 \times 13$ terrain tiles. The board is fixed, but each terrain tile can be terra-formed (changed) into any of the 7 distinct terrains (plus water, which cannot be modified). Players can only expand onto terrain which belongs to them. Furthermore, TM also has a mini-game which consists of a Cult-Board where individual players can choose to move up in each of the cult-tracks throughout game-play. 
+The game of TM consists of a terrain board that's split into $9 \times 13$ terrain tiles. The board is fixed, but each terrain tile can be terra-formed (changed) into any of the 7 distinct terrains (plus water, which cannot be modified). Players can only expand onto terrain which belongs to them. Furthermore, TM also has a mini-game which consists of a Cult-Board (see Figure \ref{fig:TM_Cult_Track}) where individual players can choose to move up in each of the cult-tracks throughout game-play. 
 
 The initial state of the game consists of players selecting initial starting positions for their original dwellings. 
 
@@ -64,7 +64,7 @@ Throughout the game, the goal of each player is to accumulate as many VPs as pos
 From the definition above, the main emphasis of our system is the task of taking a singe state representation $S_t$ at a particular time-step, and outputting an action to take to continue gameplay for the current player. As such, the input of our system consists of the following information, fully representative of the state of the game:
 
 \begin{enumerate}
-    \item Current terrain configuration. The terrain configuration consists of multiple pieces of information. For each terrain tile, we will receive as input:
+    \item Current terrain configuration. See Figure \ref{fig:TM_Board} for a reference. The terrain configuration consists of multiple pieces of information. For each terrain tile, we will receive as input:
     \begin{enumerate}
         \item The current color of the tile. This gives us information not only about which player currently controls the terrain, but also which terrains can be expanded into.
         \item The current level of development for the terrain. For the state of development, we note that each terrain tile can be one of (1) UNDEVELOPED, (2) DWELLING, (3) TRADING\_POST, (4) SANCTUARY, or (5) STRONGHOLD.
@@ -101,8 +101,8 @@ We will evaluate our agents using the standard simulator. The main metric for ev
 \section{Infrastructure}
 An open-source simulator for the game of TM already exists and is written in TM \cite{infra}. We've currently converted this open-source simulator into Python and can run locally, simulating gameplay. For our baselines, we've taken the built-in AI agents as baselines (which tend to perform relatively poorly). For our oracles, we've instead taken the approach of analyzing a large database of game data available online.
 
-\subsection{Model and Approaches}
-Developing an AI agent that can play well will be extremely challenging. Even current heuristic-based agents have difficulty scoring positions. The state-action space for TM is extremely large. Games typically have trees that are >50 moves deep (per player) and which have a branching factor of $>10$. 
+\subsection{Overview of Model and Approaches}
+Developing an AI agent that can play well will be extremely challenging. Even current heuristic-based agents have difficulty scoring positions. The state-action space for TM is extremely large. Games typically have trees that are $>50$ moves deep (per player) and which have a branching factor of $>10$. 
 
 We can approach this game as a typical minmax search-problem. Simple approaches would simply be depth-limited alpha-beta pruning similar to what we used in PacMan. These approaches can be tweaked for efficiency, and are essentially what the current AIs use.
 
@@ -118,6 +118,22 @@ For an Oracle, we have two options. Even the current state-of the art AI in TM d
 
 \subsection{Competitive Player Oracle}
 Our oracle will therefore consists of the scores achieved by expert players. We've summarized this data in Table \ref{table:average_2p_score}, broken down by faction. We look only at the two-player scenario, as this is the one on which our algorithm focuses.
+
+\section{Deep Q-Learning Methods for Terra Mystica}
+In this section, we describe the main methods we use for training our agent. In particular, we place heavy emphasis on the methods described by AlphaGo\cite{AlphaGo}, AlphaGoZero, \cite{AlphaGoZero}, and AlphaZero \cite{AlphaZero} with pertinent modifications made for our specific problem domain.
+
+
+\subsection{AlphaTMZero}
+Our main method will be a modication of the AlphaGo Zero \cite{AlphaGoZero} algorithm which was described in detail. We chose this algorithm over the methods described for Alpha Go \cite{AlphaGo} for two main reasons -- the AlphaGo Zero is a zero-knowledge reinforcement learning algorithm. This means that it requires to expert human play data and rather both generates (simulates gameplay) as well as 
+
+We describe an adaptation of the AlphaGoZero algorithm which we're implementing. Given how generic the algorithm is, we'll be mostly implementing a simple modifications to it, consisting almost exclusively of how we modify the input and the output.
+
+
+
+\section{Preliminary Results}
+We've run only a few experiments, many of which demonstrate severe limitations of our model and possible our infrastructure. We're focusing exclusively.
+
+TODO(LEARNING RATE AND OTHER CRAP WITH THE MODEL IN SEVERELY RESTRICTED MODE!!!! UGH)
 
 \section{Appendices}
 % This section is optional. Include additional derivations of proofs which weren’t core to the understanding of your proposed algorithm. Usually you put equations here when you don't want to disrupt the flow of the main paper.
@@ -170,6 +186,20 @@ Fakirs           & 82.19                 & 1000                    \\ \hline
 \caption{Self-play easy AI agent: AI\_Level5 from \cite{TMStatsAI}}
 \label{table:average_2p_score}
 \end{table}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.2]{../figures/tm_board}
+    \caption{The Terra Mystyca Game Board and Its Representation}
+    \label{fig:TM_Board}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.6]{../figures/terra-mystica-cult}
+    \caption{The Terra Mystyca Cult Track}
+    \label{fig:TM_Cult_Track}
+\end{figure}
 
 {\small
 \bibliographystyle{../common/ieee}
