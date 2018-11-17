@@ -1,8 +1,9 @@
-from enum import Enum, auto
+from enum import Enum, auto, unique
 import utils
 
 from typing import Dict, List, Tuple, Set
 
+@unique
 class Terrain(Enum):
   PLAIN = auto() # Brown
   SWAMP = auto() # Black
@@ -13,11 +14,13 @@ class Terrain(Enum):
   DESERT = auto() # Yellow
   WATER = auto() # BLUE WATER, unbuildable
 
+@unique
 class PowerBowl(Enum):
   I = auto()
   II = auto()
   III = auto()
 
+@unique
 class CultTrack(Enum):
   FIRE = auto()
   WATER = auto()
@@ -33,16 +36,59 @@ class CultBoard:
   # Moving to this location
   TOWN_KEY_REQUIRED = 10
 
-  def __init__(self):
+  # Number of availabe order positions for priests.
+  NUM_ORDERS = 4
+
+  def __init__(self, factions):
     # Mapping from cult track to list of availabler orders.
-    self.orders: Dict[CultTrack: List[int]] = {
-      CultTrack.FIRE: [3, 2, 2, 2], 
-      CultTrack.WATER: [3, 2, 2, 2],
-      CultTrack.EARTH: [3, 2, 2, 2],
-      CultTrack.AIR: [3, 2, 2, 2],
+    # Factions is the list of factions playing on the cult track.
+    self.available_orders: Dict[CultTrack: List[int]] = {
+      CultTrack.FIRE: [2, 2, 2, 3], 
+      CultTrack.WATER: [2, 2, 2, 3],
+      CultTrack.EARTH: [2, 2, 2, 3],
+      CultTrack.AIR: [2, 2, 2, 3],
     }
+    # Mapping from cult-track to index to which terrain/faction occupies that order.
+    # indexes map as 1 -> 3, 2 -> 2, 3 -> 2, 4 -> 2.
+    self.occupied_orders: Dict[CultTrack, Dict[int, Terrain]] = {
+      CultTrack.EARTH: {}, CultTrack.WATER: {}, CultTrack.FIRE: {}, CultTrack.AIR: {}
+    }
+    # Mapping from cult-track to mapping from terrain/faction to current positions.
+    self.positions: Dict[CultTrack, Dict[Terrain, int]] = {
+      CultTrack.EARTH: {}, CultTrack.WATER: {}, CultTrack.FIRE: {}, CultTrack.AIR: {}
+    }
+    for faction in factions:
+      for track, pos in faction.StartingCultPositions().items():
+        self.positions[track][faction.HomeTerrain()] = pos
 
+  def SacrificePriestToOrder(self, player: 'Player', order: CultTrack) -> Tuple[int, int]:
+    """The player is sacrificing their priest to the order specified.
 
+    Returns a tuple of (spacesGained, powerGained). Note that spacesGained can be zero
+    if the Player is at 9 but has no town key.
+    """
+    terrain = player.faction.HomeTerrain()
+    if self.available_orders[order]:
+      spacesToAttempt = self.available_orders[order].pop()
+      self.occupied_orders[order][CultBoard.NUM_ORDERS - len(self.available_orders[order])] = terrain
+    else:
+      spacesToAttempt = 1
+    currPosition = self.positions[order][terrain]
+    expectedPosition = currPosition + spacesToAttempt
+    powerCollected = sum([ power for pos, power in CultBoard.ADDITIONAL_POWER.items()
+        if currPosition < pos and pos <= expectedPosition])
+    if expectedPosition < CultBoard.TOWN_KEY_REQUIRED:
+      self.positions[order][terrain] = expectedPosition
+    # We've maxed the cult-board. We might end up moving less than expected. Check to see if we
+    # can even take the town right now. 
+    elif max(self.positions[order].values()) < CultBoard.TOWN_KEY_REQUIRED and player.UseTownKey():
+      self.positions[order][terrain] = CultBoard.TOWN_KEY_REQUIRED
+    else:
+      powerCollected -= min(3, powerCollected)
+      self.positions[order][terrain] = CultBoard.TOWN_KEY_REQUIRED - 1
+    return (self.positions[order][terrain] - currPosition, powerCollected)
+
+@unique
 class Building(Enum):
   DWELLING = auto()
   TRADING_HOUSE = auto()
@@ -189,6 +235,33 @@ class Halflings(Faction):
   def StartingShipping(self) -> int:
     return 0
 
+class Engineers(Faction):
+  def __init__(self):
+    pass
+
+  def HomeTerrain(self) -> Terrain:
+    return Terrain.MOUNTAIN
+
+  def StartingPower(self) -> Dict[PowerBowl, int]:
+    return { PowerBowl.I : 3, PowerBowl.II : 9, PowerBowl.III : 0}
+
+  def StartingWorkers(self) -> int:
+    return 2
+
+  def StartingCoins(self) -> int:
+    return 10
+
+  def StartingCultPositions(self) -> Dict[CultTrack, int]:
+    return {CultTrack.FIRE : 0, CultTrack.EARTH : 0, CultTrack.AIR : 0, CultTrack.WATER : 0}
+
+  def StartingShipping(self) -> int:
+    return 0
+
+@unique
+class TownKey(Enum):
+  """The town keys"""
+  TODO = auto()
+
 class Player:
   def __init__(self, faction: Faction):
     self.faction: Faction = faction 
@@ -196,7 +269,19 @@ class Player:
     self.coins: int = faction.StartingCoins()
     self.workers: int = faction.StartingWorkers()
     self.shipping: int = faction.StartingShipping()
+    # Mapping from TowKey to whether or not we've used it already.
+    self.used_town_keys: Dict[TownKey: bool] = {}
 
+  def UseTownKey(self) -> bool:
+    """Returns true if an available town keys was used. False if no town key is available."""
+    for key, used in self.used_town_keys.items():
+      if not used:
+        self.used_town_keys[key] = True
+        return True
+    return False
+
+  def GainTown(self, townKey: TownKey) -> None:
+    self.used_town_keys[townKey] = False
 
   def GainPower(self, power: int) -> None:
     # Gain the given amount of power. Overflowing power is automatically converted to coins.
