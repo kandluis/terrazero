@@ -304,7 +304,7 @@ class TestCultBoard(unittest.TestCase):
       })
 
     # We gain a town key and try to move (only 1) to 10.
-    self.assertIsNone(player.GainTown(TownKey.TODO))
+    self.assertIsNone(player.GainTown(TownKey.PRIEST))
     # Gain 3 power!
     self.assertEqual(cultBoard.SacrificePriestToOrder(player, CultTrack.EARTH),
       (1, 3))
@@ -320,8 +320,8 @@ class TestCultBoard(unittest.TestCase):
     cultBoard = CultBoard(factions=factions)
 
     # Both players have town keys.
-    self.assertIsNone(player1.GainTown(TownKey.TODO))
-    self.assertIsNone(player2.GainTown(TownKey.TODO))
+    self.assertIsNone(player1.GainTown(TownKey.PRIEST))
+    self.assertIsNone(player2.GainTown(TownKey.CULT))
 
     # Halfling takes the earth track by 1 -> 4 -> 6 -> 8 -> 10
     self.assertEqual(cultBoard.SacrificePriestToOrder(player1, CultTrack.EARTH),
