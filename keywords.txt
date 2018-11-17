@@ -2,3 +2,8 @@ RL
 MDP
 A*
 AlphaBeta Pruning
+MTCS
+Monte Carlo Tree Search
+Deep Q-Learning
+Q-Learning
+Reinforcement Learning

@@ -290,6 +290,12 @@ class BonusCards(Enum):
 class RoundBonus(Enum):
   pass
 
+class FavorTile(Enum):
+  pass
+
+class SpecialActions(Enum):
+  pass
+
 class Player:
   def __init__(self, faction: Faction):
     self.faction: Faction = faction 
