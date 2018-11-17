@@ -212,6 +212,9 @@ class Faction:
     """Returns the shillping level"""
     raise utils.UnimplementedError("Using abstract Faction interface")
 
+  def StartingPriests(self) -> int:
+    raise utils.UnimplementedError("Using abstract Faction interface")
+
 
 class Halflings(Faction):
   def __init__(self):
@@ -233,6 +236,9 @@ class Halflings(Faction):
     return {CultTrack.FIRE : 0, CultTrack.EARTH : 1, CultTrack.AIR : 1, CultTrack.WATER : 0}
 
   def StartingShipping(self) -> int:
+    return 0
+
+  def StartingPriests(self) -> int:
     return 0
 
 class Engineers(Faction):
@@ -257,10 +263,32 @@ class Engineers(Faction):
   def StartingShipping(self) -> int:
     return 0
 
+  def StartingPriests(self) -> int:
+    return 0
+
 @unique
 class TownKey(Enum):
   """The town keys"""
-  TODO = auto()
+  WOKERS2 = auto()
+  PRIEST = auto()
+  CULT = auto() # 1 up on every cult-track.
+  POWER8 = auto() # 8 power.
+  COIN6 = auto() # 6 coins.
+
+@unique
+class BonusCards(Enum):
+  PRIEST = auto() # 1 priest income.coins
+  WORKER_3POWER = auto()
+  COIN6 = auto()
+  POWER3_SHIPPING = auto()
+  SPADE_COIN2 = auto()
+  CULT_COIN4 = auto()
+  DWELLING_COIN2 = auto()
+  TRADING_POST_WORKER = auto()
+  STRONGHOLD_WORKER2 = auto()
+
+class RoundBonus(Enum):
+  pass
 
 class Player:
   def __init__(self, faction: Faction):
@@ -271,6 +299,8 @@ class Player:
     self.shipping: int = faction.StartingShipping()
     # Mapping from TowKey to whether or not we've used it already.
     self.used_town_keys: Dict[TownKey: bool] = {}
+    self.bridges = 0
+    self.priests = faction.StartingPriests()
 
   def UseTownKey(self) -> bool:
     """Returns true if an available town keys was used. False if no town key is available."""
