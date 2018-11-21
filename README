@@ -1,3 +1,12 @@
 # AlphaTM
 
 Kaggle https://www.kaggle.com/lemonkoala/terra-mystica#stats.csv
+
+
+# Layout
+
+# Testing
+
+```bash
+python -m unittest simulation/tests/<TEST_FILE>.py
+```
