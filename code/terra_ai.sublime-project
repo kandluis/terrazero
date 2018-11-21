@@ -1,0 +1,17 @@
+{
+	"build_systems":
+	[
+		{
+			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+			"selector": "source.python",
+			"shell_cmd": "\"python\" -u \"$file\"",
+			"path": "/Users/nautilik/.virtualenvs/terra-ai/bin"
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project"
+		}
+	]
+}
