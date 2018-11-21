@@ -11,7 +11,7 @@ class Player:
     self.workers: int = player_faction.StartingWorkers()
     self.shipping: int = player_faction.StartingShipping()
     # Mapping from TowKey to whether or not we've used it already.
-    self.used_town_keys: Dict[TownKey: bool] = {}
+    self.used_town_keys: Dict[common.TownKey, bool] = {}
     self.bridges = 0
     self.priests = player_faction.StartingPriests()
 
