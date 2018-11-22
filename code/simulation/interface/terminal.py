@@ -1,10 +1,13 @@
-from typing import Any, List, Set
+from typing import Any, List, Optional, Set
 
+from simulation.interface import io
 from simulation.core import common
 from simulation.core import faction
+from simulation.core import player
+from simulation.core import board
 
 
-class CommandLine:
+class CommandLine(io.IO):
   """Class which handles prompting and collecting user responses/actions"""
   MAX_INPUT_CHARS = 25
 
@@ -86,3 +89,18 @@ class CommandLine:
         selected.append(class_())
         break
     return selected
+
+  def InvalidInput(self):
+    print("That's not valid! Please try again.")
+
+  def InformInitialDwellingPlacement(self) -> None:
+    self._DisplayMessage("Placing initial settlements!")
+
+  def RequestLocation(self, pl: player.Player) -> board.Position:
+    while True:
+      reqStr = input("%s [%s] - Select a tile for the action: " % (type(
+          pl.faction).__name__, pl.name))
+      pos: Optional[board.Position] = board.ParsePosition(reqStr)
+      if pos:
+        return pos
+      print("Invalid position %s requested. Please try again." % reqStr)

@@ -1,6 +1,30 @@
-from typing import Dict, List, Set, Tuple
+import collections
+
+from typing import Dict, NamedTuple, List, Optional, Set, Tuple
 
 from simulation.core import common
+from simulation import utils
+
+
+class Position(NamedTuple):
+  row: str
+  column: int
+
+
+def ParsePosition(msg: str) -> Optional[Position]:
+  MIN_ROW = "A"
+  MAX_ROW = "I"
+  MIN_COL = 1
+  MAX_COL = 13
+  try:
+    letter: str = msg[0].upper()
+    column: int = int(msg[1:])
+  except (IndexError, ValueError):
+    return None
+  if (MIN_ROW <= letter and letter <= MAX_ROW and MIN_COL <= column
+      and column <= MAX_COL):
+    return Position(row=letter, column=column)
+  return None
 
 
 class GameBoard:
@@ -13,6 +37,11 @@ class GameBoard:
                       Terrain] = self._LoadStartingMap()
     rows, cols = zip(*self._tiles.keys())
     self._maxRowIndex, self._maxColIndex = max(rows), max(cols)
+
+    # Same as self._tiles but represents the currently (in any) exsting
+    # structure on the map.
+    self._structures: Dict[Tuple[int, int], Optional[
+        common.Structure]] = collections.defaultdict(lambda: None)
 
   @staticmethod
   def LinesToMap(lines: List[str]) -> Dict[Tuple[int, int], common.Terrain]:
@@ -33,13 +62,39 @@ class GameBoard:
         terrain[(i, rowIndex)] = common.Terrain.WATER
     return terrain
 
-  def GetTerrain(self, row: str, column: int) -> common.Terrain:
+  def CanBeBuilt(self, pos: Position, structure: common.Structure,
+                 owner: common.Terrain) -> bool:
+    """Checks if the given structure by the specified owner can be built at row/col """
+    rawPos = self._ToRaw(pos)
+    terrain = self._tiles[rawPos]
+    if terrain != owner:
+      return False
+    exstingStructure = self._structures[rawPos]
+    if structure == common.Structure.DWELLING:
+      return (exstingStructure is None)
+    return (exstingStructure is not None
+            and exstingStructure.IsUpgradeableTo(structure))
+
+  def Build(self, pos: Position, structure: common.Structure) -> None:
+    """Builds the given structure at the specified location. Will throw if an invalid structure is built."""
+    rawPos = self._ToRaw(pos)
+    terrain = self._tiles[rawPos]
+    exstingStructure = self._structures[rawPos]
+    if not self.CanBeBuilt(pos, structure, terrain):
+      raise utils.InternalError(
+          "Attempting to build %s at %s which is invalid!" % (structure, pos))
+    self._structures[rawPos] = structure
+
+  def GetTerrain(self, pos: Position) -> common.Terrain:
     """Returns the terrain for the row, column specified, where row is one of A-I and column
     is one of 1-13. Note that even rows only have 1-12"""
-    return self._tiles[(self._ToRaw(row, column))]
+    return self._tiles[self._ToRaw(pos)]
 
-  def GetNeighborTiles(self, row: str, column: int) -> Set[Tuple[str, int]]:
-    rawRow, rawColumn = self._ToRaw(row, column)
+  def GetStructure(self, pos: Position) -> Optional[common.Structure]:
+    return self._structures[self._ToRaw(pos)]
+
+  def GetNeighborTiles(self, pos: Position) -> Set[Position]:
+    rawRow, rawColumn = self._ToRaw(pos)
     # The tile side dependso n the row.
     otherRawColumn: int = rawColumn - 1 if rawRow % 2 == 0 else rawColumn + 1
     # We union the neighbors for both sides of the tile.
@@ -48,7 +103,18 @@ class GameBoard:
     # Now we just convert them back to their tile values and dedup. Don't
     # count yourself.
     return {self._FromRaw(*rawNeighbor)
-            for rawNeighbor in rawNeighbors} - {(row, column)}
+            for rawNeighbor in rawNeighbors} - {pos}
+
+  def NeighborStructureOwners(
+      self, pos: Position) -> Set[Tuple[common.Structure, common.Terrain]]:
+    results: Set[Tuple[common.Structure, common.Terrain]] = set()
+    for neighbor in self.GetNeighborTiles(pos):
+      terrain: common.Terrain = self.GetTerrain(pos)
+      structure: Optional[common.Structure] = self.GetStructure(pos)
+      if not structure:
+        continue
+      results.add((structure, terrain))
+    return results
 
   def _GetRawNeighbors(self, row: int, column: int) -> Set[Tuple[int, int]]:
     neighbors: Set[Tuple[int, int]] = set()
@@ -62,18 +128,18 @@ class GameBoard:
       neighbors.add((row, column + 1))
     return neighbors
 
-  def _ToRaw(self, row: str, column: int) -> Tuple[int, int]:
-    rawRow: int = ord(row.upper()) - ord('A')
-    rawColumn: int = 2 * (column - 1) + 1
+  def _ToRaw(self, pos: Position) -> Tuple[int, int]:
+    rawRow: int = ord(pos.row.upper()) - ord('A')
+    rawColumn: int = 2 * (pos.column - 1) + 1
     return rawRow, rawColumn
 
-  def _FromRaw(self, rawRow: int, rawColumn: int) -> Tuple[str, int]:
+  def _FromRaw(self, rawRow: int, rawColumn: int) -> Position:
     row: str = chr(ord('A') + rawRow)
     if rawRow % 2 == 0:
       column = int(rawColumn / 2) + 1
     else:
       column = int((rawColumn - 1) / 2) + 1
-    return row, column
+    return Position(row=row, column=column)
 
   def _LoadStartingMap(self) -> Dict[Tuple[int, int], common.Terrain]:
     """
