@@ -1,6 +1,80 @@
 import enum
 
+from typing import NamedTuple
+
 from simulation import utils
+
+
+class Resources:
+  def __init__(self,
+               coins: int = 0,
+               workers: int = 0,
+               bridges: int = 0,
+               priests: int = 0):
+    self.coins: int = coins
+    self.workers: int = workers
+    self.bridges: int = bridges
+    self.priests: int = priests
+
+  def IsValid(self) -> int:
+    return not (self.coins < 0 or self.workers < 0 or self.bridges < 0
+                or self.priests < 0)
+
+  def ForceValid(self) -> None:
+    self.coins = max(0, self.coins)
+    self.workers = max(0, self.workers)
+    self.bridges = max(0, self.bridges)
+    self.priests = max(0, self.priests)
+
+  def __eq__(self, other) -> bool:
+    return (self.coins == other.coins and self.workers == other.workers
+            and self.priests == other.priests
+            and self.bridges == other.bridges)
+
+  def __add__(self, other: 'Resources') -> 'Resources':
+    return Resources(
+        coins=self.coins + other.coins,
+        workers=self.workers + other.workers,
+        bridges=self.bridges + other.bridges,
+        priests=self.priests + other.priests)
+
+  def __radd__(self, other: 'Resources') -> 'Resources':
+    if other == 0: return self
+    return self.__add__(other)
+
+  def __iadd__(self, other: 'Resources') -> 'Resources':
+    self.coins += other.coins
+    self.workers += other.workers
+    self.bridges += other.bridges
+    self.priests += other.priests
+    return self
+
+  def __sub__(self, other: 'Resources') -> 'Resources':
+    return Resources(
+        coins=self.coins - other.coins,
+        workers=self.workers - other.workers,
+        bridges=self.bridges - other.bridges,
+        priests=self.priests - other.priests)
+
+  def __rsub__(self, other: 'Resources') -> 'Resources':
+    if other == 0: return self
+    return self.__sub__(other)
+
+  def __isub__(self, other: 'Resources') -> 'Resources':
+    self.coins -= other.coins
+    self.workers -= other.workers
+    self.bridges -= other.bridges
+    self.priests -= other.priests
+    return self
+
+  def __str__(self) -> str:
+    return """
+    Coins: {coins}     Workers: {workers}   Priests: {priests}   Bridges: {bridges}
+    """.format(
+        coins=self.coins,
+        workers=self.workers,
+        priests=self.priests,
+        bridges=self.bridges)
 
 
 @enum.unique
@@ -223,10 +297,20 @@ class FavorTile(enum.Enum):
 
 
 @enum.unique
-class Building(enum.Enum):
+class Structure(enum.Enum):
   """The different building types available in TM."""
   DWELLING = enum.auto()
-  TRADING_HOUSE = enum.auto()
+  TRADING_POST = enum.auto()
   SANCTUARY = enum.auto()
   TEMPLE = enum.auto()
   STRONGHOLD = enum.auto()
+
+  def IsUpgradeableTo(self, other: 'Structure') -> bool:
+    """Returns true if 'other' is a structure to which we can upgrade"""
+    if other == Structure.TRADING_POST:
+      return self == Structure.DWELLING
+    if other == Structure.TEMPLE or other == Structure.STRONGHOLD:
+      return self == Structure.TRADING_POST
+    if other == Structure.SANCTUARY:
+      return self == Structure.TEMPLE
+    raise utils.InternalError("Invalid structure: %s" % other)

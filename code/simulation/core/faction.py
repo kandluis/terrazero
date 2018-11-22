@@ -1,6 +1,6 @@
 import abc
 
-from typing import Dict, List
+from typing import Dict, List, NamedTuple
 
 from simulation import utils
 from simulation.core import common
@@ -22,13 +22,8 @@ class Faction(abc.ABC):
     pass
 
   @abc.abstractmethod
-  def StartingWorkers(self) -> int:
-    """Returns the number of initial workers"""
-    pass
-
-  @abc.abstractmethod
-  def StartingCoins(self) -> int:
-    """Returns the number of initial coins"""
+  def StartingResources(self) -> common.Resources:
+    """Returns the number of initial resources for this class"""
     pass
 
   @abc.abstractmethod
@@ -42,7 +37,8 @@ class Faction(abc.ABC):
     pass
 
   @abc.abstractmethod
-  def StartingPriests(self) -> int:
+  def StructureCost(self, structure: common.Structure,
+                    adjacentEnemyStructure: bool) -> common.Resources:
     pass
 
   def __str__(self) -> str:
@@ -52,20 +48,21 @@ class Faction(abc.ABC):
       Home Terrain: {terrain}
 
       Starting Resources:
-      Coins: {coins}     Workers: {workers}    Shipping: {shipping}   Priests: {priests}
+      {resources}
 
       Power:
       {power}
+
+      Shipping:
+      {shipping}
 
       Cult Positions:
       {cult}
     """.format(
         terrain=self.HomeTerrain(),
-        coins=self.StartingCoins(),
-        workers=self.StartingWorkers(),
-        shipping=self.StartingShipping(),
-        priests=self.StartingPriests(),
+        resources=self.StartingResources(),
         power=self.StartingPower(),
+        shipping=self.StartingShipping(),
         cult=self.StartingCultPositions(),
         class_name=type(self).__name__)
 
@@ -84,11 +81,8 @@ class Halflings(Faction):
         common.PowerBowl.III: 0
     }
 
-  def StartingWorkers(self) -> int:
-    return 3
-
-  def StartingCoins(self) -> int:
-    return 15
+  def StartingResources(self) -> common.Resources:
+    return common.Resources(workers=3, priests=0, coins=15, bridges=0)
 
   def StartingCultPositions(self) -> Dict[common.CultTrack, int]:
     return {
@@ -101,8 +95,20 @@ class Halflings(Faction):
   def StartingShipping(self) -> int:
     return 0
 
-  def StartingPriests(self) -> int:
-    return 0
+  def StructureCost(self, structure: common.Structure,
+                    adjacentEnemyStructure: bool) -> common.Resources:
+    if structure == common.Structure.DWELLING:
+      return common.Resources(workers=1, coins=2)
+    if structure == common.Structure.TRADING_POST:
+      return common.Resources(
+          workers=2, coins=3 if adjacentEnemyStructure else 6)
+    if structure == common.Structure.STRONGHOLD:
+      return common.Resources(workers=4, coins=8)
+    if structure == common.Structure.TEMPLE:
+      return common.Resources(workers=2, coins=5)
+    if structure == common.Structure.SANCTUARY:
+      return common.Resources(workers=4, coins=6)
+    raise utils.InternalError("Unknown cost for structure: %s" % structure)
 
 
 class Engineers(Faction):
@@ -119,11 +125,8 @@ class Engineers(Faction):
         common.PowerBowl.III: 0
     }
 
-  def StartingWorkers(self) -> int:
-    return 2
-
-  def StartingCoins(self) -> int:
-    return 10
+  def StartingResources(self) -> common.Resources:
+    return common.Resources(workers=2, priests=0, coins=10, bridges=0)
 
   def StartingCultPositions(self) -> Dict[common.CultTrack, int]:
     return {
@@ -136,8 +139,20 @@ class Engineers(Faction):
   def StartingShipping(self) -> int:
     return 0
 
-  def StartingPriests(self) -> int:
-    return 0
+  def StructureCost(self, structure: common.Structure,
+                    adjacentEnemyStructure: bool) -> common.Resources:
+    if structure == common.Structure.DWELLING:
+      return common.Resources(workers=1, coins=1)
+    if structure == common.Structure.TRADING_POST:
+      return common.Resources(
+          workers=1, coins=2 if adjacentEnemyStructure else 4)
+    if structure == common.Structure.STRONGHOLD:
+      return common.Resources(workers=3, coins=6)
+    if structure == common.Structure.TEMPLE:
+      return common.Resources(workers=1, coins=4)
+    if structure == common.Structure.SANCTUARY:
+      return common.Resources(workers=3, coins=6)
+    raise utils.InternalError("Unknown cost for structure: %s" % structure)
 
 
 def AllAvailable() -> List[Faction]:

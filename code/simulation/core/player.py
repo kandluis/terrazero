@@ -1,7 +1,8 @@
-from typing import Dict
+from typing import Any, Dict
 
 from simulation.core import common
 from simulation.core import faction
+from simulation import utils
 
 
 class Player:
@@ -9,16 +10,84 @@ class Player:
     self.name = name
     self.faction: faction.Faction = player_faction
     self.power: Dict[common.PowerBowl, int] = player_faction.StartingPower()
-    self.coins: int = player_faction.StartingCoins()
-    self.workers: int = player_faction.StartingWorkers()
+    self.resources: common.Resources = player_faction.StartingResources()
     self.shipping: int = player_faction.StartingShipping()
     # Mapping from TowKey to whether or not we've used it already.
     self.used_town_keys: Dict[common.TownKey, bool] = {}
-    self.bridges: int = 0
-    self.priests: int = player_faction.StartingPriests()
+
+    # Map from types to the number the player currently has on his/her board.
+    self.structures: Dict[common.Structure, int] = {
+        common.Structure.DWELLING: 8,
+        common.Structure.TRADING_POST: 4,
+        common.Structure.SANCTUARY: 3,
+        common.Structure.TEMPLE: 1,
+        common.Structure.STRONGHOLD: 1,
+    }
 
     # Victory points. All players start with 20.
     self.victory_points = 20
+
+  def _MaxUseablePower(self) -> int:
+    count: int = self.power[common.PowerBowl.III]
+    return count + (self.power[common.PowerBowl.II] // 2)
+
+  def _PowerRequiredToZeroNegativeReources(self,
+                                           resources: common.Resources) -> int:
+    # The costs of each.
+    PRIESTS: int = 5
+    WORKERS: int = 3
+    COINS: int = 1
+
+    required = 0
+    if resources.coins < 0:
+      required += (-COINS * resources.coins)
+    if resources.workers < 0:
+      required += (-WORKERS * resources.workers)
+    if resources.priests < 0:
+      required += (-PRIESTS * resources.priests)
+    return required
+
+  def _CanBurnPowerForMissingResources(self,
+                                       resources: common.Resources) -> bool:
+    """If all resources are positive, this trivially is true"""
+    return (self._MaxUseablePower() >=
+            self._PowerRequiredToZeroNegativeReources(resources))
+
+  def CanBuild(self, structure, adjacentEnemies) -> bool:
+    """Asks if the player can possibly build this structure with his available resources"""
+    cost: common.Resources = self.faction.StructureCost(
+        structure, adjacentEnemies)
+    remainingResources = self.resources - cost
+    if remainingResources.IsValid():
+      return True
+    return self._CanBurnPowerForMissingResources(remainingResources)
+
+  def Build(self,
+            structure: common.Structure,
+            adjacentEnemies: bool,
+            free: bool = False) -> None:
+    """Asks the player to build the specified structure.
+    If free is true, this costs the player no resources"""
+    currCount: int = self.structures[structure]
+    if currCount < 1:
+      raise utils.InternalError(
+          "Attempted to decrement structure %s [%s] for Player: %s" %
+          (structure, currCount, self.name))
+    self.structures[structure] -= 1
+    if free:
+      return
+    if not self.CanBuild(structure, adjacentEnemies):
+      raise utils.InternalError(
+          "Attempted to build %s which is impossible with current resources: %s and power: %s"
+          % (structure, self.resources, self.power))
+    cost: common.Resources = self.faction.StructureCost(
+        structure, adjacentEnemies)
+    self.resources -= cost
+    if self.resources.IsValid():
+      return
+    self.UsePower(self._PowerRequiredToZeroNegativeReources(self.resources))
+    self.resources.ForceValid()
+    return
 
   def UseTownKey(self) -> bool:
     """Returns true if an available town keys was used. False if no town key is available."""
@@ -27,6 +96,36 @@ class Player:
         self.used_town_keys[key] = True
         return True
     return False
+
+  def CanUsePower(self, amount: int) -> bool:
+    """Returns true of the power can use the amount of power specifid. May require burning"""
+    return self._MaxUseablePower() >= amount
+
+  def UsePower(self, amount: int) -> None:
+    """The player will use up the specified amount of power, even if it requires burning.
+
+    Raises an error if it doesn't have enough power"""
+    assert amount >= 0
+    if not self.CanUsePower(amount):
+      raise utils.InternalError(
+          "Requesting to use %s power, which is not possible! Current power: %s."
+          % (amount, self.power))
+    # We assume you'll always use power from Bowl 3 downwards.
+    toMove: int = min(amount, self.power[common.PowerBowl.III])
+    amount -= toMove
+    self.power[common.PowerBowl.III] -= toMove
+    self.power[common.PowerBowl.I] += toMove
+    if amount == 0:
+      return
+    toMove = min(2 * amount, self.power[common.PowerBowl.II])
+    amount -= (toMove // 2)
+    if amount != 0:
+      raise utils.InternalError(
+          "Something has gone terrible wrong! We thought we could use %s power, "
+          "but we can't! Power: %s" % (amount, self.power))
+    self.power[common.PowerBowl.II] -= toMove
+    self.power[common.PowerBowl.I] += (toMove // 2)
+    return
 
   def GainTown(self, townKey: common.TownKey) -> None:
     self.used_town_keys[townKey] = False
@@ -65,13 +164,13 @@ class Player:
 
     # Spending an even amount of excess power always makes sense and is
     # optimal.
-    self.coins += int(remainingPower / 2)
+    self.resources.coins += int(remainingPower / 2)
     # TODO(nautilik): We assume player will want to spend remaining 1 power,
     # even if this means he'll end up with power stuck in
     # common.PowerBowl.II.
     if remainingPower % 2 == 1:
       self.power[common.PowerBowl.III] -= 1
       self.power[common.PowerBowl.II] += 1
-      self.coins += 1
+      self.resources.coins += 1
 
     return None

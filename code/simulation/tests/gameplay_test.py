@@ -1,9 +1,12 @@
 import unittest
 import random
 
+from unittest import mock
+
 from simulation.core import gameplay
 from simulation.core import common
 from simulation.core import player
+from simulation.interface import io
 
 
 class MockPlayer(player.Player):
@@ -12,6 +15,9 @@ class MockPlayer(player.Player):
 
 
 class TestGameObject(unittest.TestCase):
+  def setUp(self):
+    self.mock_interface = mock.Mock(auto_spec=io.IO)
+
   def testSelectingGameScoringTiles(self):
     random.seed(1)
     self.assertCountEqual(gameplay.SelectGameScoringTiles(), [
@@ -49,10 +55,15 @@ class TestGameObject(unittest.TestCase):
 
   def testPlayerLimits(self):
     with self.assertRaises(AssertionError):
-      gameplay.Game(players=[MockPlayer()], scoring_tiles=[], bonus_cards=[])
+      gameplay.Game(
+          players=[mock.Mock(auto_spec=player.Player)],
+          scoring_tiles=[],
+          bonus_cards=[],
+          interface=self.mock_interface)
 
     with self.assertRaises(AssertionError):
       gameplay.Game(
-          players=[MockPlayer() for _ in range(6)],
+          players=[mock.Mock(auto_spec=player.Player) for _ in range(6)],
           scoring_tiles=[],
-          bonus_cards=[])
+          bonus_cards=[],
+          interface=self.mock_interface)
