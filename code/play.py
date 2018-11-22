@@ -1,5 +1,5 @@
-def main():
-  pass
+from simulation import game_runner
 
 if __name__ == '__main__':
-  main()
+  runner = game_runner.GameRunner()
+  runner.start()

@@ -8,5 +8,6 @@ Kaggle https://www.kaggle.com/lemonkoala/terra-mystica#stats.csv
 # Testing
 
 ```bash
-python -m unittest simulation/tests/<TEST_FILE>.py
+cd code
+python -m unittest discover --pattern="*_test.py"
 ```

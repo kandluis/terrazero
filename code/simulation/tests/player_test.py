@@ -7,9 +7,11 @@ from simulation.core import player
 
 class TestPlayer(unittest.TestCase):
   def testHalflingPlayer(self):
-    test_player = player.Player(player_faction=faction.Halflings())
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
 
     # Halfling configuration.
+    self.assertEqual(test_player.name, "test")
     self.assertEqual(test_player.power, {
         common.PowerBowl.I: 3,
         common.PowerBowl.II: 9,
@@ -24,7 +26,8 @@ class TestPlayer(unittest.TestCase):
     self.assertEqual(test_player.victory_points, 20)
 
   def testEngineerPlayer(self):
-    test_player = player.Player(player_faction=faction.Engineers())
+    test_player = player.Player(
+        name="test", player_faction=faction.Engineers())
 
     # Halfling configuration.
     self.assertEqual(test_player.power, {
@@ -42,7 +45,7 @@ class TestPlayer(unittest.TestCase):
 
   def testPlayerGainingSinglePower(self):
     halfling = faction.Halflings()
-    test_player = player.Player(halfling)
+    test_player = player.Player("test", halfling)
 
     # Starting configuration for the given class.
     self.assertEqual(test_player.power, {
@@ -52,7 +55,7 @@ class TestPlayer(unittest.TestCase):
     })
     self.assertEqual(test_player.coins, 15)
 
-    self.assertIsNone(test_player.GainPower(1))
+    test_player.GainPower(1)
     self.assertEqual(test_player.power, {
         common.PowerBowl.I: 2,
         common.PowerBowl.II: 10,
@@ -62,7 +65,7 @@ class TestPlayer(unittest.TestCase):
 
   def testPlayerGainingRolloverPower(self):
     halfling = faction.Halflings()
-    test_player = player.Player(halfling)
+    test_player = player.Player("test", halfling)
 
     # Starting configuration for the given class.
     self.assertEqual(test_player.power, {
@@ -72,7 +75,7 @@ class TestPlayer(unittest.TestCase):
     })
     self.assertEqual(test_player.coins, 15)
 
-    self.assertIsNone(test_player.GainPower(4))
+    test_player.GainPower(4)
     self.assertEqual(test_player.power, {
         common.PowerBowl.I: 0,
         common.PowerBowl.II: 11,
@@ -82,7 +85,7 @@ class TestPlayer(unittest.TestCase):
 
   def testPlayerGainingMaxPower(self):
     halfling = faction.Halflings()
-    test_player = player.Player(halfling)
+    test_player = player.Player("test", halfling)
 
     # Starting configuration for the given class.
     self.assertEqual(test_player.power, {
@@ -92,7 +95,7 @@ class TestPlayer(unittest.TestCase):
     })
     self.assertEqual(test_player.coins, 15)
 
-    self.assertIsNone(test_player.GainPower(15))
+    test_player.GainPower(15)
     self.assertEqual(test_player.power, {
         common.PowerBowl.I: 0,
         common.PowerBowl.II: 0,
@@ -102,7 +105,7 @@ class TestPlayer(unittest.TestCase):
 
   def testPlayerGainingMaxPowerPlusEvenValue(self):
     halfling = faction.Halflings()
-    test_player = player.Player(halfling)
+    test_player = player.Player("test", halfling)
 
     # Starting configuration for the given class.
     self.assertEqual(test_player.power, {
@@ -113,7 +116,7 @@ class TestPlayer(unittest.TestCase):
     self.assertEqual(test_player.coins, 15)
 
     # 15 gets us to max, the extra 4 power is converted into 2 coins.
-    self.assertIsNone(test_player.GainPower(19))
+    test_player.GainPower(19)
     self.assertEqual(test_player.power, {
         common.PowerBowl.I: 0,
         common.PowerBowl.II: 0,
@@ -123,7 +126,7 @@ class TestPlayer(unittest.TestCase):
 
   def testPlayerGainingMaxPowerPlusOddValue(self):
     halfling = faction.Halflings()
-    test_player = player.Player(halfling)
+    test_player = player.Player("test", halfling)
 
     # Starting configuration for the given class.
     self.assertEqual(test_player.power, {
@@ -135,7 +138,7 @@ class TestPlayer(unittest.TestCase):
 
     # 15 gets us to max, the extra 3 power is converted into 2 coins.
     # Even though this may not be optimal.
-    self.assertIsNone(test_player.GainPower(18))
+    test_player.GainPower(18)
     self.assertEqual(test_player.power, {
         common.PowerBowl.I: 0,
         common.PowerBowl.II: 1,
@@ -144,11 +147,12 @@ class TestPlayer(unittest.TestCase):
     self.assertEqual(test_player.coins, 17)
 
   def testPlayerTownKeys(self):
-    test_player = player.Player(player_faction=faction.Halflings())
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
     self.assertEqual(test_player.used_town_keys, {})
 
     # Gain a town key and use it.
-    self.assertIsNone(test_player.GainTown(common.TownKey.CULT))
+    test_player.GainTown(common.TownKey.CULT)
     self.assertEqual(test_player.used_town_keys, {common.TownKey.CULT: False})
 
     self.assertTrue(test_player.UseTownKey())
