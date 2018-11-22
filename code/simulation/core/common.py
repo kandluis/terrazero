@@ -1,16 +1,41 @@
 import enum
 
+from simulation import utils
+
 
 @enum.unique
 class Terrain(enum.Enum):
-  PLAIN = enum.auto()  # Brown
-  SWAMP = enum.auto()  # Black
-  LAKE = enum.auto()  # Blue
-  FOREST = enum.auto()  # Green
-  MOUNTAIN = enum.auto()  # Grey
-  WASTELAND = enum.auto()  # Red
-  DESERT = enum.auto()  # Yellow
-  WATER = enum.auto()  # BLUE WATER, unbuildable
+  PLAIN = enum.auto()
+  SWAMP = enum.auto()
+  LAKE = enum.auto()
+  FOREST = enum.auto()
+  MOUNTAIN = enum.auto()
+  WASTELAND = enum.auto()
+  DESERT = enum.auto()
+  WATER = enum.auto()  # BLUE, unbuildable
+
+  def GetColor(self) -> str:
+    if self == Terrain.PLAIN:
+      return "BROWN"
+    if self == Terrain.SWAMP:
+      return "BLACK"
+    if self == Terrain.LAKE:
+      return "BLUE"
+    if self == Terrain.FOREST:
+      return "GREEN"
+    if self == Terrain.MOUNTAIN:
+      return "GREY"
+    if self == Terrain.WASTELAND:
+      return "RED"
+    if self == Terrain.DESERT:
+      return "YELLOW"
+    if self == Terrain.WATER:
+      return "BLUE[unbuildable]"
+    raise utils.UnimplementedError(
+        "Humand description of %s does not exist" % self.name)
+
+  def __str__(self) -> str:
+    return "%s (%s)" % (super(Terrain, self).__str__(), self.GetColor())
 
 
 @enum.unique
@@ -38,9 +63,27 @@ class TownKey(enum.Enum):
   POWER8 = enum.auto()  # 8 power.
   COIN6 = enum.auto()  # 6 coins.
 
+  def _GetHumanDescription(self) -> str:
+    if self == TownKey.WOKERS2:
+      return "2 immediate workers"
+    if self == TownKey.PRIEST:
+      return "1 immediate priest"
+    if self == TownKey.CULT:
+      return "1 up on every cult-track."
+    if self == TownKey.POWER8:
+      return "8 immediate power."
+    if self == TownKey.COIN6:
+      return "6 immediate coins."
+    raise utils.UnimplementedError(
+        "Humand description of %s does not exist" % self.name)
+
+  def __str__(self) -> str:
+    return "%s [%s]" % (super(TownKey, self).__str__(),
+                        self._GetHumanDescription())
+
 
 @enum.unique
-class BonusCards(enum.Enum):
+class BonusCard(enum.Enum):
   """The nine possible bonus cards.  Each one tends to work at each Phase of the game.
   Phase I is income, Phase II is during gameplay, and Phase III is at end of round.
   """
@@ -57,6 +100,32 @@ class BonusCards(enum.Enum):
   TRADING_POST_WORKER = enum.auto()
   STRONGHOLD_WORKER2 = enum.auto()  # 4 vp per SH/TE. 2 worker income.
 
+  def _GetHumanDescription(self) -> str:
+    if self == BonusCard.PRIEST:
+      return "1 priest income"
+    if self == BonusCard.WORKER_3POWER:
+      return "1 wrker income and 3 power income."
+    if self == BonusCard.COIN6:
+      return "6 coins income."
+    if self == BonusCard.POWER3_SHIPPING:
+      return "3 power income and +1 shipping for Phase I and II."
+    if self == BonusCard.SPADE_COIN2:
+      return "1 spade special action and 2 coin income."
+    if self == BonusCard.CULT_COIN4:
+      return "1 cult track special action + 4 coin income."
+    if self == BonusCard.DWELLING_COIN2:
+      return "1 vp per dwelling in board at end, 2 coin income"
+    if self == BonusCard.TRADING_POST_WORKER:
+      return "# 2 vp per TP on board at end, 1 worker income."
+    if self == BonusCard.STRONGHOLD_WORKER2:
+      return "# 4 vp per SH/TE. 2 worker income."
+    raise utils.UnimplementedError(
+        "Humand description of %s does not exist" % self.name)
+
+  def __str__(self) -> str:
+    return "%s [%s]" % (super(BonusCard, self).__str__(),
+                        self._GetHumanDescription())
+
 
 @enum.unique
 class ScoringTile(enum.Enum):
@@ -67,7 +136,7 @@ class ScoringTile(enum.Enum):
   DWELLING_WATER4_PRIEST = enum.auto()
   # 2 VP per TP built, and get a spade for 4 Water.
   TP_WATER4_SPADE = enum.auto()
-  # 5 VP per town built, and get 1 spade per 4 on cult track.
+  # 5 VP per town built, and get 1 spade per 4 on earth.
   TOWN_EARTH4_SPADE = enum.auto()
   # 4 VP per stronghold, and get 1 worker per 2 air.
   STRONGHOLD_AIR2_WORKER = enum.auto()
@@ -77,6 +146,30 @@ class ScoringTile(enum.Enum):
   DWELLING_FIRE4_POWER4 = enum.auto()
   # 5 VP per stornghold, and get 1 worker per 2 fire.
   STRONGHOLD_FIRE2_WORKER = enum.auto()
+
+  def _GetHumanDescription(self) -> str:
+    if self == ScoringTile.TP_AIR4_SPADE:
+      return "Phase II: 2 VP per TP built. Phase III: Get 1 spade per 4 Air."
+    if self == ScoringTile.DWELLING_WATER4_PRIEST:
+      return "Phase II: 2 VP per Dwelling built. Phase III: Get 1 priest per 4 Water."
+    if self == ScoringTile.TP_WATER4_SPADE:
+      return "Phase II: 2 VP per TP built. Phase III: Get a spade for 4 Water."
+    if self == ScoringTile.TOWN_EARTH4_SPADE:
+      return "Phase II: 5 VP per town built. Phase III: Get 1 spade per 4 on Earth."
+    if self == ScoringTile.STRONGHOLD_AIR2_WORKER:
+      return "Phase II: 4 VP per stronghold. Phase III: Get 1 worker per 2 Air."
+    if self == ScoringTile.SPADE_EARTH_COIN:
+      return "Phase II: 2 VP per spade used. Phase III: Get 1 coint per 1 Earth."
+    if self == ScoringTile.DWELLING_FIRE4_POWER4:
+      return "Phase II: 2 VP per dwelling built. Phase III: Get 4 power per 4 Fire."
+    if self == ScoringTile.STRONGHOLD_FIRE2_WORKER:
+      return "Phase II: 5 VP per stornghold. Phase III: Get 1 worker per 2 Fire."
+    raise utils.UnimplementedError(
+        "Humand description of %s does not exist" % self.name)
+
+  def __str__(self) -> str:
+    return "%s [%s]" % (super(ScoringTile, self).__str__(),
+                        self._GetHumanDescription())
 
 
 @enum.unique
@@ -99,6 +192,34 @@ class FavorTile(enum.Enum):
   WATER3 = enum.auto()  # 3 water.
   EARTH3 = enum.auto()  # 3 earth.
   AIR3 = enum.auto()  # 3 air.
+
+  def _GetHumanDescription(self) -> str:
+    if self == FavorTile.COIN3_FIRE:
+      return "3 coin income, 1 fire advancement."
+    if self == FavorTile.TP3VP_WATER:
+      return "3 VP per built dwelling, 1 water advancement."
+    if self == FavorTile.DWELLING2_EARTH:
+      return "2 VP per dwelling built, 1 earth."
+    if self == FavorTile.TP1234_AIR:
+      return "Get 2/3/3/4 VP per 1/2/3/4 TPs when passing. 1 Air."
+    if self == FavorTile.TOWN_FIRE2:
+      return "Town founding only requires combined power of 6, instead of 7. 2 Fire."
+    if self == FavorTile.CULTACTION_AIR2:
+      return "Special action to use cult track, plus 2 water."
+    if self == FavorTile.WORKER_POWER_EARTH2:
+      return "1 worker + 1 power income, 2 eart."
+    if self == FavorTile.POWER4_AIR2:
+      return "4 power income, 2 air."
+    if self == FavorTile.FIRE3:
+      return "3 fire."
+    if self == FavorTile.WATER3:
+      return "3 water."
+    if self == FavorTile.EARTH3:
+      return "3 earth."
+    if self == FavorTile.AIR3:
+      return "3 air."
+    raise utils.UnimplementedError(
+        "Humand description of %s does not exist" % self.name)
 
 
 @enum.unique

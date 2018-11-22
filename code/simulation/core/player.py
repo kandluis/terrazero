@@ -5,7 +5,8 @@ from simulation.core import faction
 
 
 class Player:
-  def __init__(self, player_faction: faction.Faction):
+  def __init__(self, name: str, player_faction: faction.Faction) -> None:
+    self.name = name
     self.faction: faction.Faction = player_faction
     self.power: Dict[common.PowerBowl, int] = player_faction.StartingPower()
     self.coins: int = player_faction.StartingCoins()
@@ -36,7 +37,7 @@ class Player:
     remainingPower: int = power
     assert remainingPower >= 0
     if remainingPower == 0:
-      return
+      return None
 
     if self.power[common.PowerBowl.I] > 0:
       toMove = min(self.power[common.PowerBowl.I], remainingPower)
@@ -45,7 +46,7 @@ class Player:
       remainingPower -= toMove
 
     if remainingPower == 0:
-      return
+      return None
 
     # If we still have power, power I bowl must be empty at this point.
     # Otherwise, we have no power left.
@@ -57,7 +58,7 @@ class Player:
       remainingPower -= toMove
 
     if remainingPower == 0:
-      return
+      return None
 
     # If we still have power, power II bowl must be empty at this point.
     assert self.power[common.PowerBowl.II] == 0
@@ -72,3 +73,5 @@ class Player:
       self.power[common.PowerBowl.III] -= 1
       self.power[common.PowerBowl.II] += 1
       self.coins += 1
+
+    return None

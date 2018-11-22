@@ -1,43 +1,73 @@
-from typing import Dict
+import abc
 
-from simulation.core import utils
+from typing import Dict, List
+
+from simulation import utils
 from simulation.core import common
 
 
-class Faction:
+class Faction(abc.ABC):
   """
   Interface for accessing one of the 14 Factions.
   """
 
-  def __init__(self):
-    raise utils.UnimplementedError("Using abstract Faction interface")
-
+  @abc.abstractmethod
   def HomeTerrain(self) -> common.Terrain:
     """Returns the home terrain of the faction"""
-    raise utils.UnimplementedError("Using abstract Faction interface")
+    pass
 
+  @abc.abstractmethod
   def StartingPower(self) -> Dict[common.PowerBowl, int]:
     """Returns a mapping for the initial power for this faction"""
-    raise utils.UnimplementedError("Using abstract Faction interface")
+    pass
 
+  @abc.abstractmethod
   def StartingWorkers(self) -> int:
     """Returns the number of initial workers"""
-    raise utils.UnimplementedError("Using abstract Faction interface")
+    pass
 
+  @abc.abstractmethod
   def StartingCoins(self) -> int:
     """Returns the number of initial coins"""
-    raise utils.UnimplementedError("Using abstract Faction interface")
+    pass
 
+  @abc.abstractmethod
   def StartingCultPositions(self) -> Dict[common.CultTrack, int]:
     """Returnst the starting cult positions"""
-    raise utils.UnimplementedError("Using abstract Faction interface")
+    pass
 
+  @abc.abstractmethod
   def StartingShipping(self) -> int:
     """Returns the shillping level"""
-    raise utils.UnimplementedError("Using abstract Faction interface")
+    pass
 
+  @abc.abstractmethod
   def StartingPriests(self) -> int:
-    raise utils.UnimplementedError("Using abstract Faction interface")
+    pass
+
+  def __str__(self) -> str:
+
+    return """
+      ---------------- {class_name} ----------------
+      Home Terrain: {terrain}
+
+      Starting Resources:
+      Coins: {coins}     Workers: {workers}    Shipping: {shipping}   Priests: {priests}
+
+      Power:
+      {power}
+
+      Cult Positions:
+      {cult}
+    """.format(
+        terrain=self.HomeTerrain(),
+        coins=self.StartingCoins(),
+        workers=self.StartingWorkers(),
+        shipping=self.StartingShipping(),
+        priests=self.StartingPriests(),
+        power=self.StartingPower(),
+        cult=self.StartingCultPositions(),
+        class_name=type(self).__name__)
 
 
 class Halflings(Faction):
@@ -108,3 +138,7 @@ class Engineers(Faction):
 
   def StartingPriests(self) -> int:
     return 0
+
+
+def AllAvailable() -> List[Faction]:
+  return [Halflings(), Engineers()]

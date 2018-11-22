@@ -58,7 +58,7 @@ class TestCultBoard(unittest.TestCase):
 
   def testSacrificePriestToOrderOvershootPower(self):
     halfling = faction.Halflings()
-    test_player = player.Player(player_faction=halfling)
+    test_player = player.Player(name="test", player_faction=halfling)
     cultBoard = cult.CultBoard(factions=[halfling])
 
     # We move 3 spaces and gain 1 power, since we overshoot the 3 token.
@@ -73,7 +73,7 @@ class TestCultBoard(unittest.TestCase):
 
   def testSacrificePriestToOrderLandOnPower(self):
     halfling = faction.Halflings()
-    test_player = player.Player(player_faction=halfling)
+    test_player = player.Player(name="test", player_faction=halfling)
     cultBoard = cult.CultBoard(factions=[halfling])
 
     # We move 3 spaces and gain 1 power, since we land on 3.
@@ -88,7 +88,7 @@ class TestCultBoard(unittest.TestCase):
 
   def testSacrificeManyPriestsTownKeys(self):
     halfling = faction.Halflings()
-    test_player = player.Player(player_faction=halfling)
+    test_player = player.Player(name="test", player_faction=halfling)
     cultBoard = cult.CultBoard(factions=[halfling])
 
     # We move 3 spaces and gain 1 power, since we land on 4.
@@ -128,7 +128,7 @@ class TestCultBoard(unittest.TestCase):
                      {common.Terrain.PLAIN: 9})
 
     # We gain a town key and try to move (only 1) to 10.
-    self.assertIsNone(test_player.GainTown(common.TownKey.PRIEST))
+    test_player.GainTown(common.TownKey.PRIEST)
     # Gain 3 power!
     self.assertEqual(
         cultBoard.SacrificePriestToOrder(test_player, common.CultTrack.EARTH),
@@ -139,13 +139,13 @@ class TestCultBoard(unittest.TestCase):
 
   def testCantOccupyAlreadyTakenTown(self):
     factions = [faction.Halflings(), faction.Engineers()]
-    player1 = player.Player(player_faction=factions[0])
-    player2 = player.Player(player_faction=factions[1])
+    player1 = player.Player(name="test", player_faction=factions[0])
+    player2 = player.Player(name="test", player_faction=factions[1])
     cultBoard = cult.CultBoard(factions=factions)
 
     # Both players have town keys.
-    self.assertIsNone(player1.GainTown(common.TownKey.PRIEST))
-    self.assertIsNone(player2.GainTown(common.TownKey.CULT))
+    player1.GainTown(common.TownKey.PRIEST)
+    player2.GainTown(common.TownKey.CULT)
 
     # Halfling takes the earth track by 1 -> 4 -> 6 -> 8 -> 10
     self.assertEqual(
