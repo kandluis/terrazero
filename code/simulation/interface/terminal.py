@@ -14,6 +14,12 @@ class CommandLine(io.IO):
   def __init__(self):
     pass
 
+  def _VerticalSpace(self):
+    print("""
+
+
+    """)
+
   def _RequestInteger(self, message: str) -> int:
     while True:
       try:
@@ -29,15 +35,18 @@ class CommandLine(io.IO):
       print("Entered value is too long!")
 
   def WelcomeMessage(self) -> None:
+    self._VerticalSpace()
     print(r"""
       Welcome to TM! A copy of the rulebook is located at 
       http://www.feuerland-spiele.de/dateien/Terra_Mystica_EN_1.0_.pdf
       """)
 
   def RequestNumberOfPlayers(self) -> int:
+    self._VerticalSpace()
     return self._RequestInteger("Enter the number of players playing?: ")
 
   def RequestPlayerNames(self, num_players: int) -> List[str]:
+    self._VerticalSpace()
     return [
         self._RequestString("Name for Player %s?: " % (i + 1))
         for i in range(num_players)
@@ -50,11 +59,13 @@ class CommandLine(io.IO):
     print("============== %s ==============" % msg)
 
   def DisplayScoringTiles(self, tiles: List[common.ScoringTile]) -> None:
+    self._VerticalSpace()
     self._DisplayMessage("Scoring Tiles")
     for tile in tiles:
       self._DisplayPrintableValue(tile)
 
   def DisplayBonusCards(self, cards: List[common.BonusCard]) -> None:
+    self._VerticalSpace()
     self._DisplayMessage("Bonus Tiles")
     for card in cards:
       self._DisplayPrintableValue(card)
@@ -66,6 +77,7 @@ class CommandLine(io.IO):
   def RequestPlayerFactions(
       self, player_names: List[str],
       available: List[faction.Faction]) -> List[faction.Faction]:
+    self._VerticalSpace()
     self._DisplayMessage("Faction Selection")
     self._DisplayMessage("Available Factions")
     self._DisplayFactions(available)
@@ -91,16 +103,36 @@ class CommandLine(io.IO):
     return selected
 
   def InvalidInput(self):
+    self._VerticalSpace()
     print("That's not valid! Please try again.")
 
   def InformInitialDwellingPlacement(self) -> None:
+    self._VerticalSpace()
     self._DisplayMessage("Placing initial settlements!")
 
+  def _NamePrefix(self, pl: player.Player) -> str:
+    return "%s [%s]" % (type(pl.faction).__name__, pl.name)
+
   def RequestLocation(self, pl: player.Player) -> board.Position:
+    self._VerticalSpace()
     while True:
-      reqStr = input("%s [%s] - Select a tile for the action: " % (type(
-          pl.faction).__name__, pl.name))
+      reqStr = self._RequestString(
+          "%s - Select a tile for the action: " % self._NamePrefix(pl))
       pos: Optional[board.Position] = board.ParsePosition(reqStr)
       if pos:
         return pos
       print("Invalid position %s requested. Please try again." % reqStr)
+
+  def RequestBonusCardSelection(self, pl: player.Player,
+                                available: List[common.BonusCard]) -> int:
+    self._VerticalSpace()
+    for i, card in enumerate(available):
+      print("%s : %s" % (i + 1, card))
+    while True:
+      index: int = self._RequestInteger(
+          "%s - Select the index of the bonus card to take: " %
+          self._NamePrefix(pl))
+      if 1 <= index and index <= len(available):
+        return index - 1
+      print("The selected index %s is out of range [%s, %s)!" %
+            (index, 1, len(available)))

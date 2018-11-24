@@ -1,6 +1,6 @@
 import random
 
-from typing import List
+from typing import List, Optional
 
 from simulation.core import common
 from simulation.core import player as player_module
@@ -43,13 +43,19 @@ class Game:
     ]
     return len(neighbors) > 0
 
+  def _TransformAndBuild(self, player) -> None:
+    while True:
+      pos: board.Position = self.interface.RequestLocation(player)
+      final_terrains: List[common.Terrain] = player.ReachableTerrains()
+      pass
+
   def _PlaceInitialDWellings(self, player) -> None:
     while True:
       pos: board.Position = self.interface.RequestLocation(player)
       if not self.board.CanBeBuilt(
           pos,
           structure=common.Structure.DWELLING,
-          owner=player.faction.HomeTerrain()):
+          final_terrain=[player.faction.HomeTerrain()]):
         self.interface.InvalidInput()
         continue
 
@@ -63,13 +69,52 @@ class Game:
       break
 
   def InitializeDwellings(self) -> None:
-    # TODO(luis): Handle Chaos Magicians and Nomads
+    # 1st dwellings.
     self.interface.InformInitialDwellingPlacement()
     for player in self.players:
       self._PlaceInitialDWellings(player)
+
+    # 2nd dwellings.
     self.interface.InformInitialDwellingPlacement()
     for player in reversed(self.players):
       self._PlaceInitialDWellings(player)
+
+    # TODO(luis): Handle Chaos Magicians and Nomads
+
+  def SwapBonusCards(self, player: player_module.Player) -> None:
+    """The player has passed (usually) and we need to swap cards."""
+    selected_index: int = self.interface.RequestBonusCardSelection(
+        player, self.available_bonus_cards)
+    selected_card: common.BonusCard = self.available_bonus_cards.pop(
+        selected_index)
+    returnedCard: Optional[common.BonusCard] = player.TakeBonusCard(
+        selected_card)
+    if returnedCard:
+      self.available_bonus_cards.append(returnedCard)
+
+  def _EndRoundForBonusCards(self):
+    """Perform required activities at the end of a round"""
+    for card in self.available_bonus_cards:
+      card.coins += 1
+
+  def EndRound(self):
+    # TODO....
+    self._EndRoundForBonusCards()
+
+  def InitializeBonusCards(self) -> None:
+    for player in reversed(self.players):
+      self.SwapBonusCards(player)
+    self._EndRoundForBonusCards()
+
+  def IncomePhase(self) -> None:
+    """Go through the income phase of a Round"""
+    for player in self.players:
+      player.CollectPhaseIIncome()
+
+  def ActionPhase(self) -> None:
+    """Execute the action phase. self.players is already in order."""
+    for player in self.players:
+      pass
 
 
 def SelectGameScoringTiles() -> List[common.ScoringTile]:

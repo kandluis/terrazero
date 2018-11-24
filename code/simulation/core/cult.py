@@ -58,6 +58,8 @@ class CultBoard:
       spacesToAttempt: int = self.available_orders[order].pop()
       self.occupied_orders[order][CultBoard.NUM_ORDERS -
                                   len(self.available_orders[order])] = terrain
+      # Tell the player the have now lost a priest.
+      player.SacrificePriestToOrder()
     else:
       spacesToAttempt = 1
     currPosition = self.positions[order][terrain]

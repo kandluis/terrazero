@@ -63,11 +63,12 @@ class GameBoard:
     return terrain
 
   def CanBeBuilt(self, pos: Position, structure: common.Structure,
-                 owner: common.Terrain) -> bool:
-    """Checks if the given structure by the specified owner can be built at row/col """
+                 final_terrain: List[common.Terrain]) -> bool:
+    """Checks if the given structure can built at row/col.
+    This will return true if at least ONE of the given owners can build it"""
     rawPos = self._ToRaw(pos)
     terrain = self._tiles[rawPos]
-    if terrain != owner:
+    if terrain not in final_terrain:
       return False
     exstingStructure = self._structures[rawPos]
     if structure == common.Structure.DWELLING:
@@ -80,7 +81,7 @@ class GameBoard:
     rawPos = self._ToRaw(pos)
     terrain = self._tiles[rawPos]
     exstingStructure = self._structures[rawPos]
-    if not self.CanBeBuilt(pos, structure, terrain):
+    if not self.CanBeBuilt(pos, structure, [terrain]):
       raise utils.InternalError(
           "Attempting to build %s at %s which is invalid!" % (structure, pos))
     self._structures[rawPos] = structure
