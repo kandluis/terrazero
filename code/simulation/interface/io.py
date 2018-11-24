@@ -50,3 +50,8 @@ class IO(abc.ABC):
   @abc.abstractmethod
   def RequestLocation(self, pl: player.Player) -> board.Position:
     pass
+
+  @abc.abstractmethod
+  def RequestBonusCardSelection(self, pl: player.Player,
+                                available: List[common.BonusCard]) -> int:
+    pass

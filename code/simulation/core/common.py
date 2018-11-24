@@ -1,73 +1,76 @@
 import enum
 
-from typing import NamedTuple
+from typing import Any, NamedTuple, TypeVar
 
 from simulation import utils
 
+T = TypeVar('T', bound='Resources')
+
 
 class Resources:
-  def __init__(self,
+  def __init__(self: T,
                coins: int = 0,
                workers: int = 0,
                bridges: int = 0,
-               priests: int = 0):
+               priests: int = 0,
+               power: int = 0) -> None:
     self.coins: int = coins
     self.workers: int = workers
     self.bridges: int = bridges
     self.priests: int = priests
 
-  def IsValid(self) -> int:
+  def IsValid(self: T) -> int:
     return not (self.coins < 0 or self.workers < 0 or self.bridges < 0
                 or self.priests < 0)
 
-  def ForceValid(self) -> None:
+  def ForceValid(self: T) -> None:
     self.coins = max(0, self.coins)
     self.workers = max(0, self.workers)
     self.bridges = max(0, self.bridges)
     self.priests = max(0, self.priests)
 
-  def __eq__(self, other) -> bool:
+  def __eq__(self, other: Any) -> bool:
     return (self.coins == other.coins and self.workers == other.workers
             and self.priests == other.priests
             and self.bridges == other.bridges)
 
-  def __add__(self, other: 'Resources') -> 'Resources':
+  def __add__(self: T, other: T) -> Any:
     return Resources(
         coins=self.coins + other.coins,
         workers=self.workers + other.workers,
         bridges=self.bridges + other.bridges,
         priests=self.priests + other.priests)
 
-  def __radd__(self, other: 'Resources') -> 'Resources':
+  def __radd__(self: T, other: Any) -> T:
     if other == 0: return self
     return self.__add__(other)
 
-  def __iadd__(self, other: 'Resources') -> 'Resources':
+  def __iadd__(self: T, other: T) -> T:
     self.coins += other.coins
     self.workers += other.workers
     self.bridges += other.bridges
     self.priests += other.priests
     return self
 
-  def __sub__(self, other: 'Resources') -> 'Resources':
+  def __sub__(self: T, other: T) -> Any:
     return Resources(
         coins=self.coins - other.coins,
         workers=self.workers - other.workers,
         bridges=self.bridges - other.bridges,
         priests=self.priests - other.priests)
 
-  def __rsub__(self, other: 'Resources') -> 'Resources':
+  def __rsub__(self: T, other: Any) -> T:
     if other == 0: return self
     return self.__sub__(other)
 
-  def __isub__(self, other: 'Resources') -> 'Resources':
+  def __isub__(self: T, other: T) -> T:
     self.coins -= other.coins
     self.workers -= other.workers
     self.bridges -= other.bridges
     self.priests -= other.priests
     return self
 
-  def __str__(self) -> str:
+  def __str__(self: T) -> str:
     return """
     Coins: {coins}     Workers: {workers}   Priests: {priests}   Bridges: {bridges}
     """.format(
@@ -75,6 +78,18 @@ class Resources:
         workers=self.workers,
         priests=self.priests,
         bridges=self.bridges)
+
+
+class Income(Resources):
+  def __init__(self, power: int = 0, **kwargs):
+    super(Income, self).__init__(**kwargs)
+    self.power = power
+
+  def IsValid(self) -> int:
+    raise utils.InternalError("Income should not be used this way!")
+
+  def ForceValid(self) -> None:
+    raise utils.InternalError("Income should not be used this way!")
 
 
 @enum.unique
@@ -174,25 +189,59 @@ class BonusCard(enum.Enum):
   TRADING_POST_WORKER = enum.auto()
   STRONGHOLD_WORKER2 = enum.auto()  # 4 vp per SH/TE. 2 worker income.
 
+  def __init__(self, value: int):
+    self.coins = 0
+
+  def PlayerIncome(self) -> Income:
+    if self == BonusCard.PRIEST:
+      return Income(priests=1)
+    if self == BonusCard.WORKER_3POWER:
+      return Income(workers=1, power=3)
+    if self == BonusCard.COIN6:
+      return Income(coins=6)
+    if self == BonusCard.POWER3_SHIPPING:
+      return Income(power=3)
+    if self == BonusCard.SPADE_COIN2:
+      return Income()
+    if self == BonusCard.CULT_COIN4:
+      return Income()
+    if self == BonusCard.DWELLING_COIN2:
+      return Income()
+    if self == BonusCard.TRADING_POST_WORKER:
+      return Income()
+    if self == BonusCard.STRONGHOLD_WORKER2:
+      return Income()
+
+    raise utils.InternalError("FavorTile %s is not implemented!" % self)
+
   def _GetHumanDescription(self) -> str:
     if self == BonusCard.PRIEST:
-      return "1 priest income"
+      return "1 priest income%s." % ("" if self.coins == 0 else
+                                     " <%s coins> " % self.coins)
     if self == BonusCard.WORKER_3POWER:
-      return "1 wrker income and 3 power income."
+      return "1 wrker income and 3 power income%s." % (
+          "" if self.coins == 0 else " <%s coins> " % self.coins)
     if self == BonusCard.COIN6:
-      return "6 coins income."
+      return "6 coins income%s." % ("" if self.coins == 0 else
+                                    " <%s coins> " % self.coins)
     if self == BonusCard.POWER3_SHIPPING:
-      return "3 power income and +1 shipping for Phase I and II."
+      return "3 power income and +1 shipping for Phase I and II%s." % (
+          "" if self.coins == 0 else " <%s coins> " % self.coins)
     if self == BonusCard.SPADE_COIN2:
-      return "1 spade special action and 2 coin income."
+      return "1 spade special action and 2 coin income%s." % (
+          "" if self.coins == 0 else " <%s coins> " % self.coins)
     if self == BonusCard.CULT_COIN4:
-      return "1 cult track special action + 4 coin income."
+      return "1 cult track special action + 4 coin income%s." % (
+          "" if self.coins == 0 else " <%s coins> " % self.coins)
     if self == BonusCard.DWELLING_COIN2:
-      return "1 vp per dwelling in board at end, 2 coin income"
+      return "1 vp per dwelling in board at end, 2 coin income%s." % (
+          "" if self.coins == 0 else " <%s coins> " % self.coins)
     if self == BonusCard.TRADING_POST_WORKER:
-      return "# 2 vp per TP on board at end, 1 worker income."
+      return "2 vp per TP on board at end, 1 worker income%s." % (
+          "" if self.coins == 0 else " <%s coins> " % self.coins)
     if self == BonusCard.STRONGHOLD_WORKER2:
-      return "# 4 vp per SH/TE. 2 worker income."
+      return "4 vp per SH/TE. 2 worker income%s." % (
+          "" if self.coins == 0 else " <%s coins> " % self.coins)
     raise utils.UnimplementedError(
         "Humand description of %s does not exist" % self.name)
 
@@ -266,6 +315,21 @@ class FavorTile(enum.Enum):
   WATER3 = enum.auto()  # 3 water.
   EARTH3 = enum.auto()  # 3 earth.
   AIR3 = enum.auto()  # 3 air.
+
+  def PlayerIncome(self) -> Income:
+    if self == FavorTile.COIN3_FIRE:
+      return Income(coins=3)
+    if self == FavorTile.WORKER_POWER_EARTH2:
+      return Income(workers=1, power=1)
+    if self == FavorTile.POWER4_AIR2:
+      return Income(power=4)
+    if (self == FavorTile.TP3VP_WATER or self == FavorTile.DWELLING2_EARTH
+        or self == FavorTile.TP1234_AIR or self == FavorTile.TOWN_FIRE2
+        or self == FavorTile.CULTACTION_AIR2 or self == FavorTile.FIRE3
+        or self == FavorTile.WATER3 or self == FavorTile.EARTH3
+        or self == FavorTile.AIR3):
+      return Income()
+    raise utils.InternalError("FavorTile %s is not implemented!" % self)
 
   def _GetHumanDescription(self) -> str:
     if self == FavorTile.COIN3_FIRE:

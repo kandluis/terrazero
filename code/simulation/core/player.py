@@ -1,4 +1,6 @@
-from typing import Any, Dict
+import copy
+
+from typing import Any, Dict, List, Optional
 
 from simulation.core import common
 from simulation.core import faction
@@ -6,6 +8,8 @@ from simulation import utils
 
 
 class Player:
+  MAX_PRIESTS = 7
+
   def __init__(self, name: str, player_faction: faction.Faction) -> None:
     self.name = name
     self.faction: faction.Faction = player_faction
@@ -16,16 +20,38 @@ class Player:
     self.used_town_keys: Dict[common.TownKey, bool] = {}
 
     # Map from types to the number the player currently has on his/her board.
-    self.structures: Dict[common.Structure, int] = {
-        common.Structure.DWELLING: 8,
-        common.Structure.TRADING_POST: 4,
-        common.Structure.SANCTUARY: 3,
-        common.Structure.TEMPLE: 1,
-        common.Structure.STRONGHOLD: 1,
+    # We must make a copy!
+    self.structures: Dict[common.Structure, int] = copy.deepcopy(
+        faction.Faction.TOTAL_STRUCTURES)
+    # Same as above but the structures already built.
+    self.built_structures: Dict[common.Structure, int] = {
+        common.Structure.DWELLING: 0,
+        common.Structure.TRADING_POST: 0,
+        common.Structure.TEMPLE: 0,
+        common.Structure.SANCTUARY: 0,
+        common.Structure.STRONGHOLD: 0,
     }
 
     # Victory points. All players start with 20.
     self.victory_points = 20
+
+    # We explicitly track how many priests are still in play (if a priest is sent to
+    # an order, it is no longer in play. The player should be informed of this)
+    self.priests_still_in_play = Player.MAX_PRIESTS
+
+    # Tracks the bonus card which the player currently has. This is optional
+    # since it is not selected until after players set settlements. However,
+    # once set, it should NEVER be empty in the future since players always take a
+    # replacement card.
+    self.bonus_card: Optional[common.BonusCard] = None
+
+    # A list of favor tiles the player currently holds.
+    self.favor_tiles: List[common.FavorTile] = []
+
+    # Tracks the number of spades 
+
+  def SacrificePriestToOrder(self) -> None:
+    self.priests_still_in_play -= 1
 
   def _MaxUseablePower(self) -> int:
     count: int = self.power[common.PowerBowl.III]
@@ -68,12 +94,13 @@ class Player:
             free: bool = False) -> None:
     """Asks the player to build the specified structure.
     If free is true, this costs the player no resources"""
-    currCount: int = self.structures[structure]
-    if currCount < 1:
+    numAvailableOfStructure: int = self.structures[structure]
+    if numAvailableOfStructure < 1:
       raise utils.InternalError(
           "Attempted to decrement structure %s [%s] for Player: %s" %
-          (structure, currCount, self.name))
+          (structure, numAvailableOfStructure, self.name))
     self.structures[structure] -= 1
+    self.built_structures[structure] += 1
     if free:
       return
     if not self.CanBuild(structure, adjacentEnemies):
@@ -88,6 +115,23 @@ class Player:
     self.UsePower(self._PowerRequiredToZeroNegativeReources(self.resources))
     self.resources.ForceValid()
     return
+
+  def CollectPhaseIIncome(self) -> None:
+    """Should be called to inform the player that he/she needs to collect income."""
+    proposed_income: common.Income = self.faction.IncomeForStructures(
+        self.built_structures)
+    assert self.bonus_card is not None
+    proposed_income += self.bonus_card.PlayerIncome()
+    for favor_tile in self.favor_tiles:
+      proposed_income += favor_tile.PlayerIncome()
+    self.resources += proposed_income
+
+    # The number of priests that can be collected is bound.
+    self.resources.priests = max(self.resources.priests,
+                                 self.priests_still_in_play)
+
+    # We now collect the power.
+    self.GainPower(proposed_income.power)
 
   def UseTownKey(self) -> bool:
     """Returns true if an available town keys was used. False if no town key is available."""
@@ -126,6 +170,28 @@ class Player:
     self.power[common.PowerBowl.II] -= toMove
     self.power[common.PowerBowl.I] += (toMove // 2)
     return
+
+  def TakeBonusCard(self,
+                    card: common.BonusCard) -> Optional[common.BonusCard]:
+    """Takes the given card and returns the card the player currently holds,
+    if any"""
+    oldCard = self.bonus_card
+    # NWe need to handle if we had a shipping card.
+    if oldCard is None and oldCard == common.BonusCard.POWER3_SHIPPING:
+      assert self.shipping > 0
+      assert card != common.BonusCard.POWER3_SHIPPING
+      self.shipping -= 1
+    self.bonus_card = card
+    # Move the coins (if any) from the bonus card to the income.
+    self.resources.coins += self.bonus_card.coins
+    self.bonus_card.coins = 0
+
+    # We need to handle the shipping card.
+    if card == common.BonusCard.POWER3_SHIPPING:
+      assert oldCard != common.BonusCard.POWER3_SHIPPING
+      self.shipping += 1
+
+    return oldCard
 
   def GainTown(self, townKey: common.TownKey) -> None:
     self.used_town_keys[townKey] = False

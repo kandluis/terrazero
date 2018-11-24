@@ -9,6 +9,8 @@ from simulation.core import player
 from simulation.interface import terminal
 from simulation.interface import io
 
+NUM_ROUNDS = 6
+
 
 class GameRunner:
   def __init__(self):
@@ -36,5 +38,8 @@ class GameRunner:
     ]
     return gameplay.Game(players, scoring_tiles, bonus_cards, interface)
 
-  def start(self) -> None:
+  def execute(self) -> None:
     self.game.InitializeDwellings()
+    self.game.InitializeBonusCards()
+    for _ in range(NUM_ROUNDS):
+      self.game.IncomePhase()
