@@ -256,3 +256,4 @@ TSWLatexianTemp*
 
 # Ignore compiled python code.
 *.pyc
+*.anaconda

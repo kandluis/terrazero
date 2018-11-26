@@ -4,6 +4,13 @@ from simulation.core import board
 from simulation.core import common
 
 
+class TestPosition(unittest.TestCase):
+  def testInitialization(self):
+    pos = Position('row', 1)
+    self.assertEqual('row', pos.row)
+    self.assertEqual(1, pos.column)
+
+
 class TestGameBoardModule(unittest.TestCase):
   def testEmptyLinesToMap(self):
     self.assertEqual(board.GameBoard.LinesToMap([]), {})
