@@ -12,8 +12,7 @@ class Resources:
                coins: int = 0,
                workers: int = 0,
                bridges: int = 0,
-               priests: int = 0,
-               power: int = 0) -> None:
+               priests: int = 0) -> None:
     self.coins: int = coins
     self.workers: int = workers
     self.bridges: int = bridges
@@ -377,4 +376,6 @@ class Structure(enum.Enum):
       return self == Structure.TRADING_POST
     if other == Structure.SANCTUARY:
       return self == Structure.TEMPLE
+    if other == Structure.DWELLING:
+      return False
     raise utils.InternalError("Invalid structure: %s" % other)

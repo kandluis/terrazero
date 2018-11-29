@@ -11,7 +11,7 @@ class CultBoard:
   # Mapping from arriving cult track location which produces power
   # to how much power is received.
   ADDITIONAL_POWER: Dict[int, int] = {3: 1, 5: 2, 7: 2, 10: 3}
-  # Moving to this location
+  # Moving to this location requires a town-key.
   TOWN_KEY_REQUIRED: int = 10
 
   # Number of availabe order positions for priests.
