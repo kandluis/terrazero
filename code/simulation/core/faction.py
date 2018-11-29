@@ -10,6 +10,8 @@ class Faction(abc.ABC):
   """
   Interface for accessing one of the 14 Factions.
   """
+  # Mapping from structure to total number of such structures
+  # for a faction.
   TOTAL_STRUCTURES: Dict[common.Structure, int] = {
       common.Structure.DWELLING: 8,
       common.Structure.TRADING_POST: 4,
