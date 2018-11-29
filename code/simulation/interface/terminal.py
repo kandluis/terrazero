@@ -11,7 +11,7 @@ class CommandLine(io.IO):
   """Class which handles prompting and collecting user responses/actions"""
   MAX_INPUT_CHARS = 25
 
-  def __init__(self):
+  def __init__(self) -> None:
     pass
 
   def _VerticalSpace(self):
@@ -37,7 +37,7 @@ class CommandLine(io.IO):
   def WelcomeMessage(self) -> None:
     self._VerticalSpace()
     print(r"""
-      Welcome to TM! A copy of the rulebook is located at 
+      Welcome to TM! A copy of the rulebook is located at
       http://www.feuerland-spiele.de/dateien/Terra_Mystica_EN_1.0_.pdf
       """)
 

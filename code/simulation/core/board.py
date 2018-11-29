@@ -110,8 +110,8 @@ class GameBoard:
       self, pos: Position) -> Set[Tuple[common.Structure, common.Terrain]]:
     results: Set[Tuple[common.Structure, common.Terrain]] = set()
     for neighbor in self.GetNeighborTiles(pos):
-      terrain: common.Terrain = self.GetTerrain(pos)
-      structure: Optional[common.Structure] = self.GetStructure(pos)
+      terrain: common.Terrain = self.GetTerrain(neighbor)
+      structure: Optional[common.Structure] = self.GetStructure(neighbor)
       if not structure:
         continue
       results.add((structure, terrain))
