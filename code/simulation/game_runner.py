@@ -13,7 +13,7 @@ NUM_ROUNDS = 6
 
 
 class GameRunner:
-  def __init__(self):
+  def __init__(self) -> None:
     self.game = self._InitGame()
 
   def _InitGame(self) -> gameplay.Game:
