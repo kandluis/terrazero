@@ -329,5 +329,58 @@ class TestPlayer(unittest.TestCase):
         common.PowerBowl.III: 1
     })
 
+  def testPlayerBoundNumberOfPriests(self):
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
+    # Set bonus card to a priest.
+    test_player.bonus_card = common.BonusCard.PRIEST
+    # Manually increase the resources owned by this player to maximum
+    # number of allowed priests.
+    self.assertTrue(test_player.priests_still_in_play > 0)
+    test_player.resources.priests = test_player.priests_still_in_play
+
+    # Try to collect income. In this case, we will still have the same number of
+    # of priests.
+    oldPriests = test_player.resources.priests
+    test_player.CollectPhaseIIncome()
+    self.assertEqual(test_player.resources.priests, oldPriests)
+
   def testPlayerCanUsePowerAndUsePower(self):
-    pass
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
+
+    # For starting 3/9/0, we can always use power up to 4 (by burning)
+    for power in range(5):
+      self.assertTrue(test_player.CanUsePower(power))
+
+    # Can't even burn to get this much.
+    self.assertFalse(test_player.CanUsePower(5))
+    with self.assertRaises(utils.InternalError):
+      test_player.UsePower(5)
+
+    # But we can use 3 power by burning.
+    test_player.UsePower(3)
+    self.assertEqual(test_player.power, {
+        common.PowerBowl.I: 6,
+        common.PowerBowl.II: 3,
+        common.PowerBowl.III: 0
+    })
+
+  def testPlayerTakeBonusCards(self):
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
+
+    # Return None card.
+    self.assertIsNone(test_player.TakeBonusCard(common.BonusCard.PRIEST))
+
+    # Now take the shipping card, which is special.
+    self.assertEqual(
+        test_player.TakeBonusCard(common.BonusCard.POWER3_SHIPPING),
+        common.BonusCard.PRIEST)
+    self.assertEqual(test_player.shipping, 1)
+
+    # Now take another card, givign back the shipping.
+    self.assertEqual(
+        test_player.TakeBonusCard(common.BonusCard.CULT_COIN4),
+        common.BonusCard.POWER3_SHIPPING)
+    self.assertEqual(test_player.shipping, 0)
