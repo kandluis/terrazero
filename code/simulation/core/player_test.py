@@ -306,5 +306,27 @@ class TestPlayer(unittest.TestCase):
         common.PowerBowl.III: 0
     })
 
+  def testPlayerCollectIncomeFromFavoriteTiles(self):
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
+    # Set bonus card and favor tiles.
+    test_player.bonus_card = common.BonusCard.PRIEST
+    test_player.favor_tiles = [
+        common.FavorTile.POWER4_AIR2, common.FavorTile.COIN3_FIRE
+    ]
+
+    # Player receives 1 worker income (default for no structures).
+    # Player receives 1 priest for bonus card.
+    # Player receives 4 power and 3 coin for favor tiles.
+    # New income should be 4 worker, 1 priest, 18 coin, 0/11/1
+    test_player.CollectPhaseIIncome()
+    self.assertEqual(test_player.resources,
+                     common.Resources(workers=4, priests=1, coins=19))
+    self.assertEqual(test_player.power, {
+        common.PowerBowl.I: 0,
+        commom.PowerBowl.II: 11,
+        common.PowerBowl.III: 1
+    })
+
   def testPlayerCanUsePowerAndUsePower(self):
     pass
