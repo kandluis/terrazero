@@ -48,7 +48,7 @@ class Player:
     # A list of favor tiles the player currently holds.
     self.favor_tiles: List[common.FavorTile] = []
 
-    # Tracks the number of spades 
+    # Tracks the number of spades
 
   def SacrificePriestToOrder(self) -> None:
     self.priests_still_in_play -= 1
@@ -99,6 +99,8 @@ class Player:
       raise utils.InternalError(
           "Attempted to decrement structure %s [%s] for Player: %s" %
           (structure, numAvailableOfStructure, self.name))
+    # Even though we haven't paid, we assume it's possible to build it.
+    # It's invalid to call this function otherwise.
     self.structures[structure] -= 1
     self.built_structures[structure] += 1
     if free:

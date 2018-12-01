@@ -73,8 +73,8 @@ class TestGameObject(unittest.TestCase):
     game.board = mock_board
 
     self.assertTrue(
-        game.PlayerHasOpponentNeighborsAtPosition(player1,
-                                                  board.ParsePosition("A1")))
+        game.PlayerHasOpponentNeighborsAtPosition(
+            player1, board.Position(row="A", column=1)))
 
   @mock.patch.object(cult, 'CultBoard')
   def testOnlyMyselfAroundMe(self, _):
@@ -100,8 +100,8 @@ class TestGameObject(unittest.TestCase):
     game.board = mock_board
 
     self.assertFalse(
-        game.PlayerHasOpponentNeighborsAtPosition(player1,
-                                                  board.ParsePosition("A1")))
+        game.PlayerHasOpponentNeighborsAtPosition(
+            player1, board.Position(row="A", column=1)))
 
   @mock.patch.object(cult, 'CultBoard')
   def testNoOneAroundMe(self, _):
@@ -124,8 +124,8 @@ class TestGameObject(unittest.TestCase):
     game.board = mock_board
 
     self.assertFalse(
-        game.PlayerHasOpponentNeighborsAtPosition(player1,
-                                                  board.ParsePosition("A1")))
+        game.PlayerHasOpponentNeighborsAtPosition(
+            player1, board.Position(row="A", column=1)))
 
   def testPlayerLimits(self):
     with self.assertRaises(AssertionError):

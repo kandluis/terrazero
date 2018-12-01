@@ -19,30 +19,31 @@ class TestResources(unittest.TestCase):
 
   def tesEqualityOperator(self):
     self.assertEqual(
-        common.Resources(coins=10, workers=1, bridges=2, priests=4, power=10),
-        common.Resources(coins=10, workers=1, bridges=2, priests=4, power=10))
+        common.Resources(coins=10, workers=1, bridges=2, priests=4),
+        common.Resources(coins=10, workers=1, bridges=2, priests=4))
     self.assertNotEqual(
-        common.Resources(coins=10, workers=1, bridges=2, priests=4, power=10),
-        common.Resources(coins=10, workers=1, bridges=3, priests=4, power=10))
+        common.Resources(coins=10, workers=1, bridges=2, priests=4),
+        common.Resources(coins=10, workers=1, bridges=3, priests=4))
 
   def testAdditionOperator(self):
     self.assertEqual(
         common.Resources(workers=1) + common.Resources(workers=2, priests=4),
         common.Resources(workers=3, priests=4))
     self.assertEqual(
-        sum((common.Resources(workers=10), common.Resources(
-            worker=2, bridges=4))), common.Resources(workers=12, bridges=4))
+        sum((common.Resources(workers=10),
+             common.Resources(workers=2, bridges=4))),
+        common.Resources(workers=12, bridges=4))
     resources = common.Resources(workers=10)
-    resources += common.Resources(workers=1, power=4)
-    self.assertEqual(resources, common.Resources(workers=11, power=4))
+    resources += common.Resources(workers=1)
+    self.assertEqual(resources, common.Resources(workers=11))
 
   def testSubtraction(self):
     self.assertEqual(
         common.Resources(workers=1) - common.Resources(workers=1, priests=4),
         common.Resources(workers=0, priests=-4))
-    resources = common.Resources(workers=10, power=4)
+    resources = common.Resources(workers=10)
     resources -= common.Resources(workers=1)
-    self.assertEqual(resources, common.Resources(workers=9, power=4))
+    self.assertEqual(resources, common.Resources(workers=9))
 
 
 class TestIncome(unittest.TestCase):
@@ -98,19 +99,6 @@ class TestFavorTile(unittest.TestCase):
     self.assertEqual(common.FavorTile.WATER3.PlayerIncome(), common.Income())
     self.assertEqual(common.FavorTile.EARTH3.PlayerIncome(), common.Income())
     self.assertEqual(common.FavorTile.AIR3.PlayerIncome(), common.Income())
-
-
-class TestResources(unittest.TestCase):
-  def testValidation(self):
-    self.assertTrue(common.Resources().IsValid())
-    self.assertTrue(common.Resources(coins=1).IsValid())
-    self.assertFalse(common.Resources(coins=-1).IsValid())
-
-  def testForceValid(self):
-    invalidResources = common.Resources(coins=-1)
-    self.assertFalse(invalidResources.IsValid())
-    invalidResources.ForceValid()
-    self.assertTrue(invalidResources.IsValid())
 
 
 class TestStructureUpgrades(unittest.TestCase):
