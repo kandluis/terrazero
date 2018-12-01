@@ -3,6 +3,7 @@ import unittest
 from simulation.core import common
 from simulation.core import faction
 from simulation.core import player
+from simulation import utils
 
 
 class TestPlayer(unittest.TestCase):
@@ -245,3 +246,24 @@ class TestPlayer(unittest.TestCase):
         common.PowerBowl.II: 3,
         common.PowerBowl.III: 0
     })
+
+  def testBuildFailureIfCanNotBuild(self):
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
+    test_player.resources.workers = 2
+    # Cannot build a stronghold.
+    self.assertFalse(
+        test_player.CanBuild(
+            common.Structure.STRONGHOLD, adjacentEnemies=False))
+    with self.assertRaises(utils.InternalError):
+      test_player.Build(common.Structure.STRONGHOLD, adjacentEnemies=False)
+
+    # Alternatively, if we've already built it.
+    test_player.Build(
+        common.Structure.STRONGHOLD, adjacentEnemies=False, free=True)
+
+    self.assertFalse(
+        test_player.CanBuild(
+            common.Structure.STRONGHOLD, adjacentEnemies=False))
+    with self.assertRaises(utils.InternalError):
+      test_player.Build(common.Structure.STRONGHOLD, adjacentEnemies=False)
