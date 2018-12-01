@@ -81,6 +81,10 @@ class Player:
 
   def CanBuild(self, structure, adjacentEnemies) -> bool:
     """Asks if the player can possibly build this structure with his available resources"""
+    # Can't possible build if we don't have any such structures left
+    # on the board.
+    if self.structures[structure] <= 0:
+      return False
     cost: common.Resources = self.faction.StructureCost(
         structure, adjacentEnemies)
     remainingResources = self.resources - cost
@@ -94,21 +98,16 @@ class Player:
             free: bool = False) -> None:
     """Asks the player to build the specified structure.
     If free is true, this costs the player no resources"""
-    numAvailableOfStructure: int = self.structures[structure]
-    if numAvailableOfStructure < 1:
+    if not free and not self.CanBuild(structure, adjacentEnemies):
       raise utils.InternalError(
-          "Attempted to decrement structure %s [%s] for Player: %s" %
-          (structure, numAvailableOfStructure, self.name))
+          "Attempted to build %s which is impossible with current resources: %s and power: %s"
+          % (structure, self.resources, self.power))
     # Even though we haven't paid, we assume it's possible to build it.
     # It's invalid to call this function otherwise.
     self.structures[structure] -= 1
     self.built_structures[structure] += 1
     if free:
       return
-    if not self.CanBuild(structure, adjacentEnemies):
-      raise utils.InternalError(
-          "Attempted to build %s which is impossible with current resources: %s and power: %s"
-          % (structure, self.resources, self.power))
     cost: common.Resources = self.faction.StructureCost(
         structure, adjacentEnemies)
     self.resources -= cost
