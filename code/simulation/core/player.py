@@ -178,7 +178,7 @@ class Player:
     if any"""
     oldCard = self.bonus_card
     # NWe need to handle if we had a shipping card.
-    if oldCard is None and oldCard == common.BonusCard.POWER3_SHIPPING:
+    if oldCard is not None and oldCard == common.BonusCard.POWER3_SHIPPING:
       assert self.shipping > 0
       assert card != common.BonusCard.POWER3_SHIPPING
       self.shipping -= 1
