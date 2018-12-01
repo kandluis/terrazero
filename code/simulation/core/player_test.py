@@ -267,3 +267,44 @@ class TestPlayer(unittest.TestCase):
             common.Structure.STRONGHOLD, adjacentEnemies=False))
     with self.assertRaises(utils.InternalError):
       test_player.Build(common.Structure.STRONGHOLD, adjacentEnemies=False)
+
+  def testPlayerCollectIncomePhase(self):
+    # Halflings start with 3 workers and 15 coins, 3/9/0 power.
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
+    oldPower = test_player.power.copy()
+
+    # Player has not structures. Bonus card is manually set.
+    test_player.bonus_card = common.BonusCard.TRADING_POST_WORKER
+    test_player.CollectPhaseIIncome()
+    self.assertEqual(test_player.power, oldPower)
+    self.assertEqual(test_player.resources,
+                     common.Resources(workers=5, coins=15))
+
+    # Let player build dweling one of each, all for free.
+    test_player.Build(
+        common.Structure.DWELLING, adjacentEnemies=False, free=True)
+    test_player.Build(
+        common.Structure.TRADING_POST, adjacentEnemies=False, free=True)
+    test_player.Build(
+        common.Structure.STRONGHOLD, adjacentEnemies=False, free=True)
+    test_player.Build(
+        common.Structure.TEMPLE, adjacentEnemies=False, free=True)
+    test_player.Build(
+        common.Structure.SANCTUARY, adjacentEnemies=False, free=True)
+
+    # Collect income. Structures will provide 2 priest, 1 worker, 2 coins, 3 power.
+    # An additional 1 worker is provided by default.
+    # Bonus card provides additional 1 worker.
+    test_player.CollectPhaseIIncome()
+    self.assertEqual(test_player.resources,
+                     common.Resources(workers=8, priests=2, coins=17),
+                     "Player resources: %s" % test_player.resources)
+    self.assertEqual(test_player.power, {
+        common.PowerBowl.I: 0,
+        common.PowerBowl.II: 12,
+        common.PowerBowl.III: 0
+    })
+
+  def testPlayerCanUsePowerAndUsePower(self):
+    pass

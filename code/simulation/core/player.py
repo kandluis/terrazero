@@ -125,10 +125,10 @@ class Player:
     proposed_income += self.bonus_card.PlayerIncome()
     for favor_tile in self.favor_tiles:
       proposed_income += favor_tile.PlayerIncome()
-    self.resources += proposed_income
+    self.resources += proposed_income.resources
 
     # The number of priests that can be collected is bound.
-    self.resources.priests = max(self.resources.priests,
+    self.resources.priests = min(self.resources.priests,
                                  self.priests_still_in_play)
 
     # We now collect the power.

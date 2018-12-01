@@ -54,6 +54,33 @@ class TestIncome(unittest.TestCase):
     with self.assertRaises(utils.InternalError):
       common.Income().ForceValid()
 
+  def tesEqualityOperator(self):
+    self.assertEqual(
+        common.Income(coins=10, workers=1, bridges=2, priests=4, power=10),
+        common.Income(coins=10, workers=1, bridges=2, priests=4, power=10))
+    self.assertNotEqual(
+        common.Income(coins=10, workers=1, bridges=2, priests=4, power=4),
+        common.Income(coins=10, workers=1, bridges=2, priests=4, power=3))
+
+  def testAdditionOperator(self):
+    self.assertEqual(
+        common.Income(power=1) + common.Income(power=2, priests=4),
+        common.Income(power=3, priests=4))
+    self.assertEqual(
+        sum((common.Income(power=10), common.Income(power=2, bridges=4))),
+        common.Income(power=12, bridges=4))
+    income = common.Income(power=10)
+    income += common.Income(power=1)
+    self.assertEqual(income, common.Income(power=11))
+
+  def testSubtraction(self):
+    self.assertEqual(
+        common.Income(power=1) - common.Income(power=1, priests=4),
+        common.Income(power=0, priests=-4))
+    income = common.Income(power=10)
+    income -= common.Income(power=1)
+    self.assertEqual(income, common.Income(power=9))
+
 
 class TestBonusCard(unittest.TestCase):
   def testIncomeFromBonusCards(self):
@@ -66,15 +93,15 @@ class TestBonusCard(unittest.TestCase):
     self.assertEqual(common.BonusCard.POWER3_SHIPPING.PlayerIncome(),
                      common.Income(power=3))
     self.assertEqual(common.BonusCard.SPADE_COIN2.PlayerIncome(),
-                     common.Income())
+                     common.Income(coins=2))
     self.assertEqual(common.BonusCard.CULT_COIN4.PlayerIncome(),
-                     common.Income())
+                     common.Income(coins=4))
     self.assertEqual(common.BonusCard.DWELLING_COIN2.PlayerIncome(),
-                     common.Income())
+                     common.Income(coins=2))
     self.assertEqual(common.BonusCard.TRADING_POST_WORKER.PlayerIncome(),
-                     common.Income())
+                     common.Income(workers=1))
     self.assertEqual(common.BonusCard.STRONGHOLD_WORKER2.PlayerIncome(),
-                     common.Income())
+                     common.Income(workers=2))
 
 
 class TestFavorTile(unittest.TestCase):

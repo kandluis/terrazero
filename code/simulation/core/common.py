@@ -4,11 +4,9 @@ from typing import Any, NamedTuple, TypeVar
 
 from simulation import utils
 
-T = TypeVar('T', bound='Resources')
-
 
 class Resources:
-  def __init__(self: T,
+  def __init__(self: 'Resources',
                coins: int = 0,
                workers: int = 0,
                bridges: int = 0,
@@ -18,58 +16,58 @@ class Resources:
     self.bridges: int = bridges
     self.priests: int = priests
 
-  def IsValid(self: T) -> int:
+  def IsValid(self: 'Resources') -> int:
     return not (self.coins < 0 or self.workers < 0 or self.bridges < 0
                 or self.priests < 0)
 
-  def ForceValid(self: T) -> None:
+  def ForceValid(self: 'Resources') -> None:
     self.coins = max(0, self.coins)
     self.workers = max(0, self.workers)
     self.bridges = max(0, self.bridges)
     self.priests = max(0, self.priests)
 
-  def __eq__(self, other: Any) -> bool:
-    return (self.coins == other.coins and self.workers == other.workers
-            and self.priests == other.priests
+  def __eq__(self: 'Resources', other: Any) -> bool:
+    return (isinstance(other, Resources) and self.coins == other.coins
+            and self.workers == other.workers and self.priests == other.priests
             and self.bridges == other.bridges)
 
-  def __add__(self: T, other: T) -> Any:
+  def __add__(self: 'Resources', other: 'Resources') -> 'Resources':
     return Resources(
         coins=self.coins + other.coins,
         workers=self.workers + other.workers,
         bridges=self.bridges + other.bridges,
         priests=self.priests + other.priests)
 
-  def __radd__(self: T, other: Any) -> T:
+  def __radd__(self: 'Resources', other: 'Resources') -> 'Resources':
     if other == 0: return self
     return self.__add__(other)
 
-  def __iadd__(self: T, other: T) -> T:
+  def __iadd__(self: 'Resources', other: 'Resources') -> 'Resources':
     self.coins += other.coins
     self.workers += other.workers
     self.bridges += other.bridges
     self.priests += other.priests
     return self
 
-  def __sub__(self: T, other: T) -> Any:
+  def __sub__(self: 'Resources', other: 'Resources') -> 'Resources':
     return Resources(
         coins=self.coins - other.coins,
         workers=self.workers - other.workers,
         bridges=self.bridges - other.bridges,
         priests=self.priests - other.priests)
 
-  def __rsub__(self: T, other: Any) -> T:
+  def __rsub__(self: 'Resources', other: 'Resources') -> 'Resources':
     if other == 0: return self
     return self.__sub__(other)
 
-  def __isub__(self: T, other: T) -> T:
+  def __isub__(self: 'Resources', other: 'Resources') -> 'Resources':
     self.coins -= other.coins
     self.workers -= other.workers
     self.bridges -= other.bridges
     self.priests -= other.priests
     return self
 
-  def __str__(self: T) -> str:
+  def __str__(self: 'Resources') -> str:
     return """
     Coins: {coins}     Workers: {workers}   Priests: {priests}   Bridges: {bridges}
     """.format(
@@ -79,16 +77,57 @@ class Resources:
         bridges=self.bridges)
 
 
-class Income(Resources):
-  def __init__(self, power: int = 0, **kwargs):
-    super(Income, self).__init__(**kwargs)
+class Income:
+  def __init__(self: 'Income', power: int = 0, **kwargs):
+    self.resources = Resources(**kwargs)
     self.power = power
 
-  def IsValid(self) -> int:
+  def IsValid(self: 'Income') -> int:
     raise utils.InternalError("Income should not be used this way!")
 
-  def ForceValid(self) -> None:
+  def ForceValid(self: 'Income') -> None:
     raise utils.InternalError("Income should not be used this way!")
+
+  def __eq__(self, other: Any) -> bool:
+    return (isinstance(other, Income) and self.resources == other.resources
+            and self.power == other.power)
+
+  def __add__(self: 'Income', other: 'Income') -> 'Income':
+    newIncome = Income()
+    newIncome.resources = self.resources + other.resources
+    newIncome.power = self.power + other.power
+    return newIncome
+
+  def __radd__(self: 'Income', other: 'Income') -> 'Income':
+    if other == 0: return self
+    return self.__add__(other)
+
+  def __iadd__(self: 'Income', other: 'Income') -> 'Income':
+    self.resources += other.resources
+    self.power += other.power
+    return self
+
+  def __sub__(self: 'Income', other: 'Income') -> 'Income':
+    newIncome = Income()
+    newIncome.resources = self.resources - other.resources
+    newIncome.power = self.power - other.power
+    return newIncome
+
+  def __rsub__(self: 'Income', other: 'Income') -> 'Income':
+    if other == 0: return self
+    return self.__sub__(other)
+
+  def __isub__(self: 'Income', other: 'Income') -> 'Income':
+    self.resources -= other.resources
+    self.power -= other.power
+    return self
+
+  def __str__(self: 'Income') -> str:
+    return """
+    {resources}
+    Power: {power}
+    """.format(
+        resources=self.resources, power=self.power)
 
 
 @enum.unique
@@ -201,15 +240,15 @@ class BonusCard(enum.Enum):
     if self == BonusCard.POWER3_SHIPPING:
       return Income(power=3)
     if self == BonusCard.SPADE_COIN2:
-      return Income()
+      return Income(coins=2)
     if self == BonusCard.CULT_COIN4:
-      return Income()
+      return Income(coins=4)
     if self == BonusCard.DWELLING_COIN2:
-      return Income()
+      return Income(coins=2)
     if self == BonusCard.TRADING_POST_WORKER:
-      return Income()
+      return Income(workers=1)
     if self == BonusCard.STRONGHOLD_WORKER2:
-      return Income()
+      return Income(workers=2)
 
     raise utils.InternalError("FavorTile %s is not implemented!" % self)
 
@@ -247,6 +286,9 @@ class BonusCard(enum.Enum):
   def __str__(self) -> str:
     return "%s [%s]" % (super(BonusCard, self).__str__(),
                         self._GetHumanDescription())
+
+  def __repr__(self) -> str:
+    return self.__str__()
 
 
 @enum.unique
