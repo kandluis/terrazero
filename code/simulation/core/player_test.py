@@ -321,10 +321,11 @@ class TestPlayer(unittest.TestCase):
     # New income should be 4 worker, 1 priest, 18 coin, 0/11/1
     test_player.CollectPhaseIIncome()
     self.assertEqual(test_player.resources,
-                     common.Resources(workers=4, priests=1, coins=19))
+                     common.Resources(workers=4, priests=1, coins=18),
+                     "Player resources %s. " % test_player.resources)
     self.assertEqual(test_player.power, {
         common.PowerBowl.I: 0,
-        commom.PowerBowl.II: 11,
+        common.PowerBowl.II: 11,
         common.PowerBowl.III: 1
     })
 
