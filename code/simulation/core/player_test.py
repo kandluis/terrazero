@@ -153,3 +153,95 @@ class TestPlayer(unittest.TestCase):
     self.assertEqual(test_player.used_town_keys, {common.TownKey.CULT: True})
     self.assertFalse(test_player.UseTownKey())
     self.assertEqual(test_player.used_town_keys, {common.TownKey.CULT: True})
+
+  def testSacrificePriestToOrder(self):
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
+
+    test_player.SacrificePriestToOrder()
+    self.assertEqual(test_player.priests_still_in_play,
+                     player.Player.MAX_PRIESTS - 1)
+
+  def testPlayerCanBuild(self):
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
+
+    # Halflings start with 15 coins and 3 workers, as well as 9
+    # power in Bowl II and 3 power in Bowl I.
+
+    # They can afford dwellings.
+    self.assertTrue(
+        test_player.CanBuild(common.Structure.DWELLING, adjacentEnemies=True))
+    self.assertTrue(
+        test_player.CanBuild(common.Structure.DWELLING, adjacentEnemies=False))
+
+    # They can also afford TPs which are adjacent or not.
+    self.assertTrue(
+        test_player.CanBuild(
+            common.Structure.TRADING_POST, adjacentEnemies=True))
+    self.assertTrue(
+        test_player.CanBuild(
+            common.Structure.TRADING_POST, adjacentEnemies=False))
+
+    # They can afford temples.
+    self.assertTrue(
+        test_player.CanBuild(common.Structure.TEMPLE, adjacentEnemies=True))
+    self.assertTrue(
+        test_player.CanBuild(common.Structure.TEMPLE, adjacentEnemies=False))
+
+    # But not strongholds or santuaries, even by burning power, if they only
+    # have 2 workers.
+    test_player.resources.workers = 2
+    self.assertFalse(
+        test_player.CanBuild(common.Structure.SANCTUARY, adjacentEnemies=True))
+    self.assertFalse(
+        test_player.CanBuild(
+            common.Structure.SANCTUARY, adjacentEnemies=False))
+    self.assertFalse(
+        test_player.CanBuild(
+            common.Structure.STRONGHOLD, adjacentEnemies=True))
+    self.assertFalse(
+        test_player.CanBuild(
+            common.Structure.STRONGHOLD, adjacentEnemies=False))
+
+  def testPlayerBuildDwellings(self):
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
+    oldPower = test_player.power.copy()
+
+    # Halflings start with 15 coins and 3 workers, as well as 9
+    # power in Bowl II and 3 power in Bowl I.
+    test_player.Build(common.Structure.DWELLING, adjacentEnemies=True)
+    test_player.Build(common.Structure.DWELLING, adjacentEnemies=True)
+    # After building 2 dwellings, they should have 11 coin, 1 worker.
+    self.assertEqual(test_player.resources,
+                     common.Resources(coins=11, workers=1))
+    # And they did not burn any power.
+    self.assertEqual(test_player.power, oldPower)
+    # But they have two less Dwellings.
+    self.assertEqual(
+        test_player.structures[common.Structure.DWELLING],
+        faction.Faction.TOTAL_STRUCTURES[common.Structure.DWELLING] - 2)
+    self.assertEqual(test_player.built_structures[common.Structure.DWELLING],
+                     2)
+
+  def testPlayerBurnToBuild(self):
+    test_player = player.Player(
+        name="test", player_faction=faction.Halflings())
+
+    # Halflings start with 15 coins and 3 workers, as well as 9
+    # power in Bowl II and 3 power in Bowl I.
+    test_player.Build(common.Structure.TRADING_POST, adjacentEnemies=False)
+    # After building 1 TP (not adjacent), it costs 6 coins and 2 workers.
+    self.assertEqual(test_player.resources, common.Resources(
+        coins=9, workers=1))
+    # The next TP can be built that is adjacent, costs 3 coins and 2 workers.
+    # Player must burn 3 power to get the extra worker.
+    test_player.Build(common.Structure.TRADING_POST, adjacentEnemies=True)
+    self.assertEqual(test_player.resources, common.Resources(
+        coins=6, workers=0))
+    self.assertEqual(test_player.power, {
+        common.PowerBowl.I: 6,
+        common.PowerBowl.II: 3,
+        common.PowerBowl.III: 0
+    })
