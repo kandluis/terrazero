@@ -141,6 +141,41 @@ class TestPlayer(unittest.TestCase):
     })
     self.assertEqual(test_player.resources.coins, 17)
 
+  def testPlayerGainPowerButNoTokensLeft(self):
+    test_player = player.Player("test", player_faction=faction.Halflings())
+    # Manually set to only a single token left.
+    test_player.power = {
+        common.PowerBowl.I: 1,
+        common.PowerBowl.II: 0,
+        common.PowerBowl.III: 0
+    }
+    # Gain 2 power.
+    test_player.GainPower(2)
+    self.assertEqual(test_player.power, {
+        common.PowerBowl.I: 0,
+        common.PowerBowl.II: 0,
+        common.PowerBowl.III: 1
+    })
+
+    # Gain one more power. This should become a coin.
+    test_player.GainPower(1)
+    self.assertEqual(test_player.resources.coins, 16)
+    self.assertEqual(test_player.power, {
+        common.PowerBowl.I: 0,
+        common.PowerBowl.II: 1,
+        common.PowerBowl.III: 0
+    })
+
+    # Manually get rid of last power to see what happens when all power is burned (even though this is not possible in real game)
+    test_player.power = {
+        common.PowerBowl.I: 0,
+        common.PowerBowl.II: 0,
+        common.PowerBowl.III: 0
+    }
+    emptyPower = test_player.power.copy()
+    test_player.GainPower(2)
+    self.assertEqual(test_player.power, emptyPower)
+
   def testPlayerTownKeys(self):
     test_player = player.Player(
         name="test", player_faction=faction.Halflings())
