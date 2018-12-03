@@ -257,3 +257,9 @@ TSWLatexianTemp*
 # Ignore compiled python code.
 *.pyc
 *.anaconda
+
+# Ignore presentations.
+*.key
+
+# Ignore anything in poster/figures.
+poster/figures/*
