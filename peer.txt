@@ -1,0 +1,8 @@
+Prediction  using Machine Learning by Gang Wu
+I really liked Gang Wu's poster and presentation because it addresses an interesting, real-world problem that could help multiple people (real-estate price prediction). I also think their poster was well-laid out, with multiple graphics (for the model) as well as precise examples of what they did.
+
+Playing Ticket to Ride by Anna Revinskaya
+I particularly enjoyed Anna's poster because it is similar to my own project -- solving a complex, strategy board game using RL. The results also appeared promising, and I felt the poster was well laid-out.
+
+Interactive Machine Learning for Creating Audio Synthesis Mappings By Example by Jack Atherton
+The poster format was unique, and really caught my eye. Jack did a great job at visualizing his results, and I particularly enjoyed the linked YouTube videos!
