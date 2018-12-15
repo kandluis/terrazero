@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage[options]{algorithm2e}
 \usepackage[normalem]{ulem}
 \useunder{\uline}{\ul}{}
 
@@ -31,7 +32,7 @@ Stanford University\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-In this paper, we explore and compare multiple algorithms for solving the complex strategy game of Terra Mystica, thereafter abbreviated as TM. Previous work in the area of super-human game-play using AI has proven effective, with recent break-throughs for generic algorithms in games such as Go, Chess, and Shogi \cite{AlphaZero}. We directly apply these breakthroughs to a novel state-representation of TM with the goal of creating an AI that will rival human players. Specifically, we present initial results of applying AlphaZero to this state-representation, and analyze the strategies developed. A brief analysis is presented. We call this modified algorithm with our novel state-representaiton AlphaTM. In the end, we discuss the success and short-comings of this method by comparing against multiple baselines and typical human scores.
+In this paper, we explore and compare multiple algorithms for solving the complex strategy game of Terra Mystica, thereafter abbreviated as TM. Previous work in the area of super-human game-play using AI has proven effective, with recent break-through for generic algorithms in games such as Go, Chess, and Shogi \cite{AlphaZero}. We directly apply these breakthroughs to a novel state-representation of TM with the goal of creating an AI that will rival human players. Specifically, we present initial results of applying AlphaZero to this state-representation, and analyze the strategies developed. A brief analysis is presented. We call this modified algorithm with our novel state-representation AlphaTM. In the end, we discuss the success and short-comings of this method by comparing against multiple baselines and typical human scores.
 
 \end{abstract}
 
@@ -76,7 +77,7 @@ From the definition above, the main emphasis of our system is the task of taking
     \end{enumerate}
 \end{enumerate}
 
-The above is a brief summarization of the input to our algorithm. However, in general, the input to the algorithm is a complete definition of the game state at a particular turn. Note that Terra Mystica \textit{does not} have any dependencies in previous moves, and is completely Markovian. As such, modeling the game as an MDP is fully realizable, and is simply a question of incorporating all the features of the state.
+The above is a brief summary of the input to our algorithm. However, in general, the input to the algorithm is a complete definition of the game state at a particular turn. Note that Terra Mystica \textit{does not} have any dependencies in previous moves, and is completely Markovian. As such, modeling the game as an MDP is fully realizable, and is simply a question of incorporating all the features of the state.
 
 \subsection{Output and Evaluation Metrics}
 For a given state, the output of our algorithm will consist of an action which the player can take to continue to the next state of the game. Actions in TM are quite varied, and we do not fully enumerate them here. In general, however, there are eight possible actions:
@@ -126,12 +127,12 @@ We first introduce some of the TM-specific challenges our algorithm must overcom
 \begin{enumerate}
     \item Unlike the game of Go, the rules of TM are \textbf{not} translationally invariant. The rules of TM are position-dependent -- the most obvious way of seeing this is that each terrain-tile and patterns of terrains are different, making certain actions impossible from certain positions (or extremely costly). This is not particularly well-suited for the weight-sharing structure of Convolutional Neural Networks.
     \item Unlike the game of Go, the rules for TM are asymmetric. We can, again, trivially see this by noting that the board game board itself \ref{fig:TM_Board} has little symmetry.
-    \item The game-board is not easily quantizeable to exploit positional advantages. Unlike games where the AlphaZero algorithm has been previously applied (such as Go/Shogi/Chess), the TM map is not rectangular. In fact, each ``position'' has \textbf{6} neighbors, which is not easily representable in matrix form for CNNs.
+    \item The game-board is not easily quantized to exploit positional advantages. Unlike games where the AlphaZero algorithm has been previously applied (such as Go/Shogi/Chess), the TM map is not rectangular. In fact, each ``position'' has \textbf{6} neighbors, which is not easily representable in matrix form for CNNs.
     \item The action space is significantly more complex and hierarchical, with multiple possible ``mini''-games being played. Unlike other games where similar approaches have been applied, this action-space is extremely complex. To see this, we detail the action-spaces for other games below.
     \begin{enumerate}
         \item The initial DQN approach for Atari games had an output action space of dimension 18 (though some games had only 4 possible actions, the maximum number of actions was 18 and this was represented simply as a 18-dimensional vector representing a softmax
         probability distribution).
-        \item For Go, the output actions space was similary a $19\times19 + 1$ probability distribution over the locations on which to place a stone. 
+        \item For Go, the output actions space was similarly a $19\times19 + 1$ probability distribution over the locations on which to place a stone. 
         \item Even for Chess and Shogi, the action space similarly consisted of all legal destinations of all player's pieces on the board. While this is very expansive and more similar to what we expect for TM, TM nonetheless has additional complexity in that some actions are inherently hierarchical. You must first decide if you want to build, then decided \textbf{where} to build, and finally decide \textbf{what} to build. This involves defining an output actions-space which is significantly more complex than anything we've seen in the literature. For comparison, in \cite{AlphaZero} the output space consists of a stack of planes of $8\times 8 \times 73$. Each of the 64 positions identifies a piece to be moved, with the 73 associated layers identifying exactly \textit{how} the piece will be moved. As can be seen, this is essentially a two-level decision tree (select piece followed by selecting how to move the piece). In TM, the action-space is far more varied.
     \end{enumerate}
     \item The next challenge is that TM is not a binary win-lose situation, as is the case in Go. Instead, we must seek to maximize our score \textit{relative} to other players. Additionally, in TM, there is always the possibility of a tie. 
@@ -176,7 +177,22 @@ We end with a complete stack of dimension $9 \times 26 \times 24P$ to represent 
 
 \subsubsection{Putting it All Together}
 \label{subsubsection:final_input}
-Finally, we add $14$ layers to specify which of the $14$ possible factions the neural network should play as. This gives us an input representation of size $9 \times 26 \times (48P + 110)$. See Table \ref{table:input_size_comparison} which places this into context. In our case, this becomes $9 \times 26 \times 206$
+Finally, we add $14$ layers to specify which of the $14$ possible factions the neural network should play as. This gives us an input representation of size $9 \times 26 \times (48P + 110)$. See Table \ref{table:input_size_comparison} which places this into context. In our case, this becomes $9 \times 26 \times 206$.
+
+\begin{table}[h!]
+\begin{tabular}{|l|l|l|}
+\hline
+\textit{\textbf{Domain}} & \textbf{Input Dimensions} & \textbf{Total Size} \\ \hline
+\textbf{Atari 2600}      & 84 x 84 x 4               & 28,224              \\ \hline
+\textbf{Go}              & 19 x 19 x 17              & 6,137               \\ \hline
+\textbf{Chess}           & 8 x 8 x 119               & 7,616               \\ \hline
+\textbf{Shogi}           & 9 x 9 x 362               & 29,322              \\ \hline
+\textbf{Terra Mystica}   & 9 x 26 x 206              & 48,204              \\ \hline
+\textbf{ImageNet}        & 224x224x1                 & 50,176              \\ \hline
+\end{tabular}
+\caption{Comparison of input sizes for different domain of both games. For reference, typical CNN domain of ImageNet is also included.}
+\label{table:input_size_comparison}
+\end{table}
 
 \subsection{Action Space Representation}
 \label{section:action_space_representation}
@@ -187,7 +203,7 @@ In general, there are 8 possible actions in TM which are, generally speaking, qu
 \begin{enumerate}
     \item Terra Form and Build: This action consists of (1) selecting a location (2) selecting a terrain to terraform to (if any) and (3) optionally selecting to build.  We can represent this process as a vector of size $9 \times 13 \times (7\times 2)$. The $9 \times 13$ is selecting a location, while the first $7$ layers the probability of terraforming into one of the $7$ terrains and \textbf{not} building, and the last $7$ the probability of terraforming into each of the $7$ terrains and building.
     \item Advancing on the Shipping Track: The player may choose to advance on the shipping track. This consists of a single additional value encoding the probability of advancement.
-    \item: Lowering Spade Exchange Rate: The player may choose to advance on the spad track. This consists of a single additional value encoding the probability of choosing to advance on the spade track.
+    \item: Lowering Spade Exchange Rate: The player may choose to advance on the spade track. This consists of a single additional value encoding the probability of choosing to advance on the spade track.
     \item Upgrading a Structure: This action consists of (1) selecting a location, (2) selecting which structure to upgrade to. Depending on the location and existing structure, some actions may be illegal. We can represent this process as a vector of size $9 \times 13 \times 4$ specifying which location as well as the requested upgrade to the structure (DWELLING to TRADING POST, TRADING POST to STRONG HOLD, TRADING POST to TEMPLE, or TEMPLE to SANCTUARY).
     
     Note that when a structure is built, it's possible for the opponents to trade victory points for power. While this is an interesting aspect of the game, we ignore for our purposes and assume players will never chose to take additional power.
@@ -201,6 +217,21 @@ In general, there are 8 possible actions in TM which are, generally speaking, qu
 \subsubsection{Concluding Remarks for Action Space Representation}
 \label{subsubsection:concluding_remarks_for_action_space_representation}
 As described above, this leads to a relatively complex action-space representation. In fact, we'll end-up outputting a $9 \times 13 \times 18 + 4 \times 3 + 20 + 5 $ We summarize the action-space representation in Table \ref{table:output_size_comparison} and provide a few other methods fore reference.
+
+\begin{table}[h!]
+\begin{tabular}{|l|l|l|}
+\hline
+\textit{\textbf{Domain}} & \textbf{Input Dimensions} & \textbf{Total Size} \\ \hline
+\textbf{Atari 2600}      & 18 x 1               & 18              \\ \hline
+\textbf{Go}              & 19 x 19 + 1              & 362               \\ \hline
+\textbf{Chess}           & 8 x 8 x 73               & 4,672               \\ \hline
+\textbf{Shogi}           & 9 x 9 x 139               & 11,259              \\ \hline
+\textbf{Terra Mystica}   & 9 x 13 x 18 + 4x3 + 25 &   2,143            \\ \hline
+\textbf{ImageNet}        & 1000x1                 & 1000              \\ \hline
+\end{tabular}
+\caption{Comparison of action space sizes for different domain of both games. For ImageNet, we consider the class-distribution the actions-space}
+\label{table:output_size_comparison}
+\end{table}
 
 \subsection{Deep Q-Learning with MCTS Algorithm and Modifications}
 \label{subsection:deep_qlearning_with_mcts_algorithm_and_modifications}
@@ -218,31 +249,83 @@ The main modifications to the algorithm are mostly performed on the architecture
 \label{subsubection:overview_of_approach}
 We make use of a deep neural network (architecture described in Section \ref{subsubsection:neural_network_architecture}) $(\textbf{p}, \textbf{m}, v) = f_{\theta}(s)$ with parameters $\theta$, state-representations $s$, as described in Section \ref{subsection:input_representation}, output action-space $textbf{p}$, as described in Section \ref{section:action_space_representation}, additional action-information as $\textbf{m}$ as described in Section \ref{subsubsection:concluding_remarks_for_action_space_representation}, and a scalar value $v$ that estimates the expected output $z$ from position $s$ $v \approx \mathbb{E}[z \mid s]$. The values from this neural network are then used to guide MCTS, and the resulting move-probabilities and game output are used to iteratively update the weights for the network.
 
+\subsubsection{Monte Carlo Tree Search} 
+We provide a brief overview of the MCTS algorithm used. We assume some familiarity with how MCTS works. In general, there are three phases which need to be considered. For any given state $S_t$ which we call the root-state (this is the current state of gameplay), the algorithm simulates 800 iterations of gameplay. We note that AlphaGoZero \cite{AlphaGoZero} does 1600 iterations and AlphaZero does \cite{AlphaZero} also does 800.
+
+At each node, we perform a search until a leaf-node is found. A leaf-node is a game-state which has never-been encountered before. The search algorithm is relatively simple, as shown below and as illustrated in Figure \ref{fig:mcts-selection}. Note that the algorithm plays for the best possible move, with some bias given to moves with low-visit counts.
+
+\begin{verbatim}
+def Search(s):
+    if IsEnd(s): return R
+    if IsLeaf(s): return Expand(s)
+
+    while seen(S):
+        max_u, best_a = -INF, -1
+        for a in Actions(S) :
+            u = Q(s,a) + c*P(s,a)
+                *sqrt(visit_count(s)))
+                /(1+action_count(s,a))
+            if u>max_u:
+                max_u = u
+                best_a = a
+    s = Successor(s, best_a)
+    v = search(sp, game, nnet)
+\end{verbatim}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.09]{figures/mcts-selection.png}
+    \caption{Monte Carlo Tree Search: Selection Phase. During this phase, starting from the root node, the algorithm selects the optimal path until reaching an un-expanded leaf node. In the case above, we select left action, then the right action, reaching a new, un-expanded board state.}
+    \label{fig:mcts-selection}
+\end{figure}
+
+From above, we can see that as a sub-routing of search we have the `Expand` algorithm. The expansion algorithm is used to initialize non-terminal, unseen states of the game $S$ as follow.
+
+\begin{verbatim}
+def Expand(s):
+    v, p = NN(s)
+    InitializeCounts(s)
+    StoreP(s, p)
+    return v
+\end{verbatim}
+Where `InitializeCounts` simply initializes the counts for the new node (1 visit, 0 for each action). We also initialize all $Q(s,a) = 0$ and store the values predicted by our $NN$. Intuitively, we've now expanded the depth of our search tree, as illustrated in Figure \ref{fig:mcts-expansion}.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.09]{figures/mcts-expansion.png}
+    \caption{Monte Carlo Tree Search: Expansion Phase. During this phase, a leaf-node is ``expanded''. This is where the neural network comes in. At the leaf-node, we process the state $S_L$ to retrieve $p,v = f_{\theta}(S_L)$}, which is a vector of probabilities for the actions that are possible and a value function.
+    \label{fig:mcts-expansion}
+\end{figure}
+
+After the termination of the simulation (which ended either with an estimated $v$ by the NN or an actually $R$), we back-propagate the result by updating the corresponding $Q(s,a)$ values using the formula:
+$$
+Q(s,a) = V(Succ(s,a))
+$$
+This is outlined in Figure \ref{fig:mcts-backpropagation}.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.09]{figures/mcts-backpropagation.png}
+    \caption{Monte Carlo Tree Search: Back-propagation Phase. During this phase, we use the value $v$ estimated at the leaf-node and propagate this information back-up the tree (along the path-taken) to update the stored $Q(s,a)$ values.}
+    \label{fig:mcts-backpropagation}
+\end{figure}
+
+\subsubsection{Neural Network Training}
+The training can be summarized relatively straightforwardly. We batch $N$  (with $N = 128$) tuples $(s,p,v)$ and use this to train, with the loss presented in AlphaZero \cite{AlphaZero}. We use $c = 1$ to for our training. We perform back-propagation with this batch of data, and continue our games of self-play using the newly updated neural network. This is all performed synchronously.  
+
+
 \subsubsection{Neural Network Architecture}
 \label{subsubsection:neural_network_architecture}
-We first describe the architecture of our neural network. The input is a $9 \times 26 \times 206$ image stack as described in Section \ref{subsubsection:final_input}. Note that unlike other games, our representation includes no temporal-information ($T = 1$), both for computational efficiency and due to the fact that the game is fully encoded with the current state. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.09]{figures/architecture_2.png}
+    \caption{Detailed diagram of the multi-headed architecture explored for the game of Terra Mystica.}
+    \label{fig:architecture}
+\end{figure}
 
-The input features $s_t$ are processed by a residual tower which consists of a single convolutional block  followed by $19$ residual blocks, as per \cite{AlphaGoZero}. The first convolutional block consists of 256 filters of kernal size $3 \times 3$ with stride 1, batch normalization, and a ReLU non-linearity. 
+We first describe the architecture of our neural network. For brief overview, see Figure \ref{fig:architecture}. The input is a $9 \times 26 \times 206$ image stack as described in Section \ref{subsubsection:final_input}. Note that unlike other games, our representation includes no temporal-information ($T = 1$), both for computational efficiency and due to the fact that the game is fully encoded with the current state. 
 
-Each residual block applies the following modules, in sequence, to its input. A convolution of 256 filters of kernel size $3 \times 3$ with stride 1, batch-normalization, and a ReLU non-linearity, followed by a second convolution of 256 filters of kernel size $3 \times 3$ with stride $1$, and batch-normalization. The input is then added to this, a ReLu applied, and the final output taken as input for the next block. See Figure \ref{fig:input_architecture_diagram} for a reference.
-
-The output of the residual tower is passed into multiple separate 'heads' for computing the policy, value, and miscellaneous information. The heads in charge of computing the policy apply the following modules, which we guess at given that the AlphaZero Paper \cite{AlphaZero} does not discuss in detail how the heads are modified to handle the final values.
-
-For the policy, we have one head that applies a convolution of 64 filters with kernel size $2 \times 2$ with stride 2 along the horizontal direction, reducing our map to $9 \times 13 \times 64$. This convolution is followed by batch normalization, a ReLU non-linearity.
-
-We then split this head into two further heads. We then apply an FC layer which outputs a vector of $9 \times 13 \times 18 + 32$ which we interpret as discussed in Section \ref{section:action_space_representation}, representing the mutally exclusive possible actions that a player can take.
-
-For the second part, we apply a further convolution with 1 filter of size $1 \times 1$, reducing our input to $9 \times 13 \time 1$. This is followed by a batch-normalization layer followed by a ReLU. We then apply a FC layer further producing a probability distribution over a $5 \times 1$ vector.
-
-
-For the value head, we apply a convolution of $32$ filters of kernel size $1 \times 1$ with stride $1$ to the, followed by batch normalization and a ReLU unit. We follow this with an FC to 264 units, a ReLU, another FC to a scalar, and a tanh nonlinearity to output a scalar in the range $[-1, 1]$.
-
-\section{Experimental Results}
-Given the complexity of the problem we're facing, the majority of the work has been spent developing the reinforcement learning pipeline with an implementation of MCTS. For reference, we present the results we've achieved with approximately $2$ days of training on our local GPU. We note that the score achieved by our AI is significantly worse than that achieved from our baseline AIs. See Table \ref{table:average_2p_score_our_ai} for overview of our results in the two factions described previously.
-
-\section{Appendices}
-% This section is optional. Include additional derivations of proofs which weren’t core to the understanding of your proposed algorithm. Usually you put equations here when you don't want to disrupt the flow of the main paper.
-%Optional. More details to be added later.
+The input features $s_t$ are processed by a residual tower which consists of a single convolution block  followed by $19$ residual blocks, as per \cite{AlphaGoZero}. The first convolution block consists of 256 filters of kernel size $3 \times 3$ with stride 1, batch normalization, and a ReLU non-linearity. 
 
 \begin{figure}[h!]
     \centering
@@ -251,72 +334,95 @@ Given the complexity of the problem we're facing, the majority of the work has b
     \label{fig:input_architecture_diagram}
 \end{figure}
 
-\begin{table}[h!]
-\begin{tabular}{|l|l|l|}
-\hline
-\textit{\textbf{Domain}} & \textbf{Input Dimensions} & \textbf{Total Size} \\ \hline
-\textbf{Atari 2600}      & 84 x 84 x 4               & 28,224              \\ \hline
-\textbf{Go}              & 19 x 19 x 17              & 6,137               \\ \hline
-\textbf{Chess}           & 8 x 8 x 119               & 7,616               \\ \hline
-\textbf{Shogi}           & 9 x 9 x 362               & 29,322              \\ \hline
-\textbf{Terra Mystica}   & 9 x 26 x 206              & 48,204              \\ \hline
-\textbf{ImageNet}        & 224x224x1                 & 50,176              \\ \hline
-\end{tabular}
-\caption{Comparison of input sizes for different domain of both games. For reference, typical CNN domain of ImageNet is also included.}
-\label{table:input_size_comparison}
-\end{table}
+Each residual block applies the following modules, in sequence, to its input. A convolution of 256 filters of kernel size $3 \times 3$ with stride 1, batch-normalization, and a ReLU non-linearity, followed by a second convolution of 256 filters of kernel size $3 \times 3$ with stride $1$, and batch-normalization. The input is then added to this, a ReLu applied, and the final output taken as input for the next block. See Figure \ref{fig:input_architecture_diagram} for a reference.
+
+The output of the residual tower is passed into multiple separate 'heads' for computing the policy, value, and miscellaneous information. The heads in charge of computing the policy apply the following modules, which we guess at given that the AlphaZero Paper \cite{AlphaZero} does not discuss in detail how the heads are modified to handle the final values. See Figure \ref{fig:multi_head_architecture} for an overview diagram.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.09]{figures/mutli-head-architecture.png}
+    \caption{Details on multi-headed architecture for Neural Network. The final output state of the residual tower is fed into two paths. (1) On the left is the  policy network. (2) On the right is the value estimator. The policy network is further split into two, for computing two disjoint distributions over the action space, each normalized independently.}
+    \label{fig:multi_head_architecture}
+\end{figure}
+
+For the policy, we have one head that applies a convolution of 64 filters with kernel size $2 \times 2$ with stride 2 along the horizontal direction, reducing our map to $9 \times 13 \times 64$. This convolution is followed by batch normalization, a ReLU non-linearity.
+
+We then split this head into two further heads. We then apply an FC layer which outputs a vector of $9 \times 13 \times 18 + 32$ which we interpret as discussed in Section \ref{section:action_space_representation}, representing the mutually exclusive possible actions that a player can take.
+
+For the second part, we apply a further convolution with 1 filter of size $1 \times 1$, reducing our input to $9 \times 13 \time 1$. This is followed by a batch-normalization layer followed by a ReLU. We then apply a FC layer further producing a probability distribution over a $5 \times 1$ vector.
+
+
+For the value head, we apply a convolution of $32$ filters of kernel size $1 \times 1$ with stride $1$ to the, followed by batch normalization and a ReLU unit. We follow this with an FC to 264 units, a ReLU, another FC to a scalar, and a tanh-nonlinearity to output a scalar in the range $[-1, 1]$.
+
+\section{Experimental Results}
+Given the complexity of the problem we're facing, the majority of the work has been spent developing the reinforcement learning pipeline with an implementation of MCTS. The pipeline appears to not train well, even after multiple games of self-play.
+
+\subsection{Baselines}
+For the base-lines, we compare the final scores achieved by existing AI agents. We see their results in Table \ref{table:average_2p_score}. The results demonstrate that current AIs are fairly capable at scoring highly during games of self-play.
+
 
 \begin{table}[h!]
 \begin{tabular}{|l|l|l|}
 \hline
-\textit{\textbf{Domain}} & \textbf{Input Dimensions} & \textbf{Total Size} \\ \hline
-\textbf{Atari 2600}      & 18 x 1               & 18              \\ \hline
-\textbf{Go}              & 19 x 19 + 1              & 362               \\ \hline
-\textbf{Chess}           & 8 x 8 x 73               & 4,672               \\ \hline
-\textbf{Shogi}           & 9 x 9 x 139               & 11,259              \\ \hline
-\textbf{Terra Mystica}   & 9 x 13 x 18 + 4x3 + 25 &   2,143            \\ \hline
-\textbf{ImageNet}        & 1000x1                 & 1000              \\ \hline
+\multicolumn{3}{|c|}{{\ul \textbf{Simulated Self-Play Average Scores - AI}}}      \\ \hline
+\textbf{Faction} & \textbf{Average Score} & \textbf{Sampled Games} \\ \hline
+Halfing          & 92.21                 & 1000                   \\ \hline
+Engineers        & 77.12                 & 1000                   \\ \hline
 \end{tabular}
-\caption{Comparison of action space sizes for different domain of both games. For ImageNet, we consider the class-distribution the actions-space}
-\label{table:output_size_comparison}
+\caption{Self-play easy AI agent: AI\_Level5 from \cite{TMStatsAI}}
+\label{table:average_2p_score_ai}
 \end{table}
 
+\subsection{Oracle}
+A second comparison, showing in Table \ref{table:average_2p_score}, demonstrates the skill we would expect to achieve. These are the average scores of the best human players, averaged over online data.
 
 \begin{table}[h!]
 \begin{tabular}{|l|l|l|}
 \hline
 \multicolumn{3}{|c|}{{\ul \textbf{Average Human Score (2p)}}}      \\ \hline
 \textbf{Faction} & \textbf{Average Score} & \textbf{Sampled Games} \\ \hline
-Halfing          & 133.32                 & 2227                   \\ \hline
+Halfling          & 133.32                 & 2227                   \\ \hline
 Engineers        & 127.72                 & 1543                   \\ \hline
 \end{tabular}
 \caption{Average human scores by faction for a two-player TM games online.}
 \label{table:average_2p_score}
 \end{table}
 
-\begin{table}[h!]
-\begin{tabular}{|l|l|l|}
-\hline
-\multicolumn{3}{|c|}{{\ul \textbf{Simulated Self-Play Average Scores}}}      \\ \hline
-\textbf{Faction} & \textbf{Average Score} & \textbf{Sampled Games} \\ \hline
-Halfing          & 92.21                 & 1000                   \\ \hline
-Engineers        & 77.12                 & 1000                   \\ \hline
-\end{tabular}
-\caption{Self-play easy AI agent: AI\_Level5 from \cite{TMStatsAI}}
-\label{table:average_2p_score}
-\end{table}
+\subsection{AlphaTM}
+The results for AlphaTM are presented below. Training appears to not have taken place, at least not with the architecture and number of iterations which we executed. The AI still appears to play randomly, specially at later, and more crucial, stages of the game. See Table \ref{table:average_2p_score_our_ai}.
 
 \begin{table}[h!]
 \begin{tabular}{|l|l|l|l|}
 \hline
-\multicolumn{3}{|c|}{{\ul \textbf{Simulated Self-Play Average Scores}}}      \\ \hline
+\multicolumn{3}{|c|}{{\ul \textbf{Simulated Self-Play Average Scores - AlphaTM}}}      \\ \hline
 \textbf{Faction} & \textbf{Average Score\footnote{Over Final 1000 Games of Self-Play}} & \textbf{Training Iterations} \\ \hline
 Halfing          & 32.11                 & 10,000                   \\ \hline
 Engineers        & 34.12                 & 10,000                 \\ \hline
 \end{tabular}
 \caption{Our Self-Play AI after 10,000 training iterations, with average score over final 1000 games.}
-\label{table:average_2p_score_our_ai}
+\label{table:average_2p_score_alpha_tm}
 \end{table}
+
+Overall, we summarize:
+\begin{itemize}
+    \item The AI plays poorly in early stages of the game, though it seems to learn to build structures adjacent to other players.
+    \item As the game progresses, the actions of the agent are indistinguishable from random. A cursory analysis of $\pi$ reveals these states are basically random. It appears that the AI is not learning to generalize, or has simple not played sufficient games.
+\end{itemize}
+
+\section{Future Work}
+Given the poor results from the experiments above, many avenues exists for future work. In particular, we propose a few extensions to the above approach below.
+
+\subsection{Generalizing to Multi-Player Game}
+In the general context, the reinforcement learning pipeline that performed the best (with some semblance of learning) is the one where the game was presented as a zero-sum two-player game explicitly (I win, you lose). While the neural network architecture presented can readily generalize to more players, the theory behind the learning algorithm will no-longer hold. The game is no longer zero-sum.
+
+\subsection{New Architectures and Improvements} 
+Another area of future work is experimenting with further architectures and general improvement, with possible hyper parameter tuning.
+
+
+\section{Appendices}
+% This section is optional. Include additional derivations of proofs which weren’t core to the understanding of your proposed algorithm. Usually you put equations here when you don't want to disrupt the flow of the main paper.
+%Optional. More details to be added later.
+
 
 \begin{figure}[h!]
     \centering
@@ -327,16 +433,17 @@ Engineers        & 34.12                 & 10,000                 \\ \hline
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.6]{../figures/terra-mystica-cult}
+    \includegraphics[scale=0.8]{../figures/terra-mystica-cult}
     \caption{The Terra Mystica Cult Track}
     \label{fig:TM_Cult_Track}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.25]{../figures/image_tm}
+    \includegraphics[scale=0.20]{../figures/image_tm}
     \caption{The Terra Mystica Board Representation}
     \label{fig:TM_Board_Representation}
 \end{figure}
+
 
 \end{document}
