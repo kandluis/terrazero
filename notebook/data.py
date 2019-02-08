@@ -5,10 +5,7 @@ import argparse
 import datetime
 import json
 import requests
-try:
-  import _pickle as pickle
-except:
-  import pickle
+import pickle
 
 from dateutil import relativedelta
 from urllib import request
@@ -109,14 +106,14 @@ def fetchAllGameSetences(detailsLocal: bool = False,
     """
   OLDEST_DATE = datetime.datetime(year=2013, month=1, day=15)
   NEWEST_DATE = datetime.datetime.now()
-  data = fetchAllSummaryData(
+  data: List[Game] = fetchAllSummaryData(
       OLDEST_DATE,
       NEWEST_DATE,
       keepPredicate=keepHighScoringGames,
       maxGames=20000,
       local=summaryLocal)
-  sentences = []
-  if not detailsLocals:
+  sentences: List[Text] = []
+  if not detailsLocal:
     for i, game in enumerate(data):
       sentence = downloadLogForGameAsSentence(game)
       sentences.append(sentence)
@@ -125,10 +122,10 @@ def fetchAllGameSetences(detailsLocal: bool = False,
                   'wb') as f:
           pickle.dump(sentences, f)
         del sentences
-        senteces = []
+        senteces: List[Text] = []
   # Load it from disk.
-  text = ""
-  for i, game in range(0, len(data), saveEvery):
+  text: Text = ""
+  for i in range(0, len(data), saveEvery):
     with open('snellman/sentences-%s-of-%s.pkl' % (i, len(data)), 'rb') as f:
       text += "\n".join(pickle.load(f))
   return text
