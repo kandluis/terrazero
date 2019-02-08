@@ -6,11 +6,10 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage[options]{algorithm2e}
 \usepackage[normalem]{ulem}
 \useunder{\uline}{\ul}{}
 
-\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+\usepackage[pagebackref=true,breaklinks=true,colorlinks,bookmarks=false]{hyperref}
 
 \cvprfinalcopy
 
@@ -179,7 +178,7 @@ We end with a complete stack of dimension $9 \times 26 \times 24P$ to represent 
 \label{subsubsection:final_input}
 Finally, we add $14$ layers to specify which of the $14$ possible factions the neural network should play as. This gives us an input representation of size $9 \times 26 \times (48P + 110)$. See Table \ref{table:input_size_comparison} which places this into context. In our case, this becomes $9 \times 26 \times 206$.
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \begin{tabular}{|l|l|l|}
 \hline
 \textit{\textbf{Domain}} & \textbf{Input Dimensions} & \textbf{Total Size} \\ \hline
@@ -218,7 +217,7 @@ In general, there are 8 possible actions in TM which are, generally speaking, qu
 \label{subsubsection:concluding_remarks_for_action_space_representation}
 As described above, this leads to a relatively complex action-space representation. In fact, we'll end-up outputting a $9 \times 13 \times 18 + 4 \times 3 + 20 + 5 $ We summarize the action-space representation in Table \ref{table:output_size_comparison} and provide a few other methods fore reference.
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \begin{tabular}{|l|l|l|}
 \hline
 \textit{\textbf{Domain}} & \textbf{Input Dimensions} & \textbf{Total Size} \\ \hline
@@ -274,7 +273,7 @@ def Search(s):
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.09]{figures/mcts-selection.png}
+    \includegraphics[scale=0.09]{../figures/mcts-selection.png}
     \caption{Monte Carlo Tree Search: Selection Phase. During this phase, starting from the root node, the algorithm selects the optimal path until reaching an un-expanded leaf node. In the case above, we select left action, then the right action, reaching a new, un-expanded board state.}
     \label{fig:mcts-selection}
 \end{figure}
@@ -292,7 +291,7 @@ Where `InitializeCounts` simply initializes the counts for the new node (1 visit
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.09]{figures/mcts-expansion.png}
+    \includegraphics[scale=0.09]{../figures/mcts-expansion.png}
     \caption{Monte Carlo Tree Search: Expansion Phase. During this phase, a leaf-node is ``expanded''. This is where the neural network comes in. At the leaf-node, we process the state $S_L$ to retrieve $p,v = f_{\theta}(S_L)$}, which is a vector of probabilities for the actions that are possible and a value function.
     \label{fig:mcts-expansion}
 \end{figure}
@@ -305,7 +304,7 @@ This is outlined in Figure \ref{fig:mcts-backpropagation}.
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.09]{figures/mcts-backpropagation.png}
+    \includegraphics[scale=0.09]{../figures/mcts-backpropagation.png}
     \caption{Monte Carlo Tree Search: Back-propagation Phase. During this phase, we use the value $v$ estimated at the leaf-node and propagate this information back-up the tree (along the path-taken) to update the stored $Q(s,a)$ values.}
     \label{fig:mcts-backpropagation}
 \end{figure}
@@ -316,9 +315,9 @@ The training can be summarized relatively straightforwardly. We batch $N$  (with
 
 \subsubsection{Neural Network Architecture}
 \label{subsubsection:neural_network_architecture}
-\begin{figure}[h!]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[scale=0.09]{figures/architecture_2.png}
+    \includegraphics[scale=0.09]{../figures/architecture_2.png}
     \caption{Detailed diagram of the multi-headed architecture explored for the game of Terra Mystica.}
     \label{fig:architecture}
 \end{figure}
@@ -327,7 +326,7 @@ We first describe the architecture of our neural network. For brief overview, se
 
 The input features $s_t$ are processed by a residual tower which consists of a single convolution block  followed by $19$ residual blocks, as per \cite{AlphaGoZero}. The first convolution block consists of 256 filters of kernel size $3 \times 3$ with stride 1, batch normalization, and a ReLU non-linearity. 
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
     \centering
     \includegraphics[scale=0.3]{../figures/architecture}
     \caption{Architecture Diagram for shared processing of the state space features. An initial convolution block is used to standardize the number of features, which is then followed by 18 residual blocks.}
@@ -338,9 +337,9 @@ Each residual block applies the following modules, in sequence, to its input. A 
 
 The output of the residual tower is passed into multiple separate 'heads' for computing the policy, value, and miscellaneous information. The heads in charge of computing the policy apply the following modules, which we guess at given that the AlphaZero Paper \cite{AlphaZero} does not discuss in detail how the heads are modified to handle the final values. See Figure \ref{fig:multi_head_architecture} for an overview diagram.
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[scale=0.09]{figures/mutli-head-architecture.png}
+    \includegraphics[scale=0.09]{../figures/mutli-head-architecture.png}
     \caption{Details on multi-headed architecture for Neural Network. The final output state of the residual tower is fed into two paths. (1) On the left is the  policy network. (2) On the right is the value estimator. The policy network is further split into two, for computing two disjoint distributions over the action space, each normalized independently.}
     \label{fig:multi_head_architecture}
 \end{figure}
@@ -361,7 +360,7 @@ Given the complexity of the problem we're facing, the majority of the work has b
 For the base-lines, we compare the final scores achieved by existing AI agents. We see their results in Table \ref{table:average_2p_score}. The results demonstrate that current AIs are fairly capable at scoring highly during games of self-play.
 
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \begin{tabular}{|l|l|l|}
 \hline
 \multicolumn{3}{|c|}{{\ul \textbf{Simulated Self-Play Average Scores - AI}}}      \\ \hline
@@ -376,7 +375,7 @@ Engineers        & 77.12                 & 1000                   \\ \hline
 \subsection{Oracle}
 A second comparison, showing in Table \ref{table:average_2p_score}, demonstrates the skill we would expect to achieve. These are the average scores of the best human players, averaged over online data.
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \begin{tabular}{|l|l|l|}
 \hline
 \multicolumn{3}{|c|}{{\ul \textbf{Average Human Score (2p)}}}      \\ \hline
@@ -389,9 +388,10 @@ Engineers        & 127.72                 & 1543                   \\ \hline
 \end{table}
 
 \subsection{AlphaTM}
-The results for AlphaTM are presented below. Training appears to not have taken place, at least not with the architecture and number of iterations which we executed. The AI still appears to play randomly, specially at later, and more crucial, stages of the game. See Table \ref{table:average_2p_score_our_ai}.
+The results for AlphaTM are presented below. Training appears to not have taken place, at least not with the architecture and number of iterations which we executed. The AI still appears to play randomly, specially at later, and more crucial, stages of the game. See Table \ref{table:average_2p_score_alpha_tm}.
 
-\begin{table}[h!]
+
+\begin{table}[!ht]
 \begin{tabular}{|l|l|l|l|}
 \hline
 \multicolumn{3}{|c|}{{\ul \textbf{Simulated Self-Play Average Scores - AlphaTM}}}      \\ \hline
@@ -424,26 +424,30 @@ Another area of future work is experimenting with further architectures and gene
 %Optional. More details to be added later.
 
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
     \centering
     \includegraphics[scale=0.2]{../figures/tm_board}
     \caption{The Terra Mystica Game Board and Its Representation}
     \label{fig:TM_Board}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
     \centering
     \includegraphics[scale=0.8]{../figures/terra-mystica-cult}
     \caption{The Terra Mystica Cult Track}
     \label{fig:TM_Cult_Track}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
     \centering
     \includegraphics[scale=0.20]{../figures/image_tm}
     \caption{The Terra Mystica Board Representation}
     \label{fig:TM_Board_Representation}
 \end{figure}
 
+{\small
+\bibliographystyle{../common/ieee}
+\bibliography{../common/egbib}
+}
 
 \end{document}
