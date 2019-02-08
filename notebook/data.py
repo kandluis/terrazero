@@ -87,7 +87,7 @@ def fetchAllSummaryData(minDate: datetime.datetime,
     del data
     maxDate -= relativedelta.relativedelta(months=1)
     print("Collected %s games from %s." % (len(results),
-                                           address if local else filename))
+                                           address if not local else filename))
   return results
 
 
