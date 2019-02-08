@@ -9,6 +9,7 @@ import pickle
 
 from dateutil import relativedelta
 from urllib import request
+from urllib import error
 
 from typing import List, Text, Callable, Optional
 
@@ -62,7 +63,7 @@ def fetchAllSummaryData(minDate: datetime.datetime,
       try:
         with request.urlopen(address) as site:
           data = json.loads(site.read().decode())
-      except:
+      except error.URLError:
         print("Cannot download data for data %s" % (maxDate.strftime("%Y-%m")))
         maxDate -= relativedelta.relativedelta(months=1)
         continue
@@ -73,7 +74,7 @@ def fetchAllSummaryData(minDate: datetime.datetime,
       try:
         with open(filename, 'rb') as f:
           data = pickle.load(f)
-      except:
+      except FileNotFoundError:
         print("Could not unpickle from filename %s" % (filename))
         maxDate -= relativedelta.relativedelta(months=1)
         continue
