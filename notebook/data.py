@@ -75,6 +75,7 @@ def fetchAllSummaryData(minDate: datetime.datetime,
           data = pickle.load(f)
       except:
         print("Could not unpickle from filename %s" % (filename))
+        maxDate -= relativedelta.relativedelta(months=1)
         continue
 
     prevNGames = len(results)
