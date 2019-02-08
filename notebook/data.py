@@ -97,7 +97,6 @@ def keepHighScoringGames(game: Game) -> bool:
 
 def downloadLogForGameAsSentence(game: Game) -> Text:
   kBaseUrl = "https://terra.snellman.net/app/view-game/"
-  print("Downloading game: %s" % game.game_id)
   res = requests.post(kBaseUrl, data={'game': game.game_id})
   data = json.loads(res.content)
   commands = [
@@ -124,15 +123,21 @@ def fetchAllGameSetences(detailsLocal: bool = False,
       local=summaryLocal)
   sentences: List[Text] = []
   if not detailsLocal:
-    for i, game in enumerate(data):
-      sentence = downloadLogForGameAsSentence(game)
-      sentences.append(sentence)
-      if i + 1 % saveEvery == 0:
-        with open('snellman/sentences-%s-of-%s.pkl' % (i, len(data)),
-                  'wb') as f:
-          pickle.dump(sentences, f)
-        del sentences
-        senteces: List[Text] = []
+    try:
+      for i, game in enumerate(data):
+        print("Downloading game %s: %s" % (i, game.game_id))
+        sentence = downloadLogForGameAsSentence(game)
+        sentences.append(sentence)
+        if i + 1 % saveEvery == 0:
+          with open('snellman/sentences-%s-of-%s.pkl' % (i, len(data)),
+                    'wb') as f:
+            pickle.dump(sentences, f)
+          del sentences
+          senteces: List[Text] = []
+    finally:
+      with open("snellman/sentences-partial-%s-of-%s.pkl", 'wb'):
+        pickle.dump(sentences, f)
+
   # Load it from disk.
   text: Text = ""
   for i in range(0, len(data), saveEvery):
