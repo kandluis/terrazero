@@ -4,14 +4,15 @@
 import argparse
 import datetime
 import json
-import requests
+import os
 import pickle
+import requests
 
 from dateutil import relativedelta
 from urllib import request
 from urllib import error
 
-from typing import List, Text, Callable, Optional
+from typing import Callable, Dict, List, Optional, Text, Tuple
 
 
 class Game:
@@ -112,7 +113,7 @@ def parseShardedFilename(filename: Text) -> Tuple[int, int]:
   prefix: Text = filename.split(".")[0]
   parts: List[Text] = prefix.split("-")
   totalShards = int(parts[-1])
-  shardNumber = int(parts(-3))
+  shardNumber = int(parts[-3])
   return (shardNumber, totalShards)
 
 
@@ -159,7 +160,7 @@ def fetchAllGameSetences(detailsLocal: bool = False,
         else:
           maxFileInFileSet[totalShards] = filename
     filenameToLoad: Text = maxFileInFileSet[max(maxFileInFileSet.keys())]
-    with open(os.path.join(dirpath, filename)) as f:
+    with open(os.path.join(dirpath, filename), 'rb') as f:
       sentences = pickle.load(f)
   return "\n".join(sentences)
 
