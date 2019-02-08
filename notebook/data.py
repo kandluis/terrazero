@@ -114,7 +114,7 @@ def fetchAllGameSetences(detailsLocal: bool = False,
       NEWEST_DATE,
       keepPredicate=keepHighScoringGames,
       maxGames=20000,
-      local=local)
+      local=summaryLocal)
   sentences = []
   if not detailsLocals:
     for i, game in enumerate(data):
@@ -137,11 +137,11 @@ def fetchAllGameSetences(detailsLocal: bool = False,
 def setUpParser() -> argparse.ArgumentParser:
   parser = argparse.ArgumentParser(description='Download TM game data.')
   parser.add_argument(
-      'saveEvery',
+      '--saveEvery',
       type=int,
       help='How often to save the details if downloading, or how often they '
       'were saved if already downloaded and loading from disk.',
-      defautl=1000)
+      default=1000)
   parser.add_argument(
       '--detailsLocal', dest='detailsLocal', action='store_true')
   parser.add_argument(
