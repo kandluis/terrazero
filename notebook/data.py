@@ -63,14 +63,20 @@ def fetchAllSummaryData(minDate: datetime.datetime,
         with request.urlopen(address) as site:
           data = json.loads(site.read().decode())
       except:
+        print("Cannot download data for data %s" % (maxDate.strftime("%Y-%m")))
         maxDate -= relativedelta.relativedelta(months=1)
         continue
       with open("snellman/summary-%s.pkl" % (maxDate.strftime("%Y-%m")),
                 'wb') as f:
         pickle.dump(data, f)
     else:
-      with open(filename, 'rb') as f:
-        data = pickle.load(f)
+      try:
+        with open(filename, 'rb') as f:
+          data = pickle.load(f)
+      except:
+        print("Could not unpickle from filename %s" % (filename))
+        continue
+
     prevNGames = len(results)
     for obj in data:
       game = Game(obj)
