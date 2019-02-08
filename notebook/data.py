@@ -108,6 +108,14 @@ def downloadLogForGameAsSentence(game: Game) -> Text:
   return gameSentence
 
 
+def parseShardedFilename(filename: Text) -> Tuple[int, int]:
+  prefix: Text = filename.split(".")[0]
+  parts: List[Text] = prefix.split("-")
+  totalShards = int(parts[-1])
+  shardNumber = int(parts(-3))
+  return (shardNumber, totalShards)
+
+
 def fetchAllGameSetences(detailsLocal: bool = False,
                          summaryLocal: bool = False,
                          saveEvery: int = 1000) -> Text:
@@ -129,21 +137,31 @@ def fetchAllGameSetences(detailsLocal: bool = False,
         sentence = downloadLogForGameAsSentence(game)
         sentences.append(sentence)
         if (i + 1) % saveEvery == 0:
-          with open('snellman/sentences-%s-of-%s.pkl' % (i, len(data)),
-                    'wb') as f:
+          filename: Text = 'snellman/sentences-%s-of-%s.pkl' % (i, len(data))
+          print("Saving to %s" % filename)
+          with open(filename, 'wb') as f:
             pickle.dump(sentences, f)
-          del sentences
-          senteces: List[Text] = []
     finally:
-      with open("snellman/sentences-partial-%s-of-%s.pkl", 'wb') as f:
+      filename = "snellman/sentences-%s-of-%s.pkl" % (i, len(data))
+      print("Dumpting to %s " % filename)
+      with open(filename, 'wb') as f:
         pickle.dump(sentences, f)
-
-  # Load it from disk.
-  text: Text = ""
-  for i in range(0, len(data), saveEvery):
-    with open('snellman/sentences-%s-of-%s.pkl' % (i, len(data)), 'rb') as f:
-      text += "\n".join(pickle.load(f))
-  return text
+  # Try to load from disk.
+  else:
+    for (dirpath, dirnames, filenames) in os.walk("snellman"):
+      maxFileInFileSet: Dict[int, Text] = {}
+      for filename in filenames:
+        nShard, totalShards = parseShardedFilename(filename)
+        if totalShards in maxFileInFileSet:
+          nPrevShards, _ = parseShardedFilename(maxFileInFileSet[totalShards])
+          if nPrevShards < nShard:
+            maxFileInFileSet[totalShards] = filename
+        else:
+          maxFileInFileSet[totalShards] = filename
+    filenameToLoad: Text = maxFileInFileSet[max(maxFileInFileSet.keys())]
+    with open(os.path.join(dirpath, filename)) as f:
+      sentences = pickle.load(f)
+  return "\n".join(sentences)
 
 
 def setUpParser() -> argparse.ArgumentParser:
