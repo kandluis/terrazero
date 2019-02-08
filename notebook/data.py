@@ -128,14 +128,14 @@ def fetchAllGameSetences(detailsLocal: bool = False,
         print("Downloading game %s: %s" % (i, game.game_id))
         sentence = downloadLogForGameAsSentence(game)
         sentences.append(sentence)
-        if i + 1 % saveEvery == 0:
+        if (i + 1) % saveEvery == 0:
           with open('snellman/sentences-%s-of-%s.pkl' % (i, len(data)),
                     'wb') as f:
             pickle.dump(sentences, f)
           del sentences
           senteces: List[Text] = []
     finally:
-      with open("snellman/sentences-partial-%s-of-%s.pkl", 'wb'):
+      with open("snellman/sentences-partial-%s-of-%s.pkl", 'wb') as f:
         pickle.dump(sentences, f)
 
   # Load it from disk.
