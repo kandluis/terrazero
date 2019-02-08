@@ -97,6 +97,7 @@ def keepHighScoringGames(game: Game) -> bool:
 
 def downloadLogForGameAsSentence(game: Game) -> Text:
   kBaseUrl = "https://terra.snellman.net/app/view-game/"
+  print("Downloading game: %s" % game.game_id)
   res = requests.post(kBaseUrl, data={'game': game.game_id})
   data = json.loads(res.content)
   commands = [
