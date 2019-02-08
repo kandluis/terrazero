@@ -117,6 +117,25 @@ def parseShardedFilename(filename: Text) -> Tuple[int, int]:
   return (shardNumber, totalShards)
 
 
+def loadSentencesFromDisk() -> List[Text]:
+  for (dirpath, dirnames, filenames) in os.walk("snellman"):
+    maxFileInFileSet: Dict[int, Text] = {}
+    for filename in filenames:
+      nShard, totalShards = parseShardedFilename(filename)
+      if totalShards in maxFileInFileSet:
+        nPrevShards, _ = parseShardedFilename(maxFileInFileSet[totalShards])
+        if nPrevShards < nShard:
+          maxFileInFileSet[totalShards] = filename
+      else:
+        maxFileInFileSet[totalShards] = filename
+    filenameToLoad: Text = maxFileInFileSet[max(maxFileInFileSet.keys())]
+    with open(os.path.join(dirpath, filename), 'rb') as f:
+      sentences = pickle.load(f)
+    return sentences
+  else:
+    return []
+
+
 def fetchAllGameSetences(detailsLocal: bool = False,
                          summaryLocal: bool = False,
                          saveEvery: int = 1000) -> Text:
@@ -130,10 +149,14 @@ def fetchAllGameSetences(detailsLocal: bool = False,
       keepPredicate=keepHighScoringGames,
       maxGames=20000,
       local=summaryLocal)
-  sentences: List[Text] = []
+  sentences: List[Text] = loadSentencesFromDisk()
   if not detailsLocal:
     try:
-      for i, game in enumerate(data):
+      # Try to continue where we left off. Assume user "did the right thing" and
+      # is using the same "data" to load the games.
+      # Migrate to a set of ids eventually.
+      for i in range(len(sentences), len(data)):
+        game: Game = data[i]
         print("Downloading game %s: %s" % (i, game.game_id))
         sentence = downloadLogForGameAsSentence(game)
         sentences.append(sentence)
@@ -147,21 +170,6 @@ def fetchAllGameSetences(detailsLocal: bool = False,
       print("Dumpting to %s " % filename)
       with open(filename, 'wb') as f:
         pickle.dump(sentences, f)
-  # Try to load from disk.
-  else:
-    for (dirpath, dirnames, filenames) in os.walk("snellman"):
-      maxFileInFileSet: Dict[int, Text] = {}
-      for filename in filenames:
-        nShard, totalShards = parseShardedFilename(filename)
-        if totalShards in maxFileInFileSet:
-          nPrevShards, _ = parseShardedFilename(maxFileInFileSet[totalShards])
-          if nPrevShards < nShard:
-            maxFileInFileSet[totalShards] = filename
-        else:
-          maxFileInFileSet[totalShards] = filename
-    filenameToLoad: Text = maxFileInFileSet[max(maxFileInFileSet.keys())]
-    with open(os.path.join(dirpath, filename), 'rb') as f:
-      sentences = pickle.load(f)
   return "\n".join(sentences)
 
 
