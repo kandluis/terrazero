@@ -121,6 +121,9 @@ def loadSentencesFromDisk() -> List[Text]:
   for (dirpath, dirnames, filenames) in os.walk("snellman"):
     maxFileInFileSet: Dict[int, Text] = {}
     for filename in filenames:
+      if not filename.startswith("sentences-"):
+        continue
+      print(filename)
       nShard, totalShards = parseShardedFilename(filename)
       if totalShards in maxFileInFileSet:
         nPrevShards, _ = parseShardedFilename(maxFileInFileSet[totalShards])
