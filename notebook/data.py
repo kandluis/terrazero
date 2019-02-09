@@ -123,7 +123,6 @@ def loadSentencesFromDisk() -> List[Text]:
     for filename in filenames:
       if not filename.startswith("sentences-"):
         continue
-      print(filename)
       nShard, totalShards = parseShardedFilename(filename)
       if totalShards in maxFileInFileSet:
         nPrevShards, _ = parseShardedFilename(maxFileInFileSet[totalShards])
@@ -132,8 +131,10 @@ def loadSentencesFromDisk() -> List[Text]:
       else:
         maxFileInFileSet[totalShards] = filename
     filenameToLoad: Text = maxFileInFileSet[max(maxFileInFileSet.keys())]
-    with open(os.path.join(dirpath, filename), 'rb') as f:
+    print("Reading from file: %s" % filenameToLoad)
+    with open(os.path.join(dirpath, filenameToLoad), 'rb') as f:
       sentences = pickle.load(f)
+    print("Loaded %s games" % len(sentences))
     return sentences
   else:
     return []
@@ -170,7 +171,7 @@ def fetchAllGameSetences(detailsLocal: bool = False,
             pickle.dump(sentences, f)
     finally:
       filename = "snellman/sentences-%s-of-%s.pkl" % (i, len(data))
-      print("Dumpting to %s " % filename)
+      print("Dumping to %s " % filename)
       with open(filename, 'wb') as f:
         pickle.dump(sentences, f)
   return "\n".join(sentences)
