@@ -263,3 +263,6 @@ TSWLatexianTemp*
 
 # Ignore anything in poster/figures.
 poster/figures/*
+
+# Ignore input as this is too large.e
+*.input
