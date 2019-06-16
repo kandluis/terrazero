@@ -74,8 +74,8 @@ class Faction(abc.ABC):
   def _DefaultIncome(self) -> common.Income:
     pass
 
-  def IncomeForStructures(
-      self, structures: Dict[common.Structure, int]) -> common.Income:
+  def IncomeForStructures(self, structures: Dict[common.Structure, int]
+                          ) -> common.Income:
     """This includes default income"""
     income = self._DefaultIncome()
     for structure, count in structures.items():
@@ -118,17 +118,16 @@ class Faction(abc.ABC):
 
       Cult Positions:
       {cult}
-    """.format(
-        terrain=self.HomeTerrain(),
-        resources=self.StartingResources(),
-        power=self.StartingPower(),
-        shipping=self.StartingShipping(),
-        cult=self.StartingCultPositions(),
-        class_name=type(self).__name__)
+    """.format(terrain=self.HomeTerrain(),
+               resources=self.StartingResources(),
+               power=self.StartingPower(),
+               shipping=self.StartingShipping(),
+               cult=self.StartingCultPositions(),
+               class_name=type(self).__name__)
 
 
 class Halflings(Faction):
-  def __init__(self):
+  def __init__(self) -> None:
     pass
 
   def HomeTerrain(self) -> common.Terrain:
@@ -160,8 +159,8 @@ class Halflings(Faction):
     if structure == common.Structure.DWELLING:
       return common.Resources(workers=1, coins=2)
     if structure == common.Structure.TRADING_POST:
-      return common.Resources(
-          workers=2, coins=3 if adjacentEnemyStructure else 6)
+      return common.Resources(workers=2,
+                              coins=3 if adjacentEnemyStructure else 6)
     if structure == common.Structure.STRONGHOLD:
       return common.Resources(workers=4, coins=8)
     if structure == common.Structure.TEMPLE:
@@ -202,7 +201,7 @@ class Halflings(Faction):
 
 
 class Engineers(Faction):
-  def __init__(self):
+  def __init__(self) -> None:
     pass
 
   def HomeTerrain(self) -> common.Terrain:
@@ -234,8 +233,8 @@ class Engineers(Faction):
     if structure == common.Structure.DWELLING:
       return common.Resources(workers=1, coins=1)
     if structure == common.Structure.TRADING_POST:
-      return common.Resources(
-          workers=1, coins=2 if adjacentEnemyStructure else 4)
+      return common.Resources(workers=1,
+                              coins=2 if adjacentEnemyStructure else 4)
     if structure == common.Structure.STRONGHOLD:
       return common.Resources(workers=3, coins=6)
     if structure == common.Structure.TEMPLE:

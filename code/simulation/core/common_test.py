@@ -5,19 +5,19 @@ from simulation import utils
 
 
 class TestResources(unittest.TestCase):
-  def testValidation(self):
+  def testValidation(self) -> None:
     self.assertTrue(common.Resources().IsValid())
     self.assertTrue(
         common.Resources(coins=1, workers=1, bridges=1, priests=1).IsValid())
     self.assertFalse(common.Resources(coins=-1).IsValid())
 
-  def testForceValid(self):
+  def testForceValid(self) -> None:
     invalidResources = common.Resources(coins=-1)
     self.assertFalse(invalidResources.IsValid())
     invalidResources.ForceValid()
     self.assertTrue(invalidResources.IsValid())
 
-  def tesEqualityOperator(self):
+  def tesEqualityOperator(self) -> None:
     self.assertEqual(
         common.Resources(coins=10, workers=1, bridges=2, priests=4),
         common.Resources(coins=10, workers=1, bridges=2, priests=4))
@@ -25,7 +25,7 @@ class TestResources(unittest.TestCase):
         common.Resources(coins=10, workers=1, bridges=2, priests=4),
         common.Resources(coins=10, workers=1, bridges=3, priests=4))
 
-  def testAdditionOperator(self):
+  def testAdditionOperator(self) -> None:
     self.assertEqual(
         common.Resources(workers=1) + common.Resources(workers=2, priests=4),
         common.Resources(workers=3, priests=4))
@@ -37,7 +37,7 @@ class TestResources(unittest.TestCase):
     resources += common.Resources(workers=1)
     self.assertEqual(resources, common.Resources(workers=11))
 
-  def testSubtraction(self):
+  def testSubtraction(self) -> None:
     self.assertEqual(
         common.Resources(workers=1) - common.Resources(workers=1, priests=4),
         common.Resources(workers=0, priests=-4))
@@ -47,14 +47,14 @@ class TestResources(unittest.TestCase):
 
 
 class TestIncome(unittest.TestCase):
-  def testFunctionsRaiseErrors(self):
+  def testFunctionsRaiseErrors(self) -> None:
     with self.assertRaises(utils.InternalError):
       common.Income().IsValid()
 
     with self.assertRaises(utils.InternalError):
       common.Income().ForceValid()
 
-  def tesEqualityOperator(self):
+  def tesEqualityOperator(self) -> None:
     self.assertEqual(
         common.Income(coins=10, workers=1, bridges=2, priests=4, power=10),
         common.Income(coins=10, workers=1, bridges=2, priests=4, power=10))
@@ -62,7 +62,7 @@ class TestIncome(unittest.TestCase):
         common.Income(coins=10, workers=1, bridges=2, priests=4, power=4),
         common.Income(coins=10, workers=1, bridges=2, priests=4, power=3))
 
-  def testAdditionOperator(self):
+  def testAdditionOperator(self) -> None:
     self.assertEqual(
         common.Income(power=1) + common.Income(power=2, priests=4),
         common.Income(power=3, priests=4))
@@ -73,7 +73,7 @@ class TestIncome(unittest.TestCase):
     income += common.Income(power=1)
     self.assertEqual(income, common.Income(power=11))
 
-  def testSubtraction(self):
+  def testSubtraction(self) -> None:
     self.assertEqual(
         common.Income(power=1) - common.Income(power=1, priests=4),
         common.Income(power=0, priests=-4))
@@ -83,7 +83,7 @@ class TestIncome(unittest.TestCase):
 
 
 class TestBonusCard(unittest.TestCase):
-  def testIncomeFromBonusCards(self):
+  def testIncomeFromBonusCards(self) -> None:
     self.assertEqual(common.BonusCard.PRIEST.PlayerIncome(),
                      common.Income(priests=1))
     self.assertEqual(common.BonusCard.WORKER_3POWER.PlayerIncome(),
@@ -105,7 +105,7 @@ class TestBonusCard(unittest.TestCase):
 
 
 class TestFavorTile(unittest.TestCase):
-  def testIncomeFromFavorTiel(self):
+  def testIncomeFromFavorTiel(self) -> None:
     self.assertEqual(common.FavorTile.COIN3_FIRE.PlayerIncome(),
                      common.Income(coins=3))
     self.assertEqual(common.FavorTile.WORKER_POWER_EARTH2.PlayerIncome(),
@@ -129,7 +129,7 @@ class TestFavorTile(unittest.TestCase):
 
 
 class TestStructureUpgrades(unittest.TestCase):
-  def testDwellingUpgrades(self):
+  def testDwellingUpgrades(self) -> None:
     structure = common.Structure.DWELLING
     self.assertFalse(structure.IsUpgradeableTo(common.Structure.DWELLING))
     self.assertTrue(structure.IsUpgradeableTo(common.Structure.TRADING_POST))
@@ -137,7 +137,7 @@ class TestStructureUpgrades(unittest.TestCase):
     self.assertFalse(structure.IsUpgradeableTo(common.Structure.STRONGHOLD))
     self.assertFalse(structure.IsUpgradeableTo(common.Structure.SANCTUARY))
 
-  def testTradingPostUpgrades(self):
+  def testTradingPostUpgrades(self) -> None:
     structure = common.Structure.DWELLING
     self.assertFalse(structure.IsUpgradeableTo(common.Structure.DWELLING))
     self.assertTrue(structure.IsUpgradeableTo(common.Structure.TRADING_POST))

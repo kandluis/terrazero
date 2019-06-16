@@ -7,14 +7,14 @@ from simulation.core import player
 
 
 class TestCultBoard(unittest.TestCase):
-  def testInitializationOfEmptyCultBoard(self):
+  def testInitializationOfEmptyCultBoard(self) -> None:
     cultBoard = cult.CultBoard(factions=[])
     for _, order in cultBoard.occupied_orders.items():
       self.assertFalse(order)
     for _, track in cultBoard.positions.items():
       self.assertFalse(track)
 
-  def testInitializationSingleFaction(self):
+  def testInitializationSingleFaction(self) -> None:
     halfling = faction.Halflings()
     cultBoard = cult.CultBoard(factions=[halfling])
     for _, order in cultBoard.occupied_orders.items():
@@ -29,7 +29,7 @@ class TestCultBoard(unittest.TestCase):
     self.assertEqual(cultBoard.positions[common.CultTrack.WATER],
                      {common.Terrain.PLAIN: 0})
 
-  def testInitializationMultipleFactions(self):
+  def testInitializationMultipleFactions(self) -> None:
 
     halfling = faction.Halflings()
     engineer = faction.Engineers()
@@ -56,7 +56,7 @@ class TestCultBoard(unittest.TestCase):
         common.Terrain.MOUNTAIN: 0
     })
 
-  def testSacrificePriestToOrderOvershootPower(self):
+  def testSacrificePriestToOrderOvershootPower(self) -> None:
     halfling = faction.Halflings()
     test_player = player.Player(name="test", player_faction=halfling)
     cultBoard = cult.CultBoard(factions=[halfling])
@@ -71,7 +71,7 @@ class TestCultBoard(unittest.TestCase):
     self.assertEqual(cultBoard.occupied_orders[common.CultTrack.EARTH],
                      {1: common.Terrain.PLAIN})
 
-  def testSacrificePriestToOrderLandOnPower(self):
+  def testSacrificePriestToOrderLandOnPower(self) -> None:
     halfling = faction.Halflings()
     test_player = player.Player(name="test", player_faction=halfling)
     cultBoard = cult.CultBoard(factions=[halfling])
@@ -86,7 +86,7 @@ class TestCultBoard(unittest.TestCase):
     self.assertEqual(cultBoard.occupied_orders[common.CultTrack.FIRE],
                      {1: common.Terrain.PLAIN})
 
-  def testSacrificeManyPriestsTownKeys(self):
+  def testSacrificeManyPriestsTownKeys(self) -> None:
     halfling = faction.Halflings()
     test_player = player.Player(name="test", player_faction=halfling)
     cultBoard = cult.CultBoard(factions=[halfling])
@@ -137,7 +137,7 @@ class TestCultBoard(unittest.TestCase):
     self.assertEqual(cultBoard.positions[common.CultTrack.EARTH],
                      {common.Terrain.PLAIN: 10})
 
-  def testCantOccupyAlreadyTakenTown(self):
+  def testCantOccupyAlreadyTakenTown(self) -> None:
     factions = [faction.Halflings(), faction.Engineers()]
     player1 = player.Player(name="test", player_faction=factions[0])
     player2 = player.Player(name="test", player_faction=factions[1])

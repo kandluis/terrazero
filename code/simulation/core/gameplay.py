@@ -43,13 +43,13 @@ class Game:
     ]
     return len(neighbors) > 0
 
-  def _TransformAndBuild(self, player) -> None:
+  def _TransformAndBuild(self, player: player_module.Player) -> None:
     while True:
       pos: board.Position = self.interface.RequestLocation(player)
-      final_terrains: List[common.Terrain] = player.ReachableTerrains()
+      # final_terrains: List[common.Terrain] = player.ReachableTerrains()
       pass
 
-  def _PlaceInitialDWellings(self, player) -> None:
+  def _PlaceInitialDWellings(self, player: player_module.Player) -> None:
     while True:
       pos: board.Position = self.interface.RequestLocation(player)
       if not self.board.CanBeBuilt(
@@ -61,11 +61,10 @@ class Game:
 
       self.board.Build(pos, structure=common.Structure.DWELLING)
       # This one is built for free!
-      player.Build(
-          common.Structure.DWELLING,
-          adjacentEnemies=self.PlayerHasOpponentNeighborsAtPosition(
-              player, pos),
-          free=True)
+      player.Build(common.Structure.DWELLING,
+                   adjacentEnemies=self.PlayerHasOpponentNeighborsAtPosition(
+                       player, pos),
+                   free=True)
       break
 
   def InitializeDwellings(self) -> None:
@@ -92,12 +91,12 @@ class Game:
     if returnedCard:
       self.available_bonus_cards.append(returnedCard)
 
-  def _EndRoundForBonusCards(self):
+  def _EndRoundForBonusCards(self) -> None:
     """Perform required activities at the end of a round"""
     for card in self.available_bonus_cards:
       card.coins += 1
 
-  def EndRound(self):
+  def EndRound(self) -> None:
     # TODO....
     self._EndRoundForBonusCards()
 

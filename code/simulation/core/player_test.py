@@ -7,9 +7,9 @@ from simulation import utils
 
 
 class TestPlayer(unittest.TestCase):
-  def testHalflingPlayer(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testHalflingPlayer(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
 
     # Halfling configuration.
     self.assertEqual(test_player.name, "test")
@@ -23,9 +23,9 @@ class TestPlayer(unittest.TestCase):
     self.assertEqual(test_player.used_town_keys, {})
     self.assertEqual(test_player.victory_points, 20)
 
-  def testEngineerPlayer(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Engineers())
+  def testEngineerPlayer(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Engineers())
 
     # Halfling configuration.
     self.assertEqual(test_player.power, {
@@ -38,7 +38,7 @@ class TestPlayer(unittest.TestCase):
     self.assertEqual(test_player.used_town_keys, {})
     self.assertEqual(test_player.victory_points, 20)
 
-  def testPlayerGainingSinglePower(self):
+  def testPlayerGainingSinglePower(self) -> None:
     halfling = faction.Halflings()
     test_player = player.Player("test", halfling)
 
@@ -58,7 +58,7 @@ class TestPlayer(unittest.TestCase):
     })
     self.assertEqual(test_player.resources.coins, 15)
 
-  def testPlayerGainingRolloverPower(self):
+  def testPlayerGainingRolloverPower(self) -> None:
     halfling = faction.Halflings()
     test_player = player.Player("test", halfling)
 
@@ -78,7 +78,7 @@ class TestPlayer(unittest.TestCase):
     })
     self.assertEqual(test_player.resources.coins, 15)
 
-  def testPlayerGainingMaxPower(self):
+  def testPlayerGainingMaxPower(self) -> None:
     halfling = faction.Halflings()
     test_player = player.Player("test", halfling)
 
@@ -98,7 +98,7 @@ class TestPlayer(unittest.TestCase):
     })
     self.assertEqual(test_player.resources.coins, 15)
 
-  def testPlayerGainingMaxPowerPlusEvenValue(self):
+  def testPlayerGainingMaxPowerPlusEvenValue(self) -> None:
     halfling = faction.Halflings()
     test_player = player.Player("test", halfling)
 
@@ -119,7 +119,7 @@ class TestPlayer(unittest.TestCase):
     })
     self.assertEqual(test_player.resources.coins, 17)
 
-  def testPlayerGainingMaxPowerPlusOddValue(self):
+  def testPlayerGainingMaxPowerPlusOddValue(self) -> None:
     halfling = faction.Halflings()
     test_player = player.Player("test", halfling)
 
@@ -141,7 +141,7 @@ class TestPlayer(unittest.TestCase):
     })
     self.assertEqual(test_player.resources.coins, 17)
 
-  def testPlayerGainPowerButNoTokensLeft(self):
+  def testPlayerGainPowerButNoTokensLeft(self) -> None:
     test_player = player.Player("test", player_faction=faction.Halflings())
     # Manually set to only a single token left.
     test_player.power = {
@@ -176,9 +176,9 @@ class TestPlayer(unittest.TestCase):
     test_player.GainPower(2)
     self.assertEqual(test_player.power, emptyPower)
 
-  def testPlayerTownKeys(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testPlayerTownKeys(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
     self.assertEqual(test_player.used_town_keys, {})
 
     # Gain a town key and use it.
@@ -190,17 +190,17 @@ class TestPlayer(unittest.TestCase):
     self.assertFalse(test_player.UseTownKey())
     self.assertEqual(test_player.used_town_keys, {common.TownKey.CULT: True})
 
-  def testSacrificePriestToOrder(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testSacrificePriestToOrder(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
 
     test_player.SacrificePriestToOrder()
     self.assertEqual(test_player.priests_still_in_play,
                      player.Player.MAX_PRIESTS - 1)
 
-  def testPlayerCanBuild(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testPlayerCanBuild(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
 
     # Halflings start with 15 coins and 3 workers, as well as 9
     # power in Bowl II and 3 power in Bowl I.
@@ -213,11 +213,11 @@ class TestPlayer(unittest.TestCase):
 
     # They can also afford TPs which are adjacent or not.
     self.assertTrue(
-        test_player.CanBuild(
-            common.Structure.TRADING_POST, adjacentEnemies=True))
+        test_player.CanBuild(common.Structure.TRADING_POST,
+                             adjacentEnemies=True))
     self.assertTrue(
-        test_player.CanBuild(
-            common.Structure.TRADING_POST, adjacentEnemies=False))
+        test_player.CanBuild(common.Structure.TRADING_POST,
+                             adjacentEnemies=False))
 
     # They can afford temples.
     self.assertTrue(
@@ -231,18 +231,18 @@ class TestPlayer(unittest.TestCase):
     self.assertFalse(
         test_player.CanBuild(common.Structure.SANCTUARY, adjacentEnemies=True))
     self.assertFalse(
-        test_player.CanBuild(
-            common.Structure.SANCTUARY, adjacentEnemies=False))
+        test_player.CanBuild(common.Structure.SANCTUARY,
+                             adjacentEnemies=False))
     self.assertFalse(
-        test_player.CanBuild(
-            common.Structure.STRONGHOLD, adjacentEnemies=True))
+        test_player.CanBuild(common.Structure.STRONGHOLD,
+                             adjacentEnemies=True))
     self.assertFalse(
-        test_player.CanBuild(
-            common.Structure.STRONGHOLD, adjacentEnemies=False))
+        test_player.CanBuild(common.Structure.STRONGHOLD,
+                             adjacentEnemies=False))
 
-  def testPlayerBuildDwellings(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testPlayerBuildDwellings(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
     oldPower = test_player.power.copy()
 
     # Halflings start with 15 coins and 3 workers, as well as 9
@@ -261,52 +261,53 @@ class TestPlayer(unittest.TestCase):
     self.assertEqual(test_player.built_structures[common.Structure.DWELLING],
                      2)
 
-  def testPlayerBurnToBuild(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testPlayerBurnToBuild(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
 
     # Halflings start with 15 coins and 3 workers, as well as 9
     # power in Bowl II and 3 power in Bowl I.
     test_player.Build(common.Structure.TRADING_POST, adjacentEnemies=False)
     # After building 1 TP (not adjacent), it costs 6 coins and 2 workers.
-    self.assertEqual(test_player.resources, common.Resources(
-        coins=9, workers=1))
+    self.assertEqual(test_player.resources, common.Resources(coins=9,
+                                                             workers=1))
     # The next TP can be built that is adjacent, costs 3 coins and 2 workers.
     # Player must burn 3 power to get the extra worker.
     test_player.Build(common.Structure.TRADING_POST, adjacentEnemies=True)
-    self.assertEqual(test_player.resources, common.Resources(
-        coins=6, workers=0))
+    self.assertEqual(test_player.resources, common.Resources(coins=6,
+                                                             workers=0))
     self.assertEqual(test_player.power, {
         common.PowerBowl.I: 6,
         common.PowerBowl.II: 3,
         common.PowerBowl.III: 0
     })
 
-  def testBuildFailureIfCanNotBuild(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testBuildFailureIfCanNotBuild(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
     test_player.resources.workers = 2
     # Cannot build a stronghold.
     self.assertFalse(
-        test_player.CanBuild(
-            common.Structure.STRONGHOLD, adjacentEnemies=False))
+        test_player.CanBuild(common.Structure.STRONGHOLD,
+                             adjacentEnemies=False))
     with self.assertRaises(utils.InternalError):
       test_player.Build(common.Structure.STRONGHOLD, adjacentEnemies=False)
 
     # Alternatively, if we've already built it.
-    test_player.Build(
-        common.Structure.STRONGHOLD, adjacentEnemies=False, free=True)
+    test_player.Build(common.Structure.STRONGHOLD,
+                      adjacentEnemies=False,
+                      free=True)
 
     self.assertFalse(
-        test_player.CanBuild(
-            common.Structure.STRONGHOLD, adjacentEnemies=False))
+        test_player.CanBuild(common.Structure.STRONGHOLD,
+                             adjacentEnemies=False))
     with self.assertRaises(utils.InternalError):
       test_player.Build(common.Structure.STRONGHOLD, adjacentEnemies=False)
 
-  def testPlayerCollectIncomePhase(self):
+  def testPlayerCollectIncomePhase(self) -> None:
     # Halflings start with 3 workers and 15 coins, 3/9/0 power.
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
     oldPower = test_player.power.copy()
 
     # Player has not structures. Bonus card is manually set.
@@ -317,16 +318,21 @@ class TestPlayer(unittest.TestCase):
                      common.Resources(workers=5, coins=15))
 
     # Let player build dweling one of each, all for free.
-    test_player.Build(
-        common.Structure.DWELLING, adjacentEnemies=False, free=True)
-    test_player.Build(
-        common.Structure.TRADING_POST, adjacentEnemies=False, free=True)
-    test_player.Build(
-        common.Structure.STRONGHOLD, adjacentEnemies=False, free=True)
-    test_player.Build(
-        common.Structure.TEMPLE, adjacentEnemies=False, free=True)
-    test_player.Build(
-        common.Structure.SANCTUARY, adjacentEnemies=False, free=True)
+    test_player.Build(common.Structure.DWELLING,
+                      adjacentEnemies=False,
+                      free=True)
+    test_player.Build(common.Structure.TRADING_POST,
+                      adjacentEnemies=False,
+                      free=True)
+    test_player.Build(common.Structure.STRONGHOLD,
+                      adjacentEnemies=False,
+                      free=True)
+    test_player.Build(common.Structure.TEMPLE,
+                      adjacentEnemies=False,
+                      free=True)
+    test_player.Build(common.Structure.SANCTUARY,
+                      adjacentEnemies=False,
+                      free=True)
 
     # Collect income. Structures will provide 2 priest, 1 worker, 2 coins, 3 power.
     # An additional 1 worker is provided by default.
@@ -341,9 +347,9 @@ class TestPlayer(unittest.TestCase):
         common.PowerBowl.III: 0
     })
 
-  def testPlayerCollectIncomeFromFavoriteTiles(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testPlayerCollectIncomeFromFavoriteTiles(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
     # Set bonus card and favor tiles.
     test_player.bonus_card = common.BonusCard.PRIEST
     test_player.favor_tiles = [
@@ -364,9 +370,9 @@ class TestPlayer(unittest.TestCase):
         common.PowerBowl.III: 1
     })
 
-  def testPlayerBoundNumberOfPriests(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testPlayerBoundNumberOfPriests(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
     # Set bonus card to a priest.
     test_player.bonus_card = common.BonusCard.PRIEST
     # Manually increase the resources owned by this player to maximum
@@ -380,9 +386,9 @@ class TestPlayer(unittest.TestCase):
     test_player.CollectPhaseIIncome()
     self.assertEqual(test_player.resources.priests, oldPriests)
 
-  def testPlayerCanUsePowerAndUsePower(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testPlayerCanUsePowerAndUsePower(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
 
     # For starting 3/9/0, we can always use power up to 4 (by burning)
     for power in range(5):
@@ -401,9 +407,9 @@ class TestPlayer(unittest.TestCase):
         common.PowerBowl.III: 0
     })
 
-  def testPlayerTakeBonusCards(self):
-    test_player = player.Player(
-        name="test", player_faction=faction.Halflings())
+  def testPlayerTakeBonusCards(self) -> None:
+    test_player = player.Player(name="test",
+                                player_faction=faction.Halflings())
 
     # Return None card.
     self.assertIsNone(test_player.TakeBonusCard(common.BonusCard.PRIEST))
@@ -415,7 +421,6 @@ class TestPlayer(unittest.TestCase):
     self.assertEqual(test_player.shipping, 1)
 
     # Now take another card, givign back the shipping.
-    self.assertEqual(
-        test_player.TakeBonusCard(common.BonusCard.CULT_COIN4),
-        common.BonusCard.POWER3_SHIPPING)
+    self.assertEqual(test_player.TakeBonusCard(common.BonusCard.CULT_COIN4),
+                     common.BonusCard.POWER3_SHIPPING)
     self.assertEqual(test_player.shipping, 0)

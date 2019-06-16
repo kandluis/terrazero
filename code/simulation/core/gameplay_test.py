@@ -12,10 +12,10 @@ from simulation.interface import io
 
 
 class TestGameObject(unittest.TestCase):
-  def setUp(self):
+  def setUp(self) -> None:
     self.mock_interface = mock.Mock(auto_spec=io.IO)
 
-  def testSelectingGameScoringTiles(self):
+  def testSelectingGameScoringTiles(self) -> None:
     random.seed(1)
     self.assertCountEqual(gameplay.SelectGameScoringTiles(), [
         common.ScoringTile.TP_WATER4_SPADE,
@@ -46,12 +46,12 @@ class TestGameObject(unittest.TestCase):
         common.ScoringTile.STRONGHOLD_FIRE2_WORKER,
     ])
 
-  def testSelectingBonusCardsForPlayer(self):
+  def testSelectingBonusCardsForPlayer(self) -> None:
     self.assertEqual(len(gameplay.SelectGameBonusCards(num_players=3)), 3 + 3)
     self.assertEqual(len(gameplay.SelectGameBonusCards(num_players=5)), 5 + 3)
 
   @mock.patch.object(cult, 'CultBoard')
-  def testOpponentsAtPosition(self, _):
+  def testOpponentsAtPosition(self, _: mock.Mock) -> None:
     player1 = mock.Mock(auto_spec=player.Player)
     player1.faction.HomeTerrain.return_value = common.Terrain.MOUNTAIN
 
@@ -65,11 +65,10 @@ class TestGameObject(unittest.TestCase):
         ((common.Structure.DWELLING, common.Terrain.MOUNTAIN),
          (common.Structure.DWELLING, common.Terrain.WASTELAND)))
 
-    game = gameplay.Game(
-        players=[player1, player2],
-        scoring_tiles=[],
-        bonus_cards=[],
-        interface=self.mock_interface)
+    game = gameplay.Game(players=[player1, player2],
+                         scoring_tiles=[],
+                         bonus_cards=[],
+                         interface=self.mock_interface)
     game.board = mock_board
 
     self.assertTrue(
@@ -77,25 +76,25 @@ class TestGameObject(unittest.TestCase):
             player1, board.Position(row="A", column=1)))
 
   @mock.patch.object(cult, 'CultBoard')
-  def testOnlyMyselfAroundMe(self, _):
+  def testOnlyMyselfAroundMe(self, _: mock.Mock) -> None:
     player1 = mock.Mock(auto_spec=player.Player)
     player1.faction.HomeTerrain.return_value = common.Terrain.MOUNTAIN
 
     player2 = mock.Mock(auto_spec=player.Player)
     player2.faction.HomeTerrain.return_value = common.Terrain.WASTELAND
 
-    game = gameplay.Game(
-        players=[player1, player2],
-        scoring_tiles=[],
-        bonus_cards=[],
-        interface=self.mock_interface)
+    game = gameplay.Game(players=[player1, player2],
+                         scoring_tiles=[],
+                         bonus_cards=[],
+                         interface=self.mock_interface)
 
     # Board will always tell us we have a dwelling on a mountain terrain
     # and a dwelling on a wasteland terrain next to us.
     mock_board = mock.Mock(auto_spec=board.GameBoard)
-    mock_board.NeighborStructureOwners.return_value = set(
-        [(common.Structure.DWELLING, common.Terrain.MOUNTAIN),
-         (common.Structure.DWELLING, common.Terrain.MOUNTAIN)])
+    mock_board.NeighborStructureOwners.return_value = set([
+        (common.Structure.DWELLING, common.Terrain.MOUNTAIN),
+        (common.Structure.DWELLING, common.Terrain.MOUNTAIN)
+    ])
 
     game.board = mock_board
 
@@ -104,7 +103,7 @@ class TestGameObject(unittest.TestCase):
             player1, board.Position(row="A", column=1)))
 
   @mock.patch.object(cult, 'CultBoard')
-  def testNoOneAroundMe(self, _):
+  def testNoOneAroundMe(self, _: mock.Mock) -> None:
     player1 = mock.Mock(auto_spec=player.Player)
     player1.faction.HomeTerrain.return_value = common.Terrain.MOUNTAIN
 
@@ -116,24 +115,22 @@ class TestGameObject(unittest.TestCase):
     mock_board = mock.Mock(auto_spec=board.GameBoard)
     mock_board.NeighborStructureOwners.return_value = []
 
-    game = gameplay.Game(
-        players=[player1, player2],
-        scoring_tiles=[],
-        bonus_cards=[],
-        interface=self.mock_interface)
+    game = gameplay.Game(players=[player1, player2],
+                         scoring_tiles=[],
+                         bonus_cards=[],
+                         interface=self.mock_interface)
     game.board = mock_board
 
     self.assertFalse(
         game.PlayerHasOpponentNeighborsAtPosition(
             player1, board.Position(row="A", column=1)))
 
-  def testPlayerLimits(self):
+  def testPlayerLimits(self) -> None:
     with self.assertRaises(AssertionError):
-      gameplay.Game(
-          players=[mock.Mock(auto_spec=player.Player)],
-          scoring_tiles=[],
-          bonus_cards=[],
-          interface=self.mock_interface)
+      gameplay.Game(players=[mock.Mock(auto_spec=player.Player)],
+                    scoring_tiles=[],
+                    bonus_cards=[],
+                    interface=self.mock_interface)
 
     with self.assertRaises(AssertionError):
       gameplay.Game(

@@ -79,7 +79,8 @@ class Player:
     return (self._MaxUseablePower() >=
             self._PowerRequiredToZeroNegativeReources(resources))
 
-  def CanBuild(self, structure, adjacentEnemies) -> bool:
+  def CanBuild(self, structure: common.Structure,
+               adjacentEnemies: bool) -> bool:
     """Asks if the player can possibly build this structure with his available resources"""
     # Can't possible build if we don't have any such structures left
     # on the board.

@@ -32,11 +32,10 @@ class Resources:
             and self.bridges == other.bridges)
 
   def __add__(self: 'Resources', other: 'Resources') -> 'Resources':
-    return Resources(
-        coins=self.coins + other.coins,
-        workers=self.workers + other.workers,
-        bridges=self.bridges + other.bridges,
-        priests=self.priests + other.priests)
+    return Resources(coins=self.coins + other.coins,
+                     workers=self.workers + other.workers,
+                     bridges=self.bridges + other.bridges,
+                     priests=self.priests + other.priests)
 
   def __radd__(self: 'Resources', other: 'Resources') -> 'Resources':
     if other == 0: return self
@@ -50,11 +49,10 @@ class Resources:
     return self
 
   def __sub__(self: 'Resources', other: 'Resources') -> 'Resources':
-    return Resources(
-        coins=self.coins - other.coins,
-        workers=self.workers - other.workers,
-        bridges=self.bridges - other.bridges,
-        priests=self.priests - other.priests)
+    return Resources(coins=self.coins - other.coins,
+                     workers=self.workers - other.workers,
+                     bridges=self.bridges - other.bridges,
+                     priests=self.priests - other.priests)
 
   def __rsub__(self: 'Resources', other: 'Resources') -> 'Resources':
     if other == 0: return self
@@ -70,15 +68,14 @@ class Resources:
   def __str__(self: 'Resources') -> str:
     return """
     Coins: {coins}     Workers: {workers}   Priests: {priests}   Bridges: {bridges}
-    """.format(
-        coins=self.coins,
-        workers=self.workers,
-        priests=self.priests,
-        bridges=self.bridges)
+    """.format(coins=self.coins,
+               workers=self.workers,
+               priests=self.priests,
+               bridges=self.bridges)
 
 
 class Income:
-  def __init__(self: 'Income', power: int = 0, **kwargs):
+  def __init__(self: 'Income', power: int = 0, **kwargs: int) -> None:
     self.resources = Resources(**kwargs)
     self.power = power
 
@@ -126,8 +123,7 @@ class Income:
     return """
     {resources}
     Power: {power}
-    """.format(
-        resources=self.resources, power=self.power)
+    """.format(resources=self.resources, power=self.power)
 
 
 @enum.unique
@@ -158,8 +154,8 @@ class Terrain(enum.Enum):
       return "YELLOW"
     if self == Terrain.WATER:
       return "BLUE[unbuildable]"
-    raise utils.UnimplementedError(
-        "Humand description of %s does not exist" % self.name)
+    raise utils.UnimplementedError("Humand description of %s does not exist" %
+                                   self.name)
 
   def __str__(self) -> str:
     return "%s (%s)" % (super(Terrain, self).__str__(), self.GetColor())
@@ -201,12 +197,12 @@ class TownKey(enum.Enum):
       return "8 immediate power."
     if self == TownKey.COIN6:
       return "6 immediate coins."
-    raise utils.UnimplementedError(
-        "Humand description of %s does not exist" % self.name)
+    raise utils.UnimplementedError("Humand description of %s does not exist" %
+                                   self.name)
 
   def __str__(self) -> str:
-    return "%s [%s]" % (super(TownKey, self).__str__(),
-                        self._GetHumanDescription())
+    return "%s [%s]" % (super(TownKey,
+                              self).__str__(), self._GetHumanDescription())
 
 
 @enum.unique
@@ -260,8 +256,8 @@ class BonusCard(enum.Enum):
       return "1 wrker income and 3 power income%s." % (
           "" if self.coins == 0 else " <%s coins> " % self.coins)
     if self == BonusCard.COIN6:
-      return "6 coins income%s." % ("" if self.coins == 0 else
-                                    " <%s coins> " % self.coins)
+      return "6 coins income%s." % ("" if self.coins == 0 else " <%s coins> " %
+                                    self.coins)
     if self == BonusCard.POWER3_SHIPPING:
       return "3 power income and +1 shipping for Phase I and II%s." % (
           "" if self.coins == 0 else " <%s coins> " % self.coins)
@@ -280,12 +276,12 @@ class BonusCard(enum.Enum):
     if self == BonusCard.STRONGHOLD_WORKER2:
       return "4 vp per SH/TE. 2 worker income%s." % (
           "" if self.coins == 0 else " <%s coins> " % self.coins)
-    raise utils.UnimplementedError(
-        "Humand description of %s does not exist" % self.name)
+    raise utils.UnimplementedError("Humand description of %s does not exist" %
+                                   self.name)
 
   def __str__(self) -> str:
-    return "%s [%s]" % (super(BonusCard, self).__str__(),
-                        self._GetHumanDescription())
+    return "%s [%s]" % (super(BonusCard,
+                              self).__str__(), self._GetHumanDescription())
 
   def __repr__(self) -> str:
     return self.__str__()
@@ -328,12 +324,12 @@ class ScoringTile(enum.Enum):
       return "Phase II: 2 VP per dwelling built. Phase III: Get 4 power per 4 Fire."
     if self == ScoringTile.STRONGHOLD_FIRE2_WORKER:
       return "Phase II: 5 VP per stornghold. Phase III: Get 1 worker per 2 Fire."
-    raise utils.UnimplementedError(
-        "Humand description of %s does not exist" % self.name)
+    raise utils.UnimplementedError("Humand description of %s does not exist" %
+                                   self.name)
 
   def __str__(self) -> str:
-    return "%s [%s]" % (super(ScoringTile, self).__str__(),
-                        self._GetHumanDescription())
+    return "%s [%s]" % (super(ScoringTile,
+                              self).__str__(), self._GetHumanDescription())
 
 
 @enum.unique
@@ -397,8 +393,8 @@ class FavorTile(enum.Enum):
       return "3 earth."
     if self == FavorTile.AIR3:
       return "3 air."
-    raise utils.UnimplementedError(
-        "Humand description of %s does not exist" % self.name)
+    raise utils.UnimplementedError("Humand description of %s does not exist" %
+                                   self.name)
 
 
 @enum.unique

@@ -6,27 +6,27 @@ from simulation import utils
 
 
 class TestPosition(unittest.TestCase):
-  def testInitialization(self):
+  def testInitialization(self) -> None:
     pos = board.Position(row='row', column=1)
     self.assertEqual('row', pos.row)
     self.assertEqual(1, pos.column)
 
-  def testParsePosition(self):
-    self.assertEqual(
-        board.ParsePosition("A13"), board.Position(row="A", column=13))
-    self.assertEqual(
-        board.ParsePosition("I1"), board.Position(row="I", column=1))
+  def testParsePosition(self) -> None:
+    self.assertEqual(board.ParsePosition("A13"),
+                     board.Position(row="A", column=13))
+    self.assertEqual(board.ParsePosition("I1"),
+                     board.Position(row="I", column=1))
 
-  def testParsePositionFailure(self):
+  def testParsePositionFailure(self) -> None:
     self.assertIsNone(board.ParsePosition("J1"))
     self.assertIsNone(board.ParsePosition("A14"))
 
 
 class TestGameBoardModule(unittest.TestCase):
-  def testEmptyLinesToMap(self):
+  def testEmptyLinesToMap(self) -> None:
     self.assertEqual(board.GameBoard.LinesToMap([]), {})
 
-  def testSingleLinesToMap(self):
+  def testSingleLinesToMap(self) -> None:
     self.assertEqual(
         board.GameBoard.LinesToMap(["WATER, SWAMP, DESERT, WATER, PLAIN"]), {
             (0, 0): common.Terrain.WATER,
@@ -41,7 +41,7 @@ class TestGameBoardModule(unittest.TestCase):
             (0, 9): common.Terrain.PLAIN
         })
 
-  def testMultiLinesToMap(self):
+  def testMultiLinesToMap(self) -> None:
     firstRow = "SWAMP, DESERT, LAKE"
     # Note that the second row is "interleaved" with the top row.
     secondRow = "WASTELAND, FOREST"
@@ -63,12 +63,12 @@ class TestGameBoardModule(unittest.TestCase):
 
 
 class TestGameBoard(unittest.TestCase):
-  def setUp(self):
+  def setUp(self) -> None:
     # The default gameboard. No test should make modifications to this. We do this only once
     # during set-up since we have to read from a file.
     self.default_board = board.GameBoard()
 
-  def testDefaultGameTerrainEdgeCases(self):
+  def testDefaultGameTerrainEdgeCases(self) -> None:
     # First row.
     self.assertEqual(
         self.default_board.GetTerrain(board.Position(row="A", column=1)),
@@ -100,7 +100,7 @@ class TestGameBoard(unittest.TestCase):
         self.default_board.GetTerrain(board.Position(row="B", column=12)),
         common.Terrain.DESERT)  # Last
 
-  def testDefaultGameBoardTerrainRandom(self):
+  def testDefaultGameBoardTerrainRandom(self) -> None:
 
     # Random checks.
     self.assertEqual(
@@ -125,7 +125,7 @@ class TestGameBoard(unittest.TestCase):
         self.default_board.GetTerrain(board.Position(row="I", column=9)),
         common.Terrain.MOUNTAIN)
 
-  def testExtraWaterTileForEvenRows(self):
+  def testExtraWaterTileForEvenRows(self) -> None:
 
     # We allow requesting the 13th column for these rows, but it's always
     # water.
@@ -142,7 +142,7 @@ class TestGameBoard(unittest.TestCase):
         self.default_board.GetTerrain(board.Position(row="H", column=13)),
         common.Terrain.WATER)
 
-  def testDefaultGameBoardTerrainFailureCases(self):
+  def testDefaultGameBoardTerrainFailureCases(self) -> None:
     with self.assertRaises(KeyError):
       self.default_board.GetTerrain(
           board.Position(row=chr(ord("A") - 1), column=1))  # No such row.
@@ -156,296 +156,275 @@ class TestGameBoard(unittest.TestCase):
       self.default_board.GetTerrain(board.Position(
           row="I", column=14))  # No such column.
 
-  def testDefaultGameBoardNeighborsCorners(self):
+  def testDefaultGameBoardNeighborsCorners(self) -> None:
 
     self.assertCountEqual(
         self.default_board.GetNeighborTiles(board.Position(row="A", column=1)),
         {("A", 2), ("B", 1)})
     # We technically allow a fictional water tile at B13 to be a neighbor.
     self.assertCountEqual(
-        self.default_board.GetNeighborTiles(
-            board.Position(row="A", column=13)), {("A", 12), ("B", 12),
-                                                  ("B", 13)})
+        self.default_board.GetNeighborTiles(board.Position(row="A",
+                                                           column=13)),
+        {("A", 12), ("B", 12), ("B", 13)})
     self.assertCountEqual(
         self.default_board.GetNeighborTiles(board.Position(row="I", column=1)),
         {("I", 2), ("H", 1)})
     # We technically allow a fictional water tile at G13 to be a neighbor.
     self.assertCountEqual(
-        self.default_board.GetNeighborTiles(
-            board.Position(row="I", column=13)), {("I", 12), ("H", 12),
-                                                  ("H", 13)})
+        self.default_board.GetNeighborTiles(board.Position(row="I",
+                                                           column=13)),
+        {("I", 12), ("H", 12), ("H", 13)})
 
-  def testCanBeBuiltBasic(self):
+  def testCanBeBuiltBasic(self) -> None:
     # Swamps can be built on A13.
+    a13 = board.ParsePosition("A13")
+    assert a13 is not None
     self.assertTrue(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A13"), common.Structure.DWELLING,
-            [common.Terrain.SWAMP]))
+        self.default_board.CanBeBuilt(a13, common.Structure.DWELLING,
+                                      [common.Terrain.SWAMP]))
     # We can build as long as one of the terrains can be built.DWELLING
     self.assertTrue(
         self.default_board.CanBeBuilt(
-            board.ParsePosition("A13"), common.Structure.DWELLING,
+            a13, common.Structure.DWELLING,
             [common.Terrain.MOUNTAIN, common.Terrain.SWAMP]))
 
     # But we can't build anything other than a dwelling.DWELLING
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A13"), common.Structure.TRADING_POST,
-            [common.Terrain.SWAMP]))
+        self.default_board.CanBeBuilt(a13, common.Structure.TRADING_POST,
+                                      [common.Terrain.SWAMP]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A13"), common.Structure.TEMPLE,
-            [common.Terrain.SWAMP]))
+        self.default_board.CanBeBuilt(a13, common.Structure.TEMPLE,
+                                      [common.Terrain.SWAMP]))
 
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A13"), common.Structure.SANCTUARY,
-            [common.Terrain.SWAMP]))
+        self.default_board.CanBeBuilt(a13, common.Structure.SANCTUARY,
+                                      [common.Terrain.SWAMP]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A13"), common.Structure.STRONGHOLD,
-            [common.Terrain.SWAMP]))
+        self.default_board.CanBeBuilt(a13, common.Structure.STRONGHOLD,
+                                      [common.Terrain.SWAMP]))
 
     # We also can't build anything that's not our terrain.
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A13"), common.Structure.DWELLING,
-            [common.Terrain.MOUNTAIN]))
+        self.default_board.CanBeBuilt(a13, common.Structure.DWELLING,
+                                      [common.Terrain.MOUNTAIN]))
 
-  def testCannotBuildOnWater(self):
+  def testCannotBuildOnWater(self) -> None:
+    b2 = board.ParsePosition("B2")
+    assert b2 is not None
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("B2"), common.Structure.DWELLING, [
-                common.Terrain.MOUNTAIN, common.Terrain.SWAMP,
-                common.Terrain.PLAIN, common.Terrain.LAKE,
-                common.Terrain.DESERT, common.Terrain.FOREST
-            ]))
+        self.default_board.CanBeBuilt(b2, common.Structure.DWELLING, [
+            common.Terrain.MOUNTAIN, common.Terrain.SWAMP,
+            common.Terrain.PLAIN, common.Terrain.LAKE, common.Terrain.DESERT,
+            common.Terrain.FOREST
+        ]))
 
-  def testBuildDwelling(self):
+  def testBuildDwelling(self) -> None:
     # Let's build a dwelling.
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.DWELLING)
-    self.assertEqual(
-        self.default_board.GetStructure(board.ParsePosition("A1")),
-        common.Structure.DWELLING)
+    a1 = board.ParsePosition("A1")
+    assert a1 is not None
+    self.default_board.Build(a1, common.Structure.DWELLING)
+    self.assertEqual(self.default_board.GetStructure(a1),
+                     common.Structure.DWELLING)
 
     # We can now build a trading post.
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.DWELLING,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.DWELLING,
+                                      [common.Terrain.PLAIN]))
     self.assertTrue(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.TRADING_POST,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.TRADING_POST,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.TEMPLE,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.TEMPLE,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.SANCTUARY,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.SANCTUARY,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.STRONGHOLD,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.STRONGHOLD,
+                                      [common.Terrain.PLAIN]))
 
-  def testBuildTradingPost(self):
+  def testBuildTradingPost(self) -> None:
     # Let's build a dwelling and trading post.
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.DWELLING)
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.TRADING_POST)
-    self.assertEqual(
-        self.default_board.GetStructure(board.ParsePosition("A1")),
-        common.Structure.TRADING_POST)
+    a1 = board.ParsePosition("A1")
+    assert a1 is not None
+    self.default_board.Build(a1, common.Structure.DWELLING)
+    self.default_board.Build(a1, common.Structure.TRADING_POST)
+    self.assertEqual(self.default_board.GetStructure(a1),
+                     common.Structure.TRADING_POST)
 
     # We can now build either a temple or stronghold.
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.DWELLING,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.DWELLING,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.TRADING_POST,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.TRADING_POST,
+                                      [common.Terrain.PLAIN]))
     self.assertTrue(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.TEMPLE,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.TEMPLE,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.SANCTUARY,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.SANCTUARY,
+                                      [common.Terrain.PLAIN]))
     self.assertTrue(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.STRONGHOLD,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.STRONGHOLD,
+                                      [common.Terrain.PLAIN]))
 
-  def testBuildTemple(self):
+  def testBuildTemple(self) -> None:
     # Let's build a dwelling and trading post.
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.DWELLING)
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.TRADING_POST)
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.TEMPLE)
-    self.assertEqual(
-        self.default_board.GetStructure(board.ParsePosition("A1")),
-        common.Structure.TEMPLE)
+    a1 = board.ParsePosition("A1")
+    assert a1 is not None
+    self.default_board.Build(a1, common.Structure.DWELLING)
+    self.default_board.Build(a1, common.Structure.TRADING_POST)
+    self.default_board.Build(a1, common.Structure.TEMPLE)
+    self.assertEqual(self.default_board.GetStructure(a1),
+                     common.Structure.TEMPLE)
 
     # We can now build a sanctuary.
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.DWELLING,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.DWELLING,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.TRADING_POST,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.TRADING_POST,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.TEMPLE,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.TEMPLE,
+                                      [common.Terrain.PLAIN]))
     self.assertTrue(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.SANCTUARY,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.SANCTUARY,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.STRONGHOLD,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.STRONGHOLD,
+                                      [common.Terrain.PLAIN]))
 
-  def testBuildSanctuary(self):
+  def testBuildSanctuary(self) -> None:
     # Let's build a dwelling and trading post.
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.DWELLING)
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.TRADING_POST)
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.TEMPLE)
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.SANCTUARY)
-    self.assertEqual(
-        self.default_board.GetStructure(board.ParsePosition("A1")),
-        common.Structure.SANCTUARY)
+    a1 = board.ParsePosition("A1")
+    assert a1 is not None
+    self.default_board.Build(a1, common.Structure.DWELLING)
+    self.default_board.Build(a1, common.Structure.TRADING_POST)
+    self.default_board.Build(a1, common.Structure.TEMPLE)
+    self.default_board.Build(a1, common.Structure.SANCTUARY)
+    self.assertEqual(self.default_board.GetStructure(a1),
+                     common.Structure.SANCTUARY)
 
     # We can build nothing!
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.DWELLING,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.DWELLING,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.TRADING_POST,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.TRADING_POST,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.TEMPLE,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.TEMPLE,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.SANCTUARY,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.SANCTUARY,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.STRONGHOLD,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.STRONGHOLD,
+                                      [common.Terrain.PLAIN]))
 
-  def testBuildStrongHold(self):
+  def testBuildStrongHold(self) -> None:
     # Let's build a dwelling and trading post.
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.DWELLING)
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.TRADING_POST)
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.STRONGHOLD)
-    self.assertEqual(
-        self.default_board.GetStructure(board.ParsePosition("A1")),
-        common.Structure.STRONGHOLD)
+    a1 = board.ParsePosition("A1")
+    assert a1 is not None
+    self.default_board.Build(a1, common.Structure.DWELLING)
+    self.default_board.Build(a1, common.Structure.TRADING_POST)
+    self.default_board.Build(a1, common.Structure.STRONGHOLD)
+    self.assertEqual(self.default_board.GetStructure(a1),
+                     common.Structure.STRONGHOLD)
 
     # We can build nothing!
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.DWELLING,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.DWELLING,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.TRADING_POST,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.TRADING_POST,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.TEMPLE,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.TEMPLE,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.SANCTUARY,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.SANCTUARY,
+                                      [common.Terrain.PLAIN]))
     self.assertFalse(
-        self.default_board.CanBeBuilt(
-            board.ParsePosition("A1"), common.Structure.STRONGHOLD,
-            [common.Terrain.PLAIN]))
+        self.default_board.CanBeBuilt(a1, common.Structure.STRONGHOLD,
+                                      [common.Terrain.PLAIN]))
 
-  def testBuildFailures(self):
+  def testBuildFailures(self) -> None:
+    a1 = board.ParsePosition("A1")
+    assert a1 is not None
     with self.assertRaises(utils.InternalError):
-      self.default_board.Build(
-          board.ParsePosition("A1"), common.Structure.TRADING_POST)
+      self.default_board.Build(a1, common.Structure.TRADING_POST)
 
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.DWELLING)
+    self.default_board.Build(a1, common.Structure.DWELLING)
     with self.assertRaises(utils.InternalError):
-      self.default_board.Build(
-          board.ParsePosition("A1"), common.Structure.TEMPLE)
+      self.default_board.Build(a1, common.Structure.TEMPLE)
 
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.TRADING_POST)
-    self.default_board.Build(
-        board.ParsePosition("A1"), common.Structure.TEMPLE)
+    self.default_board.Build(a1, common.Structure.TRADING_POST)
+    self.default_board.Build(a1, common.Structure.TEMPLE)
     with self.assertRaises(utils.InternalError):
-      self.default_board.Build(
-          board.ParsePosition("A1"), common.Structure.STRONGHOLD)
+      self.default_board.Build(a1, common.Structure.STRONGHOLD)
 
-  def testDefaultGameBoardNeighbors(self):
+  def testDefaultGameBoardNeighbors(self) -> None:
     # We include the pseudo-tile 'b13'
-    self.assertCountEqual(
-        self.default_board.GetNeighborTiles(board.ParsePosition("A13")), [
-            board.ParsePosition("A12"),
-            board.ParsePosition("B12"),
-            board.ParsePosition("B13"),
-        ])
-    self.assertCountEqual(
-        self.default_board.GetNeighborTiles(board.ParsePosition("E1")), [
-            board.ParsePosition("F1"),
-            board.ParsePosition("E2"),
-            board.ParsePosition("D1")
-        ])
-    self.assertCountEqual(
-        self.default_board.GetNeighborTiles(board.ParsePosition("E6")), [
-            board.ParsePosition("E5"),
-            board.ParsePosition("D5"),
-            board.ParsePosition("D6"),
-            board.ParsePosition("E7"),
-            board.ParsePosition("F6"),
-            board.ParsePosition("F5")
-        ])
+    a13 = board.ParsePosition("A13")
+    assert a13 is not None
+    a12 = board.ParsePosition("A12")
+    assert a12 is not None
+    b12 = board.ParsePosition("B12")
+    assert b12 is not None
+    b13 = board.ParsePosition("B13")
+    assert b13 is not None
+    self.assertCountEqual(self.default_board.GetNeighborTiles(a13), [
+        a12,
+        b12,
+        b13,
+    ])
 
-  def testDefaultGameBoardNeighbordStructureOwners(self):
+    e1 = board.ParsePosition("E1")
+    assert e1 is not None
+    f1 = board.ParsePosition("F1")
+    assert f1 is not None
+    e2 = board.ParsePosition("E2")
+    assert e2 is not None
+    d1 = board.ParsePosition("D1")
+    assert d1 is not None
+    self.assertCountEqual(self.default_board.GetNeighborTiles(e1),
+                          [f1, e2, d1])
+
+    e6 = board.ParsePosition("E6")
+    assert e6 is not None
+    e5 = board.ParsePosition("E5")
+    assert e5 is not None
+    d5 = board.ParsePosition("D5")
+    assert d5 is not None
+    d6 = board.ParsePosition("D6")
+    assert d6 is not None
+    e7 = board.ParsePosition("E7")
+    assert e7 is not None
+    f6 = board.ParsePosition("F6")
+    assert f6 is not None
+    f5 = board.ParsePosition("F5")
+    assert f5 is not None
+    self.assertCountEqual(self.default_board.GetNeighborTiles(e6),
+                          [e5, d5, d6, e7, f6, f5])
+
+  def testDefaultGameBoardNeighbordStructureOwners(self) -> None:
     # No structures anywhere!
-    self.assertTrue(
-        len(
-            self.default_board.NeighborStructureOwners(
-                board.ParsePosition("A13"))) == 0)
+    a13 = board.ParsePosition("A13")
+    assert a13 is not None
+    self.assertTrue(len(self.default_board.NeighborStructureOwners(a13)) == 0)
 
     # We build some structures.
-    self.default_board.Build(
-        board.ParsePosition("A12"), common.Structure.DWELLING)
-    self.default_board.Build(
-        board.ParsePosition("B12"), common.Structure.DWELLING)
+    a12 = board.ParsePosition("A12")
+    assert a12 is not None
+    b12 = board.ParsePosition("B12")
+    assert b12 is not None
+    self.default_board.Build(a12, common.Structure.DWELLING)
+    self.default_board.Build(b12, common.Structure.DWELLING)
 
-    self.assertCountEqual(
-        self.default_board.NeighborStructureOwners(board.ParsePosition("A13")),
-        [
-            (common.Structure.DWELLING, common.Terrain.WASTELAND),
-            (common.Structure.DWELLING, common.Terrain.DESERT),
-        ])
+    self.assertCountEqual(self.default_board.NeighborStructureOwners(a13), [
+        (common.Structure.DWELLING, common.Terrain.WASTELAND),
+        (common.Structure.DWELLING, common.Terrain.DESERT),
+    ])

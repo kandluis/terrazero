@@ -5,10 +5,10 @@ from simulation.core import faction
 
 
 class TestHalflingFaction(unittest.TestCase):
-  def testHalflingCreation(self):
+  def testHalflingCreation(self) -> None:
     halfling = faction.Halflings()
 
-  def testStartingResources(self):
+  def testStartingResources(self) -> None:
     halfling = faction.Halflings()
 
     self.assertEqual(halfling.HomeTerrain(), common.Terrain.PLAIN)
@@ -19,68 +19,69 @@ class TestHalflingFaction(unittest.TestCase):
     })
     self.assertEqual(halfling.StartingResources(),
                      common.Resources(workers=3, coins=15))
-    self.assertEqual({
-        common.CultTrack.EARTH: 1,
-        common.CultTrack.AIR: 1,
-        common.CultTrack.WATER: 0,
-        common.CultTrack.FIRE: 0
-    }, halfling.StartingCultPositions())
+    self.assertEqual(
+        {
+            common.CultTrack.EARTH: 1,
+            common.CultTrack.AIR: 1,
+            common.CultTrack.WATER: 0,
+            common.CultTrack.FIRE: 0
+        }, halfling.StartingCultPositions())
     self.assertEqual(halfling.StartingShipping(), 0)
 
-  def testStructureCost(self):
+  def testStructureCost(self) -> None:
     halfling = faction.Halflings()
 
     # Dwelling.
     self.assertEqual(
-        halfling.StructureCost(
-            common.Structure.DWELLING, adjacentEnemyStructure=False),
+        halfling.StructureCost(common.Structure.DWELLING,
+                               adjacentEnemyStructure=False),
         common.Resources(workers=1, coins=2))
     self.assertEqual(
-        halfling.StructureCost(
-            common.Structure.DWELLING, adjacentEnemyStructure=True),
+        halfling.StructureCost(common.Structure.DWELLING,
+                               adjacentEnemyStructure=True),
         common.Resources(workers=1, coins=2))
 
     # Trading post.
     self.assertEqual(
-        halfling.StructureCost(
-            common.Structure.TRADING_POST, adjacentEnemyStructure=False),
+        halfling.StructureCost(common.Structure.TRADING_POST,
+                               adjacentEnemyStructure=False),
         common.Resources(workers=2, coins=6))
     self.assertEqual(
-        halfling.StructureCost(
-            common.Structure.TRADING_POST, adjacentEnemyStructure=True),
+        halfling.StructureCost(common.Structure.TRADING_POST,
+                               adjacentEnemyStructure=True),
         common.Resources(workers=2, coins=3))
 
     # Stronghold
     self.assertEqual(
-        halfling.StructureCost(
-            common.Structure.STRONGHOLD, adjacentEnemyStructure=False),
+        halfling.StructureCost(common.Structure.STRONGHOLD,
+                               adjacentEnemyStructure=False),
         common.Resources(workers=4, coins=8))
     self.assertEqual(
-        halfling.StructureCost(
-            common.Structure.STRONGHOLD, adjacentEnemyStructure=True),
+        halfling.StructureCost(common.Structure.STRONGHOLD,
+                               adjacentEnemyStructure=True),
         common.Resources(workers=4, coins=8))
 
     # Temple.
     self.assertEqual(
-        halfling.StructureCost(
-            common.Structure.TEMPLE, adjacentEnemyStructure=False),
+        halfling.StructureCost(common.Structure.TEMPLE,
+                               adjacentEnemyStructure=False),
         common.Resources(workers=2, coins=5))
     self.assertEqual(
-        halfling.StructureCost(
-            common.Structure.TEMPLE, adjacentEnemyStructure=True),
+        halfling.StructureCost(common.Structure.TEMPLE,
+                               adjacentEnemyStructure=True),
         common.Resources(workers=2, coins=5))
 
     # Sanctuary.
     self.assertEqual(
-        halfling.StructureCost(
-            common.Structure.SANCTUARY, adjacentEnemyStructure=False),
+        halfling.StructureCost(common.Structure.SANCTUARY,
+                               adjacentEnemyStructure=False),
         common.Resources(workers=4, coins=6))
     self.assertEqual(
-        halfling.StructureCost(
-            common.Structure.SANCTUARY, adjacentEnemyStructure=True),
+        halfling.StructureCost(common.Structure.SANCTUARY,
+                               adjacentEnemyStructure=True),
         common.Resources(workers=4, coins=6))
 
-  def testIncomeForStructures(self):
+  def testIncomeForStructures(self) -> None:
     halfling = faction.Halflings()
 
     # tests SH + SA + DW income.
@@ -101,10 +102,10 @@ class TestHalflingFaction(unittest.TestCase):
 
 
 class TestEngineerFaction(unittest.TestCase):
-  def testEngineerCreation(self):
+  def testEngineerCreation(self) -> None:
     engineer = faction.Engineers()
 
-  def testStartingResources(self):
+  def testStartingResources(self) -> None:
     engineer = faction.Engineers()
 
     self.assertEqual(engineer.HomeTerrain(), common.Terrain.MOUNTAIN)
@@ -115,68 +116,69 @@ class TestEngineerFaction(unittest.TestCase):
     })
     self.assertEqual(engineer.StartingResources(),
                      common.Resources(workers=2, coins=10))
-    self.assertEqual({
-        common.CultTrack.AIR: 0,
-        common.CultTrack.WATER: 0,
-        common.CultTrack.FIRE: 0,
-        common.CultTrack.EARTH: 0
-    }, engineer.StartingCultPositions())
+    self.assertEqual(
+        {
+            common.CultTrack.AIR: 0,
+            common.CultTrack.WATER: 0,
+            common.CultTrack.FIRE: 0,
+            common.CultTrack.EARTH: 0
+        }, engineer.StartingCultPositions())
     self.assertEqual(engineer.StartingShipping(), 0)
 
-  def testStructureCost(self):
+  def testStructureCost(self) -> None:
     engineer = faction.Engineers()
 
     # Dwelling.
     self.assertEqual(
-        engineer.StructureCost(
-            common.Structure.DWELLING, adjacentEnemyStructure=False),
+        engineer.StructureCost(common.Structure.DWELLING,
+                               adjacentEnemyStructure=False),
         common.Resources(workers=1, coins=1))
     self.assertEqual(
-        engineer.StructureCost(
-            common.Structure.DWELLING, adjacentEnemyStructure=True),
+        engineer.StructureCost(common.Structure.DWELLING,
+                               adjacentEnemyStructure=True),
         common.Resources(workers=1, coins=1))
 
     # Trading post.
     self.assertEqual(
-        engineer.StructureCost(
-            common.Structure.TRADING_POST, adjacentEnemyStructure=False),
+        engineer.StructureCost(common.Structure.TRADING_POST,
+                               adjacentEnemyStructure=False),
         common.Resources(workers=1, coins=4))
     self.assertEqual(
-        engineer.StructureCost(
-            common.Structure.TRADING_POST, adjacentEnemyStructure=True),
+        engineer.StructureCost(common.Structure.TRADING_POST,
+                               adjacentEnemyStructure=True),
         common.Resources(workers=1, coins=2))
 
     # Stronghold
     self.assertEqual(
-        engineer.StructureCost(
-            common.Structure.STRONGHOLD, adjacentEnemyStructure=False),
+        engineer.StructureCost(common.Structure.STRONGHOLD,
+                               adjacentEnemyStructure=False),
         common.Resources(workers=3, coins=6))
     self.assertEqual(
-        engineer.StructureCost(
-            common.Structure.STRONGHOLD, adjacentEnemyStructure=True),
+        engineer.StructureCost(common.Structure.STRONGHOLD,
+                               adjacentEnemyStructure=True),
         common.Resources(workers=3, coins=6))
 
     # Temple.
     self.assertEqual(
-        engineer.StructureCost(
-            common.Structure.TEMPLE, adjacentEnemyStructure=False),
+        engineer.StructureCost(common.Structure.TEMPLE,
+                               adjacentEnemyStructure=False),
         common.Resources(workers=1, coins=4))
     self.assertEqual(
-        engineer.StructureCost(
-            common.Structure.TEMPLE, adjacentEnemyStructure=True),
+        engineer.StructureCost(common.Structure.TEMPLE,
+                               adjacentEnemyStructure=True),
         common.Resources(workers=1, coins=4))
 
     # Sanctuary.
     self.assertEqual(
-        engineer.StructureCost(
-            common.Structure.SANCTUARY, adjacentEnemyStructure=False),
+        engineer.StructureCost(common.Structure.SANCTUARY,
+                               adjacentEnemyStructure=False),
         common.Resources(workers=3, coins=6))
     self.assertEqual(
-        engineer.StructureCost(
-            common.Structure.SANCTUARY, adjacentEnemyStructure=True),
+        engineer.StructureCost(common.Structure.SANCTUARY,
+                               adjacentEnemyStructure=True),
         common.Resources(workers=3, coins=6))
 
-  def testIncomeForStructures(self):
+  def testIncomeForStructures(self) -> None:
     engineer = faction.Engineers()
 
     # tests SH + SA + DW income, with 1 DW incoming missing.
@@ -196,6 +198,6 @@ class TestEngineerFaction(unittest.TestCase):
 
 
 class TestFactionModule(unittest.TestCase):
-  def testAllFactions(self):
+  def testAllFactions(self) -> None:
     # A change detector test when someone tries to add more factions.
     self.assertEqual(len(faction.AllAvailable()), 2)

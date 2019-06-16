@@ -14,7 +14,7 @@ class CommandLine(io.IO):
   def __init__(self) -> None:
     pass
 
-  def _VerticalSpace(self):
+  def _VerticalSpace(self) -> None:
     print("""
 
 
@@ -74,9 +74,9 @@ class CommandLine(io.IO):
     for available_faction in factions:
       print(str(available_faction))
 
-  def RequestPlayerFactions(
-      self, player_names: List[str],
-      available: List[faction.Faction]) -> List[faction.Faction]:
+  def RequestPlayerFactions(self, player_names: List[str],
+                            available: List[faction.Faction]
+                            ) -> List[faction.Faction]:
     self._VerticalSpace()
     self._DisplayMessage("Faction Selection")
     self._DisplayMessage("Available Factions")
@@ -89,8 +89,8 @@ class CommandLine(io.IO):
         candidate = self._RequestString(
             "%s, please select an available faction by name: " % player_name)
         if candidate in used:
-          print(
-              "The requested faction %s has already been picked!" % candidate)
+          print("The requested faction %s has already been picked!" %
+                candidate)
           continue
         try:
           class_ = getattr(faction, candidate)
@@ -102,7 +102,7 @@ class CommandLine(io.IO):
         break
     return selected
 
-  def InvalidInput(self):
+  def InvalidInput(self) -> None:
     self._VerticalSpace()
     print("That's not valid! Please try again.")
 
@@ -116,8 +116,8 @@ class CommandLine(io.IO):
   def RequestLocation(self, pl: player.Player) -> board.Position:
     self._VerticalSpace()
     while True:
-      reqStr = self._RequestString(
-          "%s - Select a tile for the action: " % self._NamePrefix(pl))
+      reqStr = self._RequestString("%s - Select a tile for the action: " %
+                                   self._NamePrefix(pl))
       pos: Optional[board.Position] = board.ParsePosition(reqStr)
       if pos:
         return pos
