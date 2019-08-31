@@ -17,7 +17,7 @@ from typing import Callable, Dict, List, Optional, Text, Tuple
 
 
 _END_OF_SAMPLE_TOKEN = '<|endoftext|>'
-_WORKER_COUNT = 1000
+_WORKER_COUNT = 100
 
 class Game:
   def __init__(self, json) -> None:
