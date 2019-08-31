@@ -108,7 +108,7 @@ def downloadLogForGame(game: Game) -> Text:
       command['commands'].split(".") for command in data['ledger']
       if 'commands' in command
   ]
-  gameLog = ".\n".join(
+  gameLog = ". ".join(
       item.strip().lower() for sublist in commands for item in sublist)
   return gameLog
 
