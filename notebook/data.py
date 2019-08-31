@@ -130,6 +130,9 @@ def loadSentencesFromDisk() -> List[Text]:
           maxFileInFileSet[totalShards] = filename
       else:
         maxFileInFileSet[totalShards] = filename
+    if not maxFileInFileSet:
+      print("No sentences to load...")
+      return []
     filenameToLoad: Text = maxFileInFileSet[max(maxFileInFileSet.keys())]
     print("Reading from file: %s" % filenameToLoad)
     with open(os.path.join(dirpath, filenameToLoad), 'rb') as f:
@@ -137,6 +140,7 @@ def loadSentencesFromDisk() -> List[Text]:
     print("Loaded %s games" % len(sentences))
     return sentences
   else:
+    print("No sentences to load...")
     return []
 
 
