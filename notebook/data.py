@@ -16,7 +16,7 @@ from urllib import error
 from typing import Callable, Dict, List, Optional, Text, Tuple
 
 
-_END_OF_SAMPLE_TOKEN = '<|endoftext|>'
+_END_OF_SAMPLE_TOKEN = '\n<|endoftext|>\n'
 _WORKER_COUNT = 100
 
 class Game:
@@ -212,6 +212,11 @@ def setUpParser() -> argparse.ArgumentParser:
   parser.add_argument(
       '--no-summaryLocal', dest='summaryLocal', action='store_false')
   parser.set_defaults(feature=True)
+  parser.add_argument(
+      '--maxGames',
+      type=int,
+      help='Maximum number of games to download',
+      default=int(20e3))
   return parser
 
 
