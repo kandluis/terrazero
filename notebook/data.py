@@ -150,7 +150,8 @@ def loadSentencesFromDisk() -> List[Text]:
 
 def fetchAllGameSetences(detailsLocal: bool = False,
                          summaryLocal: bool = False,
-                         saveEvery: int = 1000) -> Text:
+                         saveEvery: int = 1000,
+                         maxGames: int = 20000) -> Text:
   """Downloads game data and dumps to disk.
   """
   def downloadGameWrapper(info: Tuple[int, Game]) -> Text:
@@ -164,7 +165,7 @@ def fetchAllGameSetences(detailsLocal: bool = False,
       OLDEST_DATE,
       NEWEST_DATE,
       keepPredicate=keepHighScoringGames,
-      maxGames=20000,
+      maxGames=maxGames,
       local=summaryLocal)
   sentences: List[Text] = loadSentencesFromDisk()
   if not detailsLocal:
@@ -226,6 +227,7 @@ if __name__ == '__main__':
   text = fetchAllGameSetences(
       detailsLocal=args.detailsLocal,
       summaryLocal=args.summaryLocal,
-      saveEvery=args.saveEvery)
+      saveEvery=args.saveEvery,
+      maxGames=args.maxGames)
   with open("snellman/games.input", "w") as f:
     f.write(text)
