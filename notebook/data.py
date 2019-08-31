@@ -8,6 +8,7 @@ import os
 import pickle
 import requests
 
+from concurrent import futures
 from dateutil import relativedelta
 from urllib import request
 from urllib import error
@@ -16,6 +17,7 @@ from typing import Callable, Dict, List, Optional, Text, Tuple
 
 
 _END_OF_SAMPLE_TOKEN = '<|endoftext|>'
+_WORKER_COUNT = 1000
 
 class Game:
   def __init__(self, json) -> None:
@@ -150,7 +152,12 @@ def fetchAllGameSetences(detailsLocal: bool = False,
                          summaryLocal: bool = False,
                          saveEvery: int = 1000) -> Text:
   """Downloads game data and dumps to disk.
-    """
+  """
+  def downloadGameWrapper(info: Tuple[int, Game]) -> Text:
+    i, game = info
+    print("Downloading game %s: %s" % (i, game.game_id))
+    return downloadLogForGame(game)
+
   OLDEST_DATE = datetime.datetime(year=2013, month=1, day=15)
   NEWEST_DATE = datetime.datetime.now()
   data: List[Game] = fetchAllSummaryData(
@@ -165,16 +172,19 @@ def fetchAllGameSetences(detailsLocal: bool = False,
       # Try to continue where we left off. Assume user "did the right thing" and
       # is using the same "data" to load the games.
       # Migrate to a set of ids eventually.
-      for i in range(len(sentences), len(data)):
-        game: Game = data[i]
-        print("Downloading game %s: %s" % (i, game.game_id))
-        sentence = downloadLogForGame(game)
-        sentences.append(sentence)
-        if (i + 1) % saveEvery == 0:
+      processedSinceLastSave = 0
+      for i in range(len(sentences), len(data), _WORKER_COUNT):
+        with futures.ThreadPoolExecutor(max_workers=WORKER_COUNT) as executor:
+          inp = [(k, data[k]) for k in range(i, i + _WORKER_COUNT)]
+          concurrent_sentences = executor.map(downloadGameWrapper, inp)
+        sentences.extend(concurrent_sentences)
+        processedSinceLastSave += _WORKER_COUNT
+        if processedSinceLastSave >= saveEvery:
           filename: Text = 'snellman/sentences-%s-of-%s.pkl' % (i, len(data))
           print("Saving to %s" % filename)
           with open(filename, 'wb') as f:
             pickle.dump(sentences, f)
+          processedSinceLastSave = 0
     finally:
       filename = "snellman/sentences-%s-of-%s.pkl" % (i, len(data))
       print("Dumping to %s " % filename)
