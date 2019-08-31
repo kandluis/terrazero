@@ -174,7 +174,7 @@ def fetchAllGameSetences(detailsLocal: bool = False,
       # Migrate to a set of ids eventually.
       processedSinceLastSave = 0
       for i in range(len(sentences), len(data), _WORKER_COUNT):
-        with futures.ThreadPoolExecutor(max_workers=WORKER_COUNT) as executor:
+        with futures.ThreadPoolExecutor(max_workers=_WORKER_COUNT) as executor:
           inp = [(k, data[k]) for k in range(i, i + _WORKER_COUNT)]
           concurrent_sentences = executor.map(downloadGameWrapper, inp)
         sentences.extend(concurrent_sentences)
