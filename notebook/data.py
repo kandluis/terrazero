@@ -15,6 +15,8 @@ from urllib import error
 from typing import Callable, Dict, List, Optional, Text, Tuple
 
 
+_END_OF_SAMPLE_TOKEN = '<|endoftext|>'
+
 class Game:
   def __init__(self, json) -> None:
     self.game_id = json['game']
@@ -96,7 +98,7 @@ def keepHighScoringGames(game: Game) -> bool:
   return game.averageVPPerPlayer() > 120
 
 
-def downloadLogForGameAsSentence(game: Game) -> Text:
+def downloadLogForGame(game: Game) -> Text:
   kBaseUrl = "https://terra.snellman.net/app/view-game/"
   res = requests.post(kBaseUrl, data={'game': game.game_id})
   data = json.loads(res.content)
@@ -104,9 +106,9 @@ def downloadLogForGameAsSentence(game: Game) -> Text:
       command['commands'].split(".") for command in data['ledger']
       if 'commands' in command
   ]
-  gameSentence = " ".join(
-      item.strip() for sublist in commands for item in sublist)
-  return gameSentence
+  gameLog = ".\n".join(
+      item.strip().lower() for sublist in commands for item in sublist)
+  return gameLog
 
 
 def parseShardedFilename(filename: Text) -> Tuple[int, int]:
@@ -166,7 +168,7 @@ def fetchAllGameSetences(detailsLocal: bool = False,
       for i in range(len(sentences), len(data)):
         game: Game = data[i]
         print("Downloading game %s: %s" % (i, game.game_id))
-        sentence = downloadLogForGameAsSentence(game)
+        sentence = downloadLogForGame(game)
         sentences.append(sentence)
         if (i + 1) % saveEvery == 0:
           filename: Text = 'snellman/sentences-%s-of-%s.pkl' % (i, len(data))
@@ -178,7 +180,7 @@ def fetchAllGameSetences(detailsLocal: bool = False,
       print("Dumping to %s " % filename)
       with open(filename, 'wb') as f:
         pickle.dump(sentences, f)
-  return "\n".join(sentences)
+  return _END_OF_SAMPLE_TOKEN.join(sentences)
 
 
 def setUpParser() -> argparse.ArgumentParser:
