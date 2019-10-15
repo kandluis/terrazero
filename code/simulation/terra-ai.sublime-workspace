@@ -1,0 +1,1842 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"publ",
+				"public_key_sender\tparam"
+			],
+			[
+				"OP_N",
+				"OP_NUMEQUAL"
+			],
+			[
+				"cust3_p",
+				"cust3_public_key\tstatement"
+			],
+			[
+				"cust",
+				"cust2_public_key\tstatement"
+			],
+			[
+				"bob_",
+				"bob_secret_key_BCY\tmodule"
+			],
+			[
+				"blo",
+				"bob_public_key_BCY"
+			],
+			[
+				"alice",
+				"alice_secret_key_BTC\tmodule"
+			],
+			[
+				"to",
+				"total_vp\tstatement"
+			],
+			[
+				"game",
+				"game_id\tstatement"
+			],
+			[
+				"tot",
+				"total_vp"
+			],
+			[
+				"downloadGa",
+				"downloadLogForGame\tfunction"
+			],
+			[
+				"comm",
+				"comment"
+			],
+			[
+				"concu",
+				"concurrent_sentences\tstatement"
+			],
+			[
+				"exec",
+				"executor\tstatement"
+			],
+			[
+				"_Ret",
+				"_RetrieveTransactions\tfunction"
+			],
+			[
+				"la",
+				"lambda\tkeyword"
+			],
+			[
+				"lates",
+				"latestAccounts"
+			],
+			[
+				"scra",
+				"scrapeAccounts\tstatement"
+			],
+			[
+				"latest",
+				"latestAccounts"
+			],
+			[
+				"Scra",
+				"ScraperError\tclass"
+			],
+			[
+				"acc",
+				"accountType"
+			],
+			[
+				"acco",
+				"accounts"
+			],
+			[
+				"late",
+				"latestAccounts\tstatement"
+			],
+			[
+				"activ",
+				"activeAccounts\tstatement"
+			],
+			[
+				"Da",
+				"DataFrame\tclass"
+			],
+			[
+				"_re",
+				"_RetrieveAccounts"
+			],
+			[
+				"cre",
+				"creds\tstatement"
+			],
+			[
+				"mint",
+				"mintapi\tmodule"
+			],
+			[
+				"Scre",
+				"ScraperOptions\tclass"
+			],
+			[
+				"Opt",
+				"Optional"
+			],
+			[
+				"parse",
+				"parse_args\tfunction"
+			],
+			[
+				"Scraper",
+				"ScraperOptions\tclass"
+			],
+			[
+				"show",
+				"showBrowser"
+			],
+			[
+				"Scr",
+				"ScraperOptions\tclass"
+			],
+			[
+				"suff",
+				"suffixIdx"
+			],
+			[
+				"maybeLar",
+				"maybeLargestIndex"
+			],
+			[
+				"binarySe",
+				"binarySearchLargest"
+			],
+			[
+				"maybeSma",
+				"maybeSmallestIndex"
+			],
+			[
+				"binar",
+				"binarySearchSmallest"
+			],
+			[
+				"star",
+				"startIndex"
+			],
+			[
+				"suf",
+				"suffixArr"
+			],
+			[
+				"suffixA",
+				"suffixArr"
+			],
+			[
+				"suffixAr",
+				"SuffixArray"
+			],
+			[
+				"reduc",
+				"reducedSuffixArray"
+			],
+			[
+				"charI",
+				"charIndeces"
+			],
+			[
+				"chari",
+				"charIdx"
+			],
+			[
+				"out",
+				"output"
+			],
+			[
+				"lms",
+				"lmsIndexes"
+			],
+			[
+				"Suf",
+				"SuffixArray"
+			],
+			[
+				"charCo",
+				"charCountAndIndex"
+			],
+			[
+				"Suffix",
+				"SuffixArray"
+			],
+			[
+				"char",
+				"character"
+			],
+			[
+				"suffix",
+				"suffix"
+			],
+			[
+				"reduced",
+				"reducedString"
+			],
+			[
+				"redu",
+				"reducedString"
+			],
+			[
+				"blockIn",
+				"blockIndex"
+			],
+			[
+				"blockInde",
+				"blockIndexes"
+			],
+			[
+				"textId",
+				"textIdx2"
+			],
+			[
+				"textI",
+				"textIdx1"
+			],
+			[
+				"currBl",
+				"currBlockIndex"
+			],
+			[
+				"currBlo",
+				"currBlockTextIdx"
+			],
+			[
+				"currB",
+				"currBlockTextIdx"
+			],
+			[
+				"parit",
+				"partiallySortedSuffixArray"
+			],
+			[
+				"partia",
+				"partiallySortedSuffixArray"
+			],
+			[
+				"sufi",
+				"suffixes"
+			],
+			[
+				"lmsS",
+				"lmsSuffixIndex"
+			],
+			[
+				"empty",
+				"emptyRanges"
+			],
+			[
+				"lmsSu",
+				"lmsSuffixIndexes"
+			],
+			[
+				"lm",
+				"lmsSuffixIndex"
+			],
+			[
+				"Suff",
+				"SuffixTag"
+			],
+			[
+				"inter",
+				"intervalMap"
+			],
+			[
+				"i",
+				"i"
+			],
+			[
+				"cha",
+				"character"
+			],
+			[
+				"first",
+				"firstOccurrence"
+			],
+			[
+				"firs",
+				"firstOccurrence"
+			],
+			[
+				"left",
+				"leftMostSTypeIndexes"
+			],
+			[
+				"ele",
+				"elems_"
+			],
+			[
+				"Hy",
+				"HybridRMQ"
+			],
+			[
+				"num",
+				"numElems_"
+			],
+			[
+				"el",
+				"elems"
+			],
+			[
+				"numE",
+				"numElems"
+			],
+			[
+				"right",
+				"rightIndex"
+			],
+			[
+				"righ",
+				"rightIndex"
+			],
+			[
+				"lowBlo",
+				"lowBlockStart"
+			],
+			[
+				"high",
+				"highBlockStart"
+			],
+			[
+				"hig",
+				"highBlock"
+			],
+			[
+				"lowBl",
+				"lowBlockStart"
+			],
+			[
+				"block",
+				"blockSize_"
+			],
+			[
+				"leafR",
+				"leafRMQs_"
+			],
+			[
+				"low",
+				"lowBlock"
+			],
+			[
+				"car",
+				"cartesianNumber"
+			],
+			[
+				"h",
+				"high"
+			],
+			[
+				"hi",
+				"highBlock"
+			],
+			[
+				"em",
+				"elems_"
+			],
+			[
+				"elems",
+				"elems_"
+			],
+			[
+				"bloc",
+				"blockMinimums_"
+			],
+			[
+				"blockMi",
+				"blockMinimums_"
+			],
+			[
+				"nu",
+				"numElems"
+			],
+			[
+				"pow",
+				"powersOfTwo_"
+			],
+			[
+				"powers",
+				"powersOfTwo_"
+			],
+			[
+				"prevS",
+				"prevSizeStartIndex"
+			],
+			[
+				"spac",
+				"spaceNeeded"
+			],
+			[
+				"ne",
+				"nextPowerOfTwo"
+			],
+			[
+				"larg",
+				"largestPowerOfTwo_"
+			],
+			[
+				"poe",
+				"powersOfTwo"
+			],
+			[
+				"power",
+				"powerOfTwo"
+			],
+			[
+				"prec",
+				"precomputed_rmq_"
+			],
+			[
+				"prev",
+				"prevSizeStartIndex"
+			],
+			[
+				"nm",
+				"numElems_"
+			],
+			[
+				"pre",
+				"precomputed_rmq_"
+			],
+			[
+				"log",
+				"log2"
+			],
+			[
+				"RMQ",
+				"RMQEntry"
+			],
+			[
+				"second_",
+				"second_min_left"
+			],
+			[
+				"second",
+				"second_min_in"
+			],
+			[
+				"a",
+				"array"
+			],
+			[
+				"size",
+				"size_of"
+			],
+			[
+				"N",
+				"NULL"
+			],
+			[
+				"add_com",
+				"add_common_setup_args\tfunction"
+			],
+			[
+				"context_id",
+				"context_idxs\tstatement"
+			],
+			[
+				"ques_cha",
+				"ques_char_idxs"
+			],
+			[
+				"context_cha",
+				"context_char_idx\tstatement"
+			],
+			[
+				"context_char_",
+				"context_char_idxs"
+			],
+			[
+				"context_d",
+				"context_idxs\tstatement"
+			],
+			[
+				"ques",
+				"ques_idx\tstatement"
+			],
+			[
+				"proce",
+				"processing_question\tstatement"
+			],
+			[
+				"se",
+				"segment\tstatement"
+			],
+			[
+				"inp",
+				"input_ids"
+			],
+			[
+				"seg",
+				"segment_ids"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "terra-ai.sublime-project",
+			"settings":
+			{
+				"buffer_size": 548,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "game_runner.py",
+			"settings":
+			{
+				"buffer_size": 1437,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "core/faction.py",
+			"settings":
+			{
+				"buffer_size": 8721,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "import unittest\n\nfrom simulation.core import common\nfrom simulation.core import faction\n\n\nclass TestHalflingFaction(unittest.TestCase):\n  def testHalflingCreation(self) -> None:\n    halfling = faction.Halflings()\n\n  def testStartingResources(self) -> None:\n    halfling = faction.Halflings()\n\n    self.assertEqual(halfling.HomeTerrain(), common.Terrain.PLAIN)\n    self.assertEqual(halfling.StartingPower(), {\n        common.PowerBowl.I: 3,\n        common.PowerBowl.II: 9,\n        common.PowerBowl.III: 0\n    })\n    self.assertEqual(halfling.StartingResources(),\n                     common.Resources(workers=3, coins=15))\n    self.assertEqual(\n        {\n            common.CultTrack.EARTH: 1,\n            common.CultTrack.AIR: 1,\n            common.CultTrack.WATER: 0,\n            common.CultTrack.FIRE: 0\n        }, halfling.StartingCultPositions())\n    self.assertEqual(halfling.StartingShipping(), 0)\n\n  def testStructureCost(self) -> None:\n    halfling = faction.Halflings()\n\n    # Dwelling.\n    self.assertEqual(\n        halfling.StructureCost(common.Structure.DWELLING,\n                               adjacentEnemyStructure=False),\n        common.Resources(workers=1, coins=2))\n    self.assertEqual(\n        halfling.StructureCost(common.Structure.DWELLING,\n                               adjacentEnemyStructure=True),\n        common.Resources(workers=1, coins=2))\n\n    # Trading post.\n    self.assertEqual(\n        halfling.StructureCost(common.Structure.TRADING_POST,\n                               adjacentEnemyStructure=False),\n        common.Resources(workers=2, coins=6))\n    self.assertEqual(\n        halfling.StructureCost(common.Structure.TRADING_POST,\n                               adjacentEnemyStructure=True),\n        common.Resources(workers=2, coins=3))\n\n    # Stronghold\n    self.assertEqual(\n        halfling.StructureCost(common.Structure.STRONGHOLD,\n                               adjacentEnemyStructure=False),\n        common.Resources(workers=4, coins=8))\n    self.assertEqual(\n        halfling.StructureCost(common.Structure.STRONGHOLD,\n                               adjacentEnemyStructure=True),\n        common.Resources(workers=4, coins=8))\n\n    # Temple.\n    self.assertEqual(\n        halfling.StructureCost(common.Structure.TEMPLE,\n                               adjacentEnemyStructure=False),\n        common.Resources(workers=2, coins=5))\n    self.assertEqual(\n        halfling.StructureCost(common.Structure.TEMPLE,\n                               adjacentEnemyStructure=True),\n        common.Resources(workers=2, coins=5))\n\n    # Sanctuary.\n    self.assertEqual(\n        halfling.StructureCost(common.Structure.SANCTUARY,\n                               adjacentEnemyStructure=False),\n        common.Resources(workers=4, coins=6))\n    self.assertEqual(\n        halfling.StructureCost(common.Structure.SANCTUARY,\n                               adjacentEnemyStructure=True),\n        common.Resources(workers=4, coins=6))\n\n  def testIncomeForStructures(self) -> None:\n    halfling = faction.Halflings()\n\n    # tests SH + SA + DW income.\n    self.assertEqual(\n        halfling.IncomeForStructures({\n            common.Structure.DWELLING: 4,\n            common.Structure.STRONGHOLD: 1,\n            common.Structure.SANCTUARY: 1\n        }), common.Income(workers=(4 + 1), priests=1, power=2))\n\n    # Tests last DW does not give income + TP + TE income\n    self.assertEqual(\n        halfling.IncomeForStructures({\n            common.Structure.DWELLING: 8,\n            common.Structure.TRADING_POST: 3,\n            common.Structure.TEMPLE: 1\n        }), common.Income(workers=8, priests=1, coins=6, power=4))\n\n\nclass TestEngineerFaction(unittest.TestCase):\n  def testEngineerCreation(self) -> None:\n    engineer = faction.Engineers()\n\n  def testStartingResources(self) -> None:\n    engineer = faction.Engineers()\n\n    self.assertEqual(engineer.HomeTerrain(), common.Terrain.MOUNTAIN)\n    self.assertEqual(engineer.StartingPower(), {\n        common.PowerBowl.I: 3,\n        common.PowerBowl.II: 9,\n        common.PowerBowl.III: 0\n    })\n    self.assertEqual(engineer.StartingResources(),\n                     common.Resources(workers=2, coins=10))\n    self.assertEqual(\n        {\n            common.CultTrack.AIR: 0,\n            common.CultTrack.WATER: 0,\n            common.CultTrack.FIRE: 0,\n            common.CultTrack.EARTH: 0\n        }, engineer.StartingCultPositions())\n    self.assertEqual(engineer.StartingShipping(), 0)\n\n  def testStructureCost(self) -> None:\n    engineer = faction.Engineers()\n\n    # Dwelling.\n    self.assertEqual(\n        engineer.StructureCost(common.Structure.DWELLING,\n                               adjacentEnemyStructure=False),\n        common.Resources(workers=1, coins=1))\n    self.assertEqual(\n        engineer.StructureCost(common.Structure.DWELLING,\n                               adjacentEnemyStructure=True),\n        common.Resources(workers=1, coins=1))\n\n    # Trading post.\n    self.assertEqual(\n        engineer.StructureCost(common.Structure.TRADING_POST,\n                               adjacentEnemyStructure=False),\n        common.Resources(workers=1, coins=4))\n    self.assertEqual(\n        engineer.StructureCost(common.Structure.TRADING_POST,\n                               adjacentEnemyStructure=True),\n        common.Resources(workers=1, coins=2))\n\n    # Stronghold\n    self.assertEqual(\n        engineer.StructureCost(common.Structure.STRONGHOLD,\n                               adjacentEnemyStructure=False),\n        common.Resources(workers=3, coins=6))\n    self.assertEqual(\n        engineer.StructureCost(common.Structure.STRONGHOLD,\n                               adjacentEnemyStructure=True),\n        common.Resources(workers=3, coins=6))\n\n    # Temple.\n    self.assertEqual(\n        engineer.StructureCost(common.Structure.TEMPLE,\n                               adjacentEnemyStructure=False),\n        common.Resources(workers=1, coins=4))\n    self.assertEqual(\n        engineer.StructureCost(common.Structure.TEMPLE,\n                               adjacentEnemyStructure=True),\n        common.Resources(workers=1, coins=4))\n\n    # Sanctuary.\n    self.assertEqual(\n        engineer.StructureCost(common.Structure.SANCTUARY,\n                               adjacentEnemyStructure=False),\n        common.Resources(workers=3, coins=6))\n    self.assertEqual(\n        engineer.StructureCost(common.Structure.SANCTUARY,\n                               adjacentEnemyStructure=True),\n        common.Resources(workers=3, coins=6))\n\n  def testIncomeForStructures(self) -> None:\n    engineer = faction.Engineers()\n\n    # tests SH + SA + DW income, with 1 DW incoming missing.\n    self.assertEqual(\n        engineer.IncomeForStructures({\n            common.Structure.DWELLING: 4,\n            common.Structure.STRONGHOLD: 1,\n            common.Structure.SANCTUARY: 1\n        }), common.Income(workers=3, priests=1, power=2))\n\n    # Test TP + TE income, extra power.\n    self.assertEqual(\n        engineer.IncomeForStructures({\n            common.Structure.TRADING_POST: 3,\n            common.Structure.TEMPLE: 2\n        }), common.Income(priests=1, coins=6, power=9))\n\n\nclass TestFactionModule(unittest.TestCase):\n  def testAllFactions(self) -> None:\n    # A change detector test when someone tries to add more factions.\n    self.assertEqual(len(faction.all_available()), 2)\n",
+			"file": "core/faction_test.py",
+			"file_size": 7342,
+			"file_write_time": 132051377930000000,
+			"settings":
+			{
+				"buffer_size": 7343,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "interface/io.py",
+			"settings":
+			{
+				"buffer_size": 1277,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "interface/terminal.py",
+			"settings":
+			{
+				"buffer_size": 4506,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "{\".class\": \"MypyFile\", \"_fullname\": \"simulation.interface.io\", \"is_partial_stub_package\": false, \"is_stub\": false, \"names\": {\".class\": \"SymbolTable\", \"IO\": {\".class\": \"SymbolTableNode\", \"kind\": \"Gdef\", \"node\": {\".class\": \"TypeInfo\", \"_promote\": null, \"abstract_attributes\": [\"display_bonus_cards\", \"display_scoring_tiles\", \"InformInitialDwellingPlacement\", \"InvalidInput\", \"RequestBonusCardSelection\", \"RequestLocation\", \"request_number_of_players\", \"request_player_factions\", \"request_player_names\", \"welcome_message\"], \"bases\": [\"abc.ABC\"], \"declared_metaclass\": null, \"defn\": {\".class\": \"ClassDef\", \"fullname\": \"simulation.interface.io.IO\", \"name\": \"IO\", \"type_vars\": []}, \"flags\": [\"is_abstract\"], \"fullname\": \"simulation.interface.io.IO\", \"metaclass_type\": \"abc.ABCMeta\", \"metadata\": {}, \"module_name\": \"simulation.interface.io\", \"mro\": [\"simulation.interface.io.IO\", \"abc.ABC\", \"builtins.object\"], \"names\": {\".class\": \"SymbolTable\", \"display_bonus_cards\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Decorator\", \"func\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"cards\"], \"flags\": [\"is_decorated\", \"is_abstract\"], \"fullname\": \"simulation.interface.io.IO.display_bonus_cards\", \"name\": \"display_bonus_cards\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"cards\"], \"arg_types\": [\"simulation.interface.io.IO\", {\".class\": \"Instance\", \"args\": [\"simulation.core.common.BonusCard\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"display_bonus_cards of IO\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}, \"is_overload\": false, \"var\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": null, \"name\": \"display_bonus_cards\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"cards\"], \"arg_types\": [\"simulation.interface.io.IO\", {\".class\": \"Instance\", \"args\": [\"simulation.core.common.BonusCard\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"display_bonus_cards of IO\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}}, \"display_scoring_tiles\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Decorator\", \"func\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"tiles\"], \"flags\": [\"is_decorated\", \"is_abstract\"], \"fullname\": \"simulation.interface.io.IO.display_scoring_tiles\", \"name\": \"display_scoring_tiles\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"tiles\"], \"arg_types\": [\"simulation.interface.io.IO\", {\".class\": \"Instance\", \"args\": [\"simulation.core.common.ScoringTile\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"display_scoring_tiles of IO\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}, \"is_overload\": false, \"var\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": null, \"name\": \"display_scoring_tiles\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"tiles\"], \"arg_types\": [\"simulation.interface.io.IO\", {\".class\": \"Instance\", \"args\": [\"simulation.core.common.ScoringTile\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"display_scoring_tiles of IO\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}}, \"InformInitialDwellingPlacement\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Decorator\", \"func\": {\".class\": \"FuncDef\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"flags\": [\"is_decorated\", \"is_abstract\"], \"fullname\": \"simulation.interface.io.IO.InformInitialDwellingPlacement\", \"name\": \"InformInitialDwellingPlacement\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.io.IO\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"InformInitialDwellingPlacement of IO\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}, \"is_overload\": false, \"var\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": null, \"name\": \"InformInitialDwellingPlacement\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.io.IO\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"InformInitialDwellingPlacement of IO\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}}, \"InvalidInput\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Decorator\", \"func\": {\".class\": \"FuncDef\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"flags\": [\"is_decorated\", \"is_abstract\"], \"fullname\": \"simulation.interface.io.IO.InvalidInput\", \"name\": \"InvalidInput\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.io.IO\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"InvalidInput of IO\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}, \"is_overload\": false, \"var\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": null, \"name\": \"InvalidInput\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.io.IO\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"InvalidInput of IO\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}}, \"RequestBonusCardSelection\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Decorator\", \"func\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0, 0], \"arg_names\": [\"self\", \"pl\", \"available\"], \"flags\": [\"is_decorated\", \"is_abstract\"], \"fullname\": \"simulation.interface.io.IO.RequestBonusCardSelection\", \"name\": \"RequestBonusCardSelection\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0, 0], \"arg_names\": [\"self\", \"pl\", \"available\"], \"arg_types\": [\"simulation.interface.io.IO\", \"simulation.core.player.Player\", {\".class\": \"Instance\", \"args\": [\"simulation.core.common.BonusCard\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"RequestBonusCardSelection of IO\", \"ret_type\": \"builtins.int\", \"variables\": []}}, \"is_overload\": false, \"var\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": null, \"name\": \"RequestBonusCardSelection\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0, 0], \"arg_names\": [\"self\", \"pl\", \"available\"], \"arg_types\": [\"simulation.interface.io.IO\", \"simulation.core.player.Player\", {\".class\": \"Instance\", \"args\": [\"simulation.core.common.BonusCard\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"RequestBonusCardSelection of IO\", \"ret_type\": \"builtins.int\", \"variables\": []}}}}, \"RequestLocation\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Decorator\", \"func\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"pl\"], \"flags\": [\"is_decorated\", \"is_abstract\"], \"fullname\": \"simulation.interface.io.IO.RequestLocation\", \"name\": \"RequestLocation\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"pl\"], \"arg_types\": [\"simulation.interface.io.IO\", \"simulation.core.player.Player\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"RequestLocation of IO\", \"ret_type\": {\".class\": \"TupleType\", \"implicit\": false, \"items\": [\"builtins.str\", \"builtins.int\"], \"partial_fallback\": \"simulation.core.board.Position\"}, \"variables\": []}}, \"is_overload\": false, \"var\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": null, \"name\": \"RequestLocation\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"pl\"], \"arg_types\": [\"simulation.interface.io.IO\", \"simulation.core.player.Player\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"RequestLocation of IO\", \"ret_type\": {\".class\": \"TupleType\", \"implicit\": false, \"items\": [\"builtins.str\", \"builtins.int\"], \"partial_fallback\": \"simulation.core.board.Position\"}, \"variables\": []}}}}, \"request_number_of_players\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Decorator\", \"func\": {\".class\": \"FuncDef\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"flags\": [\"is_decorated\", \"is_abstract\"], \"fullname\": \"simulation.interface.io.IO.request_number_of_players\", \"name\": \"request_number_of_players\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.io.IO\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"request_number_of_players of IO\", \"ret_type\": \"builtins.int\", \"variables\": []}}, \"is_overload\": false, \"var\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": null, \"name\": \"request_number_of_players\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.io.IO\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"request_number_of_players of IO\", \"ret_type\": \"builtins.int\", \"variables\": []}}}}, \"request_player_factions\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Decorator\", \"func\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0, 0], \"arg_names\": [\"self\", \"player_names\", \"available\"], \"flags\": [\"is_decorated\", \"is_abstract\"], \"fullname\": \"simulation.interface.io.IO.request_player_factions\", \"name\": \"request_player_factions\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0, 0], \"arg_names\": [\"self\", \"player_names\", \"available\"], \"arg_types\": [\"simulation.interface.io.IO\", {\".class\": \"Instance\", \"args\": [\"builtins.str\"], \"type_ref\": \"builtins.list\"}, {\".class\": \"Instance\", \"args\": [\"simulation.core.faction.Faction\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"request_player_factions of IO\", \"ret_type\": {\".class\": \"Instance\", \"args\": [\"simulation.core.faction.Faction\"], \"type_ref\": \"builtins.list\"}, \"variables\": []}}, \"is_overload\": false, \"var\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": null, \"name\": \"request_player_factions\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0, 0], \"arg_names\": [\"self\", \"player_names\", \"available\"], \"arg_types\": [\"simulation.interface.io.IO\", {\".class\": \"Instance\", \"args\": [\"builtins.str\"], \"type_ref\": \"builtins.list\"}, {\".class\": \"Instance\", \"args\": [\"simulation.core.faction.Faction\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"request_player_factions of IO\", \"ret_type\": {\".class\": \"Instance\", \"args\": [\"simulation.core.faction.Faction\"], \"type_ref\": \"builtins.list\"}, \"variables\": []}}}}, \"request_player_names\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Decorator\", \"func\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"num_players\"], \"flags\": [\"is_decorated\", \"is_abstract\"], \"fullname\": \"simulation.interface.io.IO.request_player_names\", \"name\": \"request_player_names\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"num_players\"], \"arg_types\": [\"simulation.interface.io.IO\", \"builtins.int\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"request_player_names of IO\", \"ret_type\": {\".class\": \"Instance\", \"args\": [\"builtins.str\"], \"type_ref\": \"builtins.list\"}, \"variables\": []}}, \"is_overload\": false, \"var\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": null, \"name\": \"request_player_names\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"num_players\"], \"arg_types\": [\"simulation.interface.io.IO\", \"builtins.int\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"request_player_names of IO\", \"ret_type\": {\".class\": \"Instance\", \"args\": [\"builtins.str\"], \"type_ref\": \"builtins.list\"}, \"variables\": []}}}}, \"welcome_message\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Decorator\", \"func\": {\".class\": \"FuncDef\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"flags\": [\"is_decorated\", \"is_abstract\"], \"fullname\": \"simulation.interface.io.IO.welcome_message\", \"name\": \"welcome_message\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.io.IO\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"welcome_message of IO\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}, \"is_overload\": false, \"var\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": null, \"name\": \"welcome_message\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.io.IO\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"welcome_message of IO\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}}}, \"tuple_type\": null, \"type_vars\": [], \"typeddict_type\": null}}, \"List\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"typing.List\", \"kind\": \"Gdef\"}, \"__doc__\": {\".class\": \"SymbolTableNode\", \"kind\": \"Gdef\", \"node\": {\".class\": \"Var\", \"flags\": [], \"fullname\": \"simulation.interface.io.__doc__\", \"name\": \"__doc__\", \"type\": \"builtins.str\"}}, \"__file__\": {\".class\": \"SymbolTableNode\", \"kind\": \"Gdef\", \"node\": {\".class\": \"Var\", \"flags\": [], \"fullname\": \"simulation.interface.io.__file__\", \"name\": \"__file__\", \"type\": \"builtins.str\"}}, \"__name__\": {\".class\": \"SymbolTableNode\", \"kind\": \"Gdef\", \"node\": {\".class\": \"Var\", \"flags\": [], \"fullname\": \"simulation.interface.io.__name__\", \"name\": \"__name__\", \"type\": \"builtins.str\"}}, \"__package__\": {\".class\": \"SymbolTableNode\", \"kind\": \"Gdef\", \"node\": {\".class\": \"Var\", \"flags\": [], \"fullname\": \"simulation.interface.io.__package__\", \"name\": \"__package__\", \"type\": \"builtins.str\"}}, \"abc\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"abc\", \"kind\": \"Gdef\"}, \"board\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"simulation.core.board\", \"kind\": \"Gdef\"}, \"common\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"simulation.core.common\", \"kind\": \"Gdef\"}, \"faction\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"simulation.core.faction\", \"kind\": \"Gdef\"}, \"player\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"simulation.core.player\", \"kind\": \"Gdef\"}}, \"path\": \"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/terrazero/code/simulation/interface/io.py\"}",
+			"file": "/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/.mypy_cache/3.6/simulation/interface/io.data.json",
+			"file_size": 15780,
+			"file_write_time": 132155848327064836,
+			"settings":
+			{
+				"buffer_size": 15794,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "{\".class\": \"MypyFile\", \"_fullname\": \"simulation.interface.terminal\", \"is_partial_stub_package\": false, \"is_stub\": false, \"names\": {\".class\": \"SymbolTable\", \"Any\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"typing.Any\", \"kind\": \"Gdef\"}, \"CommandLine\": {\".class\": \"SymbolTableNode\", \"kind\": \"Gdef\", \"node\": {\".class\": \"TypeInfo\", \"_promote\": null, \"abstract_attributes\": [], \"bases\": [\"simulation.interface.io.IO\"], \"declared_metaclass\": null, \"defn\": {\".class\": \"ClassDef\", \"fullname\": \"simulation.interface.terminal.CommandLine\", \"name\": \"CommandLine\", \"type_vars\": []}, \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine\", \"metaclass_type\": \"abc.ABCMeta\", \"metadata\": {}, \"module_name\": \"simulation.interface.terminal\", \"mro\": [\"simulation.interface.terminal.CommandLine\", \"simulation.interface.io.IO\", \"abc.ABC\", \"builtins.object\"], \"names\": {\".class\": \"SymbolTable\", \"display_bonus_cards\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"cards\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.display_bonus_cards\", \"name\": \"display_bonus_cards\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"cards\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", {\".class\": \"Instance\", \"args\": [\"simulation.core.common.BonusCard\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"display_bonus_cards of CommandLine\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}, \"display_scoring_tiles\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"tiles\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.display_scoring_tiles\", \"name\": \"display_scoring_tiles\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"tiles\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", {\".class\": \"Instance\", \"args\": [\"simulation.core.common.ScoringTile\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"display_scoring_tiles of CommandLine\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}, \"InformInitialDwellingPlacement\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.InformInitialDwellingPlacement\", \"name\": \"InformInitialDwellingPlacement\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"InformInitialDwellingPlacement of CommandLine\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}, \"InvalidInput\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.InvalidInput\", \"name\": \"InvalidInput\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"InvalidInput of CommandLine\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}, \"MAX_INPUT_CHARS\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"Var\", \"flags\": [\"is_initialized_in_class\"], \"fullname\": \"simulation.interface.terminal.CommandLine.MAX_INPUT_CHARS\", \"name\": \"MAX_INPUT_CHARS\", \"type\": \"builtins.int\"}}, \"RequestBonusCardSelection\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0, 0], \"arg_names\": [\"self\", \"pl\", \"available\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.RequestBonusCardSelection\", \"name\": \"RequestBonusCardSelection\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0, 0], \"arg_names\": [\"self\", \"pl\", \"available\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", \"simulation.core.player.Player\", {\".class\": \"Instance\", \"args\": [\"simulation.core.common.BonusCard\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"RequestBonusCardSelection of CommandLine\", \"ret_type\": \"builtins.int\", \"variables\": []}}}, \"RequestLocation\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"pl\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.RequestLocation\", \"name\": \"RequestLocation\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"pl\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", \"simulation.core.player.Player\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"RequestLocation of CommandLine\", \"ret_type\": {\".class\": \"TupleType\", \"implicit\": false, \"items\": [\"builtins.str\", \"builtins.int\"], \"partial_fallback\": \"simulation.core.board.Position\"}, \"variables\": []}}}, \"request_number_of_players\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.request_number_of_players\", \"name\": \"request_number_of_players\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"request_number_of_players of CommandLine\", \"ret_type\": \"builtins.int\", \"variables\": []}}}, \"request_player_factions\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0, 0], \"arg_names\": [\"self\", \"player_names\", \"available\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.request_player_factions\", \"name\": \"request_player_factions\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0, 0], \"arg_names\": [\"self\", \"player_names\", \"available\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", {\".class\": \"Instance\", \"args\": [\"builtins.str\"], \"type_ref\": \"builtins.list\"}, {\".class\": \"Instance\", \"args\": [\"simulation.core.faction.Faction\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"request_player_factions of CommandLine\", \"ret_type\": {\".class\": \"Instance\", \"args\": [\"simulation.core.faction.Faction\"], \"type_ref\": \"builtins.list\"}, \"variables\": []}}}, \"request_player_names\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"num_players\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.request_player_names\", \"name\": \"request_player_names\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"num_players\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", \"builtins.int\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"request_player_names of CommandLine\", \"ret_type\": {\".class\": \"Instance\", \"args\": [\"builtins.str\"], \"type_ref\": \"builtins.list\"}, \"variables\": []}}}, \"welcome_message\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.welcome_message\", \"name\": \"welcome_message\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"welcome_message of CommandLine\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}, \"_DisplayFactions\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"factions\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine._DisplayFactions\", \"name\": \"_DisplayFactions\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"factions\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", {\".class\": \"Instance\", \"args\": [\"simulation.core.faction.Faction\"], \"type_ref\": \"builtins.list\"}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"_DisplayFactions of CommandLine\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}, \"_DisplayMessage\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"msg\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine._DisplayMessage\", \"name\": \"_DisplayMessage\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"msg\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", \"builtins.str\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"_DisplayMessage of CommandLine\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}, \"_DisplayPrintableValue\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"value\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine._DisplayPrintableValue\", \"name\": \"_DisplayPrintableValue\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"value\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", {\".class\": \"AnyType\", \"missing_import_name\": null, \"source_any\": null, \"type_of_any\": 2}], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"_DisplayPrintableValue of CommandLine\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}, \"_NamePrefix\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"pl\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine._NamePrefix\", \"name\": \"_NamePrefix\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"pl\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", \"simulation.core.player.Player\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"_NamePrefix of CommandLine\", \"ret_type\": \"builtins.str\", \"variables\": []}}}, \"_RequestInteger\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"message\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine._RequestInteger\", \"name\": \"_RequestInteger\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"message\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", \"builtins.str\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"_RequestInteger of CommandLine\", \"ret_type\": \"builtins.int\", \"variables\": []}}}, \"_RequestString\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"message\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine._RequestString\", \"name\": \"_RequestString\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0, 0], \"arg_names\": [\"self\", \"message\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\", \"builtins.str\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"_RequestString of CommandLine\", \"ret_type\": \"builtins.str\", \"variables\": []}}}, \"_VerticalSpace\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine._VerticalSpace\", \"name\": \"_VerticalSpace\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"_VerticalSpace of CommandLine\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}, \"__init__\": {\".class\": \"SymbolTableNode\", \"kind\": \"Mdef\", \"node\": {\".class\": \"FuncDef\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"flags\": [], \"fullname\": \"simulation.interface.terminal.CommandLine.__init__\", \"name\": \"__init__\", \"type\": {\".class\": \"CallableType\", \"arg_kinds\": [0], \"arg_names\": [\"self\"], \"arg_types\": [\"simulation.interface.terminal.CommandLine\"], \"bound_args\": [], \"def_extras\": {\"first_arg\": \"self\"}, \"fallback\": \"builtins.function\", \"implicit\": false, \"is_ellipsis_args\": false, \"name\": \"__init__ of CommandLine\", \"ret_type\": {\".class\": \"NoneTyp\"}, \"variables\": []}}}}, \"tuple_type\": null, \"type_vars\": [], \"typeddict_type\": null}}, \"List\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"typing.List\", \"kind\": \"Gdef\"}, \"Optional\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"typing.Optional\", \"kind\": \"Gdef\"}, \"Set\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"typing.Set\", \"kind\": \"Gdef\"}, \"__doc__\": {\".class\": \"SymbolTableNode\", \"kind\": \"Gdef\", \"node\": {\".class\": \"Var\", \"flags\": [], \"fullname\": \"simulation.interface.terminal.__doc__\", \"name\": \"__doc__\", \"type\": \"builtins.str\"}}, \"__file__\": {\".class\": \"SymbolTableNode\", \"kind\": \"Gdef\", \"node\": {\".class\": \"Var\", \"flags\": [], \"fullname\": \"simulation.interface.terminal.__file__\", \"name\": \"__file__\", \"type\": \"builtins.str\"}}, \"__name__\": {\".class\": \"SymbolTableNode\", \"kind\": \"Gdef\", \"node\": {\".class\": \"Var\", \"flags\": [], \"fullname\": \"simulation.interface.terminal.__name__\", \"name\": \"__name__\", \"type\": \"builtins.str\"}}, \"__package__\": {\".class\": \"SymbolTableNode\", \"kind\": \"Gdef\", \"node\": {\".class\": \"Var\", \"flags\": [], \"fullname\": \"simulation.interface.terminal.__package__\", \"name\": \"__package__\", \"type\": \"builtins.str\"}}, \"board\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"simulation.core.board\", \"kind\": \"Gdef\"}, \"common\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"simulation.core.common\", \"kind\": \"Gdef\"}, \"faction\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"simulation.core.faction\", \"kind\": \"Gdef\"}, \"io\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"simulation.interface.io\", \"kind\": \"Gdef\"}, \"player\": {\".class\": \"SymbolTableNode\", \"cross_ref\": \"simulation.core.player\", \"kind\": \"Gdef\"}}, \"path\": \"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/terrazero/code/simulation/interface/terminal.py\"}",
+			"file": "/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/.mypy_cache/3.6/simulation/interface/terminal.data.json",
+			"file_size": 15551,
+			"file_write_time": 132155848336273717,
+			"settings":
+			{
+				"buffer_size": 15559,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Traditional"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Script Builder"
+				]
+			],
+			[
+				"Packages/LaTeXTools/LaTeX.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"anaconda: lint",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"linter",
+				"SublimeLinter: Toggle Highlights"
+			],
+			[
+				"lint",
+				"SublimeLinter: Show Line Errors"
+			],
+			[
+				"sublimeLinter",
+				"Preferences: SublimeLinter Settings"
+			],
+			[
+				"Linter",
+				"SublimeLinter: Show All Errors"
+			],
+			[
+				"format",
+				"SublimeAStyleFormatter: Format Current File"
+			],
+			[
+				"Latex",
+				"Build With: LaTeX - Script Builder"
+			],
+			[
+				"prv",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"pyyap",
+				"PyYapf: Format Document"
+			],
+			[
+				"py",
+				"Set Syntax: Python"
+			],
+			[
+				"Remove ",
+				"Package Control: Remove Package"
+			],
+			[
+				"Goto Def",
+				"Anaconda: Goto object definition"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install p",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Install Package Control"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 190.0,
+		"history":
+		[
+			"print('Configured Interpreter: {}'.format(get_settings(view, 'python_interpreter')))",
+			"print('In use Interpreter for view {}: {}'.format(view.file_name(), Market.get(Market, window.id()).interpreter.raw_interpreter))",
+			"print('Configured Interpreter: {}'.format(get_settings(view, 'python_interpreter')))",
+			"from Anaconda.anaconda_lib.workers.market import Market",
+			"from Anaconda.anaconda_lib.helpers import get_settings",
+			"import socket; socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((\"localhost\", 9999))",
+			"import socket; socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((\"localhost\", 57638))",
+			"import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect(('localhost', 1234)); s.send(bytes('Hello World!\\n', 'utf8')); s.close()",
+			"subprocess.check_call([interpreter, '-c', 'pass'])",
+			"interpreter = helpers.get_settings(view, 'python_interpreter')",
+			"from Anaconda.anaconda_lib import helpers; import subprocess",
+			"import socket; socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((\"localhost\", 53946))"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/simulation"
+	],
+	"file_history":
+	[
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/.mypy_cache/3.6/simulation/core/faction.data.json",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/simulation/core/player_test.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/simulation/core/gameplay_test.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/simulation/core/gameplay.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/.mypy_cache/3.6/simulation/core/player_test.data.json",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/.mypy_cache/3.6/simulation/core/gameplay.data.json",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/simulation/interface/terminal.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/simulation/game_runner.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/terra-ia.sublime-project",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/development/transactions/config.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/development/transactions/scraper.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs251/projects/proj1/Q3b.py",
+		"/Users/nautilik/Library/Application Support/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/notebook/data.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/notebook/snellman/terra-ai.sublime-project",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/play.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/notebook/snellman/games.input",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/development/transactions/run.sh",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/ee263/homework/hw5/data/sector_neutral_portfolio_data.m",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/terrazero/code/simulation/__init__.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/terrazero/code/simulation/core/board.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/terrazero/code/simulation/core/__init__.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/terrazero/code/simulation/interface/__init__.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/midterm/midterm.tex",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps0/Makefile",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/README",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/PrecomputedRMQ.h",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/PrecomputedRMQ.cpp",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/SparseTableRMQ.cpp",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/RunTests.cpp",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/FischerHeunRMQ.h",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/FischerHeunRMQ.cpp",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/HybridRMQ.h",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/HybridRMQ.cpp",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/Makefile",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/FastestRMQ.h",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/FastestRMQ.cpp",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/pset1/submission.tex",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/SparseTableRMQ.h",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/RMQEntry.h",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps1/SegmentTreeRMQ.h",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/code/ps0/README",
+		"/Users/nautilik/Library/Application Support/Sublime Text 3/Packages/User/LaTeXTools.sublime-settings",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs166/homework/pset0/submission.tex",
+		"/Users/nautilik/Library/Application Support/Sublime Text 3/Packages/LaTeXTools/LaTeX.sublime-build",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/BERT/run.sh",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/data/train_eval.json",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/setup.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/data/dev-v2.0.json",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/common/egbib.bib",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/progress_report/written.tex",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/BERT/save/bert-base-uncased/predictions-dev.json",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/BERT/examples/run_squad.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/util.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/test.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/args.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/BERT/pytorch_pretrained_bert/modeling.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/setup_bert.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/eval_bert.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/dev_submission.csv",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/BERT/save/bert-base-uncased/predictions.json",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/BERT/setup.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/train.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/layers.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/models.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/a4/utils.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/data/test_eval.json",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/BERT/save/bert-base-uncased/nbest_predictions.json",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/a4/run.sh",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/squad/data/word_emb.json",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/classes/cs224n/homework/project/progress",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/terrazero/notebook/data.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/terrazero/figures/SU_Seal_Red_R_Large.eps",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/certs.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/results.csv",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/errors2.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/links.csv",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/clemson_university.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/beloit_college.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/errors3.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/university_of_minnesota-twin_cities.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/convert.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/errors.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/results.csv",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/harvard_university.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/uc_davis.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/university_of_colorado-boulder.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/scripps_college.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/scripps.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/renseler_polytechnic_institute.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/scripps_college.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/scripts.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/simulation.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/simulation_monopoly.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/tufts.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/worcester_polytechnic_institute.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/uc_merced.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/barnard_college.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/baylor_university.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/out.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/cornell_CDS_2017-2018-v5.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/caltech_cds2017.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/american.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/princeton_cds_2017-2018.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output/test.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/simulation.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/college_extractor/data/output.txt",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/faction.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/common.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/player.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/gameplay.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/common_test.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/gameplay_test.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/player_test.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/faction_test.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/board.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/board_test.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/cult_test.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/cult.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/.anaconda",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/play.py",
+		"/Users/nautilik/Library/Application Support/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/game_runner.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/interface/terminal.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/core/__init__.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/development/transactions/raw_data.csv",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/development/transactions/app.py",
+		"/Users/nautilik/Dropbox/OnlineDocuments/2018/classes/stanford/cs221/project/code/simulation/tests/gameplay_test.py"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 101.0,
+		"where_history":
+		[
+			"/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"AllAvailable",
+			"RequestPlayerFactions",
+			"DisplayBonusCards",
+			"DisplayScoringTiles",
+			"SelectGameBonusCards",
+			"SelectGameScoringTiles",
+			"RequestPlayerNames",
+			"RequestNumberOfPlayers",
+			"WelcomeMessage",
+			"incomePhase",
+			"IncomePhase",
+			"InitializeBonusCards",
+			"InitializeDwellings",
+			"_InitGame",
+			"NUM_ROUNDS"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"all_available",
+			"request_player_factions",
+			"display_bonus_cards",
+			"display_scoring_tiles",
+			"select_game_bonus_cards",
+			"select_game_scoring_tiles",
+			"request_player_names",
+			"request_number_of_players",
+			"welcome_message",
+			"income_phase",
+			"initialize_bonus_cards",
+			"initialize_dwellings"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "terra-ai.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 548,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								548,
+								548
+							]
+						],
+						"settings":
+						{
+							"SL.148.region_keys":
+							[
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "game_runner.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1437,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								628,
+								628
+							]
+						],
+						"settings":
+						{
+							"SL.150.region_keys":
+							[
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "core/faction.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8721,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								517,
+								517
+							]
+						],
+						"settings":
+						{
+							"SL.166.region_keys":
+							[
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 619.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "core/faction_test.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7343,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"SL.167.region_keys":
+							[
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "interface/io.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1277,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"SL.162.region_keys":
+							[
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "interface/terminal.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4506,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"SL.163.region_keys":
+							[
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/.mypy_cache/3.6/simulation/interface/io.data.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15794,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/Users/nautilik/Dropbox/OnlineDocuments/2019/development/terrazero/code/.mypy_cache/3.6/simulation/interface/terminal.data.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15559,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 108.0
+	},
+	"output.anaconda_documentation":
+	{
+		"height": 108.0
+	},
+	"output.astyle_error_message":
+	{
+		"height": 0.0
+	},
+	"output.exec":
+	{
+		"height": 120.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.latextools":
+	{
+		"height": 179.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/LaTeXTools/LaTeX.sublime-build",
+	"project": "terra-ai.sublime-project",
+	"replace":
+	{
+		"height": 70.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"termina",
+				"simulation/interface/terminal.py"
+			],
+			[
+				"game_run",
+				"simulation/game_runner.py"
+			],
+			[
+				"trans",
+				"docs/transactions.py"
+			],
+			[
+				"alice",
+				"alice_private_split.json"
+			],
+			[
+				"swa",
+				"swap.py"
+			],
+			[
+				"split",
+				"lib/split_test_coins.py"
+			],
+			[
+				"data.p",
+				"notebook/data.py"
+			],
+			[
+				"run",
+				"run.sh"
+			],
+			[
+				"config",
+				"config.py"
+			],
+			[
+				"scr",
+				"scraper.py"
+			],
+			[
+				"sect",
+				"hw5/data/sector_neutral_portfolio_data.m"
+			],
+			[
+				"confi",
+				"config.py"
+			],
+			[
+				"test",
+				"code/test.sh"
+			],
+			[
+				"board_test.",
+				"code/simulation/core/board_test.py"
+			],
+			[
+				"board.",
+				"code/simulation/core/board.py"
+			],
+			[
+				"board_test",
+				"code/simulation/core/board_test.py"
+			],
+			[
+				"term",
+				"code/simulation/interface/terminal.py"
+			],
+			[
+				"gamepl",
+				"code/simulation/core/gameplay_test.py"
+			],
+			[
+				"player_test",
+				"code/simulation/core/player_test.py"
+			],
+			[
+				"common_test",
+				"code/simulation/core/common_test.py"
+			],
+			[
+				"gamepla",
+				"code/simulation/core/gameplay.py"
+			],
+			[
+				"gameplay",
+				"code/simulation/core/gameplay_test.py"
+			],
+			[
+				"gameplay_test",
+				"code/simulation/core/gameplay_test.py"
+			],
+			[
+				"cult_test",
+				"code/simulation/core/cult_test.py"
+			],
+			[
+				"faction_Test",
+				"code/simulation/core/faction_test.py"
+			],
+			[
+				"player.py",
+				"code/simulation/core/player.py"
+			],
+			[
+				"board.py",
+				"code/simulation/core/board.py"
+			],
+			[
+				"faction",
+				"code/simulation/core/faction.py"
+			],
+			[
+				"",
+				"code/simulation/core/board.py"
+			],
+			[
+				"commno",
+				"code/simulation/core/common.py"
+			],
+			[
+				"midter",
+				"midterm/midterm.tex"
+			],
+			[
+				"sais",
+				"code/ps2/SAIS.cpp"
+			],
+			[
+				"sear",
+				"code/ps2/Search.cpp"
+			],
+			[
+				"testSa",
+				"code/ps2/TestSAIS.cpp"
+			],
+			[
+				"make",
+				"code/ps0/Makefile"
+			],
+			[
+				"fas",
+				"code/ps1/FastestRMQ.cpp"
+			],
+			[
+				"runtes",
+				"code/ps1/RunTests.cpp"
+			],
+			[
+				"makefil",
+				"code/ps1/Makefile"
+			],
+			[
+				"Make",
+				"code/ps0/Makefile"
+			],
+			[
+				"precom",
+				"code/ps1/PrecomputedRMQ.cpp"
+			],
+			[
+				"preco",
+				"code/ps1/PrecomputedRMQ.h"
+			],
+			[
+				"fis",
+				"code/ps1/FischerHeunRMQ.h"
+			],
+			[
+				"hybr",
+				"code/ps1/HybridRMQ.cpp"
+			],
+			[
+				"rmq",
+				"code/ps1/RMQEntry.h"
+			],
+			[
+				"spa",
+				"code/ps1/SparseTableRMQ.h"
+			],
+			[
+				"READM",
+				"code/ps1/README"
+			],
+			[
+				"READ",
+				"code/ps0/README"
+			],
+			[
+				"run.sh",
+				"BERT/run.sh"
+			],
+			[
+				"nips",
+				"common/nips_2018.sty"
+			],
+			[
+				"eval",
+				"squad/eval_bert.py"
+			],
+			[
+				".bib",
+				"common/egbib.bib"
+			],
+			[
+				"run_s",
+				"BERT/examples/run_squad.py"
+			],
+			[
+				"run_sq",
+				"BERT/examples/run_squad.py"
+			],
+			[
+				"run_",
+				"BERT/examples/run_squad.py"
+			],
+			[
+				"setu",
+				"squad/setup.py"
+			],
+			[
+				"setup.",
+				"squad/setup.py"
+			],
+			[
+				"args",
+				"squad/args.py"
+			],
+			[
+				"set",
+				"squad/setup.py"
+			],
+			[
+				"train_ev",
+				"squad/data/train_eval.json"
+			],
+			[
+				"run.",
+				"BERT/run.sh"
+			],
+			[
+				"setp",
+				"squad/setup.py"
+			],
+			[
+				"laye",
+				"squad/layers.py"
+			],
+			[
+				"uti",
+				"squad/util.py"
+			],
+			[
+				"model",
+				"BERT/pytorch_pretrained_bert/modeling.py"
+			],
+			[
+				"ar",
+				"squad/args.py"
+			],
+			[
+				"setup",
+				"squad/setup.py"
+			],
+			[
+				"setup_ber",
+				"squad/setup_bert.py"
+			],
+			[
+				"dev",
+				"squad/data/dev-v2.0.json"
+			],
+			[
+				"egbib",
+				"project/common/egbib.bib"
+			],
+			[
+				"dev-",
+				"project/squad/data/dev-v2.0.json"
+			],
+			[
+				"dev_sub",
+				"project/dev_submission.csv"
+			],
+			[
+				"setup_be",
+				"project/squad/setup_bert.py"
+			],
+			[
+				"run_squ",
+				"project/BERT/examples/run_squad.py"
+			],
+			[
+				"modeling",
+				"project/BERT/pytorch_pretrained_bert/modeling.py"
+			],
+			[
+				"predi",
+				"project/BERT/save/bert-base-uncased/predictions-dev.json"
+			],
+			[
+				"test.py",
+				"project/squad/test.py"
+			],
+			[
+				"util",
+				"project/squad/util.py"
+			],
+			[
+				"ut",
+				"project/squad/util.py"
+			],
+			[
+				"eval_ber",
+				"project/squad/eval_bert.py"
+			],
+			[
+				"tra",
+				"project/squad/train.py"
+			],
+			[
+				"project/uti",
+				"project/squad/util.py"
+			],
+			[
+				"trai",
+				"project/squad/train.py"
+			],
+			[
+				"eval_",
+				"project/squad/eval_bert.py"
+			],
+			[
+				"test.",
+				"project/squad/test.py"
+			],
+			[
+				"predic",
+				"project/BERT/save/bert-base-uncased/predictions.json"
+			],
+			[
+				"pred",
+				"project/BERT/save/bert-base-uncased/nbest_predictions.json"
+			],
+			[
+				"pr",
+				"project/BERT/save/bert-base-uncased/predictions.json"
+			],
+			[
+				"run.s",
+				"project/BERT/run.sh"
+			],
+			[
+				"train.py",
+				"project/squad/train.py"
+			],
+			[
+				"modeling.py",
+				"project/BERT/pytorch_pretrained_bert/modeling.py"
+			],
+			[
+				"word_em",
+				"project/squad/data/word_emb.json"
+			],
+			[
+				"da",
+				"notebook/data.py"
+			],
+			[
+				"res",
+				"results.csv"
+			],
+			[
+				"erro",
+				"errors.txt"
+			],
+			[
+				"belo",
+				"data/output/beloit_college.txt"
+			],
+			[
+				"links",
+				"data/links.csv"
+			],
+			[
+				"clem",
+				"data/output/clemson_university.txt"
+			],
+			[
+				"twin",
+				"data/output/university_of_minnesota-twin_cities.txt"
+			],
+			[
+				"ln",
+				"data/links.csv"
+			],
+			[
+				"error",
+				"errors3.txt"
+			],
+			[
+				"link",
+				"data/links.csv"
+			],
+			[
+				"colora",
+				"data/output/university_of_colorado-boulder.txt"
+			],
+			[
+				"err",
+				"errors.txt"
+			],
+			[
+				"harvard",
+				"data/output/harvard_university.txt"
+			],
+			[
+				"uc_da",
+				"data/output/uc_davis.txt"
+			],
+			[
+				"sc",
+				"data/output/scripps_college.txt"
+			],
+			[
+				"scrip",
+				"scripts.txt"
+			],
+			[
+				"rense",
+				"data/output/renseler_polytechnic_institute.txt"
+			],
+			[
+				"resul",
+				"data/results.csv"
+			],
+			[
+				"lin",
+				"data/links.csv"
+			],
+			[
+				"conv",
+				"convert.py"
+			],
+			[
+				"conver",
+				"convert.py"
+			],
+			[
+				"cornel",
+				"data/output/cornell_CDS_2017-2018-v5.txt"
+			],
+			[
+				"ou",
+				"out.txt"
+			],
+			[
+				"prin",
+				"data/output/princeton_cds_2017-2018.txt"
+			],
+			[
+				"cal",
+				"data/output/caltech_cds2017.txt"
+			],
+			[
+				"brow",
+				"data/output/brown_2017-2018.txt"
+			],
+			[
+				"out",
+				"out.txt"
+			],
+			[
+				"con",
+				"convert.py"
+			],
+			[
+				"player",
+				"simulation/core/player.py"
+			],
+			[
+				"com",
+				"simulation/core/common.py"
+			],
+			[
+				"game",
+				"simulation/game_runner.py"
+			],
+			[
+				"pla",
+				"play.py"
+			],
+			[
+				"player_",
+				"simulation/core/player_test.py"
+			],
+			[
+				"gam",
+				"simulation/core/gameplay_test.py"
+			],
+			[
+				"common_te",
+				"simulation/core/common_test.py"
+			],
+			[
+				"comm",
+				"simulation/core/common.py"
+			],
+			[
+				"player_t",
+				"simulation/core/player_test.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 181.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

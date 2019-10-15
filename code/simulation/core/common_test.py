@@ -5,19 +5,19 @@ from simulation import utils
 
 
 class TestResources(unittest.TestCase):
-  def testValidation(self) -> None:
-    self.assertTrue(common.Resources().IsValid())
+  def test_validation(self) -> None:
+    self.assertTrue(common.Resources().is_valid())
     self.assertTrue(
-        common.Resources(coins=1, workers=1, bridges=1, priests=1).IsValid())
-    self.assertFalse(common.Resources(coins=-1).IsValid())
+        common.Resources(coins=1, workers=1, bridges=1, priests=1).is_valid())
+    self.assertFalse(common.Resources(coins=-1).is_valid())
 
-  def testForceValid(self) -> None:
+  def test_force_valid(self) -> None:
     invalidResources = common.Resources(coins=-1)
-    self.assertFalse(invalidResources.IsValid())
-    invalidResources.ForceValid()
-    self.assertTrue(invalidResources.IsValid())
+    self.assertFalse(invalidResources.is_valid())
+    invalidResources.force_valid()
+    self.assertTrue(invalidResources.is_valid())
 
-  def tesEqualityOperator(self) -> None:
+  def test_equality_operator(self) -> None:
     self.assertEqual(
         common.Resources(coins=10, workers=1, bridges=2, priests=4),
         common.Resources(coins=10, workers=1, bridges=2, priests=4))
@@ -25,7 +25,7 @@ class TestResources(unittest.TestCase):
         common.Resources(coins=10, workers=1, bridges=2, priests=4),
         common.Resources(coins=10, workers=1, bridges=3, priests=4))
 
-  def testAdditionOperator(self) -> None:
+  def test_addition_operator(self) -> None:
     self.assertEqual(
         common.Resources(workers=1) + common.Resources(workers=2, priests=4),
         common.Resources(workers=3, priests=4))
@@ -37,7 +37,7 @@ class TestResources(unittest.TestCase):
     resources += common.Resources(workers=1)
     self.assertEqual(resources, common.Resources(workers=11))
 
-  def testSubtraction(self) -> None:
+  def test_subtraction(self) -> None:
     self.assertEqual(
         common.Resources(workers=1) - common.Resources(workers=1, priests=4),
         common.Resources(workers=0, priests=-4))
@@ -47,14 +47,14 @@ class TestResources(unittest.TestCase):
 
 
 class TestIncome(unittest.TestCase):
-  def testFunctionsRaiseErrors(self) -> None:
+  def test_functions_raise_errors(self) -> None:
     with self.assertRaises(utils.InternalError):
-      common.Income().IsValid()
+      common.Income().is_valid()
 
     with self.assertRaises(utils.InternalError):
-      common.Income().ForceValid()
+      common.Income().force_valid()
 
-  def tesEqualityOperator(self) -> None:
+  def test_equality_operator(self) -> None:
     self.assertEqual(
         common.Income(coins=10, workers=1, bridges=2, priests=4, power=10),
         common.Income(coins=10, workers=1, bridges=2, priests=4, power=10))
@@ -62,7 +62,7 @@ class TestIncome(unittest.TestCase):
         common.Income(coins=10, workers=1, bridges=2, priests=4, power=4),
         common.Income(coins=10, workers=1, bridges=2, priests=4, power=3))
 
-  def testAdditionOperator(self) -> None:
+  def test_addition_operator(self) -> None:
     self.assertEqual(
         common.Income(power=1) + common.Income(power=2, priests=4),
         common.Income(power=3, priests=4))
@@ -73,7 +73,7 @@ class TestIncome(unittest.TestCase):
     income += common.Income(power=1)
     self.assertEqual(income, common.Income(power=11))
 
-  def testSubtraction(self) -> None:
+  def test_subtraction(self) -> None:
     self.assertEqual(
         common.Income(power=1) - common.Income(power=1, priests=4),
         common.Income(power=0, priests=-4))
@@ -83,64 +83,64 @@ class TestIncome(unittest.TestCase):
 
 
 class TestBonusCard(unittest.TestCase):
-  def testIncomeFromBonusCards(self) -> None:
-    self.assertEqual(common.BonusCard.PRIEST.PlayerIncome(),
+  def test_income_from_bonus_cards(self) -> None:
+    self.assertEqual(common.BonusCard.PRIEST.player_income(),
                      common.Income(priests=1))
-    self.assertEqual(common.BonusCard.WORKER_3POWER.PlayerIncome(),
+    self.assertEqual(common.BonusCard.WORKER_3POWER.player_income(),
                      common.Income(workers=1, power=3))
-    self.assertEqual(common.BonusCard.COIN6.PlayerIncome(),
+    self.assertEqual(common.BonusCard.COIN6.player_income(),
                      common.Income(coins=6))
-    self.assertEqual(common.BonusCard.POWER3_SHIPPING.PlayerIncome(),
+    self.assertEqual(common.BonusCard.POWER3_SHIPPING.player_income(),
                      common.Income(power=3))
-    self.assertEqual(common.BonusCard.SPADE_COIN2.PlayerIncome(),
+    self.assertEqual(common.BonusCard.SPADE_COIN2.player_income(),
                      common.Income(coins=2))
-    self.assertEqual(common.BonusCard.CULT_COIN4.PlayerIncome(),
+    self.assertEqual(common.BonusCard.CULT_COIN4.player_income(),
                      common.Income(coins=4))
-    self.assertEqual(common.BonusCard.DWELLING_COIN2.PlayerIncome(),
+    self.assertEqual(common.BonusCard.DWELLING_COIN2.player_income(),
                      common.Income(coins=2))
-    self.assertEqual(common.BonusCard.TRADING_POST_WORKER.PlayerIncome(),
+    self.assertEqual(common.BonusCard.TRADING_POST_WORKER.player_income(),
                      common.Income(workers=1))
-    self.assertEqual(common.BonusCard.STRONGHOLD_WORKER2.PlayerIncome(),
+    self.assertEqual(common.BonusCard.STRONGHOLD_WORKER2.player_income(),
                      common.Income(workers=2))
 
 
 class TestFavorTile(unittest.TestCase):
   def testIncomeFromFavorTiel(self) -> None:
-    self.assertEqual(common.FavorTile.COIN3_FIRE.PlayerIncome(),
+    self.assertEqual(common.FavorTile.COIN3_FIRE.player_income(),
                      common.Income(coins=3))
-    self.assertEqual(common.FavorTile.WORKER_POWER_EARTH2.PlayerIncome(),
+    self.assertEqual(common.FavorTile.WORKER_POWER_EARTH2.player_income(),
                      common.Income(workers=1, power=1))
-    self.assertEqual(common.FavorTile.POWER4_AIR2.PlayerIncome(),
+    self.assertEqual(common.FavorTile.POWER4_AIR2.player_income(),
                      common.Income(power=4))
-    self.assertEqual(common.FavorTile.TP3VP_WATER.PlayerIncome(),
+    self.assertEqual(common.FavorTile.TP3VP_WATER.player_income(),
                      common.Income())
-    self.assertEqual(common.FavorTile.DWELLING2_EARTH.PlayerIncome(),
+    self.assertEqual(common.FavorTile.DWELLING2_EARTH.player_income(),
                      common.Income())
-    self.assertEqual(common.FavorTile.TP1234_AIR.PlayerIncome(),
+    self.assertEqual(common.FavorTile.TP1234_AIR.player_income(),
                      common.Income())
-    self.assertEqual(common.FavorTile.TOWN_FIRE2.PlayerIncome(),
+    self.assertEqual(common.FavorTile.TOWN_FIRE2.player_income(),
                      common.Income())
-    self.assertEqual(common.FavorTile.CULTACTION_AIR2.PlayerIncome(),
+    self.assertEqual(common.FavorTile.CULTACTION_AIR2.player_income(),
                      common.Income())
-    self.assertEqual(common.FavorTile.FIRE3.PlayerIncome(), common.Income())
-    self.assertEqual(common.FavorTile.WATER3.PlayerIncome(), common.Income())
-    self.assertEqual(common.FavorTile.EARTH3.PlayerIncome(), common.Income())
-    self.assertEqual(common.FavorTile.AIR3.PlayerIncome(), common.Income())
+    self.assertEqual(common.FavorTile.FIRE3.player_income(), common.Income())
+    self.assertEqual(common.FavorTile.WATER3.player_income(), common.Income())
+    self.assertEqual(common.FavorTile.EARTH3.player_income(), common.Income())
+    self.assertEqual(common.FavorTile.AIR3.player_income(), common.Income())
 
 
 class TestStructureUpgrades(unittest.TestCase):
   def testDwellingUpgrades(self) -> None:
     structure = common.Structure.DWELLING
-    self.assertFalse(structure.IsUpgradeableTo(common.Structure.DWELLING))
-    self.assertTrue(structure.IsUpgradeableTo(common.Structure.TRADING_POST))
-    self.assertFalse(structure.IsUpgradeableTo(common.Structure.TEMPLE))
-    self.assertFalse(structure.IsUpgradeableTo(common.Structure.STRONGHOLD))
-    self.assertFalse(structure.IsUpgradeableTo(common.Structure.SANCTUARY))
+    self.assertFalse(structure.is_upgradeable_to(common.Structure.DWELLING))
+    self.assertTrue(structure.is_upgradeable_to(common.Structure.TRADING_POST))
+    self.assertFalse(structure.is_upgradeable_to(common.Structure.TEMPLE))
+    self.assertFalse(structure.is_upgradeable_to(common.Structure.STRONGHOLD))
+    self.assertFalse(structure.is_upgradeable_to(common.Structure.SANCTUARY))
 
   def testTradingPostUpgrades(self) -> None:
     structure = common.Structure.DWELLING
-    self.assertFalse(structure.IsUpgradeableTo(common.Structure.DWELLING))
-    self.assertTrue(structure.IsUpgradeableTo(common.Structure.TRADING_POST))
-    self.assertFalse(structure.IsUpgradeableTo(common.Structure.TEMPLE))
-    self.assertFalse(structure.IsUpgradeableTo(common.Structure.STRONGHOLD))
-    self.assertFalse(structure.IsUpgradeableTo(common.Structure.SANCTUARY))
+    self.assertFalse(structure.is_upgradeable_to(common.Structure.DWELLING))
+    self.assertTrue(structure.is_upgradeable_to(common.Structure.TRADING_POST))
+    self.assertFalse(structure.is_upgradeable_to(common.Structure.TEMPLE))
+    self.assertFalse(structure.is_upgradeable_to(common.Structure.STRONGHOLD))
+    self.assertFalse(structure.is_upgradeable_to(common.Structure.SANCTUARY))

@@ -1,6 +1,6 @@
 import enum
 
-from typing import Any, NamedTuple, TypeVar
+from typing import Any
 
 from simulation import utils
 
@@ -16,11 +16,11 @@ class Resources:
     self.bridges: int = bridges
     self.priests: int = priests
 
-  def IsValid(self: 'Resources') -> int:
+  def is_valid(self: 'Resources') -> int:
     return not (self.coins < 0 or self.workers < 0 or self.bridges < 0
                 or self.priests < 0)
 
-  def ForceValid(self: 'Resources') -> None:
+  def force_valid(self: 'Resources') -> None:
     self.coins = max(0, self.coins)
     self.workers = max(0, self.workers)
     self.bridges = max(0, self.bridges)
@@ -38,7 +38,8 @@ class Resources:
                      priests=self.priests + other.priests)
 
   def __radd__(self: 'Resources', other: 'Resources') -> 'Resources':
-    if other == 0: return self
+    if other == 0:
+      return self
     return self.__add__(other)
 
   def __iadd__(self: 'Resources', other: 'Resources') -> 'Resources':
@@ -55,7 +56,8 @@ class Resources:
                      priests=self.priests - other.priests)
 
   def __rsub__(self: 'Resources', other: 'Resources') -> 'Resources':
-    if other == 0: return self
+    if other == 0:
+      return self
     return self.__sub__(other)
 
   def __isub__(self: 'Resources', other: 'Resources') -> 'Resources':
@@ -67,7 +69,8 @@ class Resources:
 
   def __str__(self: 'Resources') -> str:
     return """
-    Coins: {coins}     Workers: {workers}   Priests: {priests}   Bridges: {bridges}
+    Coins: {coins}     Workers: {workers}
+    Priests: {priests}   Bridges: {bridges}
     """.format(coins=self.coins,
                workers=self.workers,
                priests=self.priests,
@@ -79,10 +82,10 @@ class Income:
     self.resources = Resources(**kwargs)
     self.power = power
 
-  def IsValid(self: 'Income') -> int:
+  def is_valid(self: 'Income') -> int:
     raise utils.InternalError("Income should not be used this way!")
 
-  def ForceValid(self: 'Income') -> None:
+  def force_valid(self: 'Income') -> None:
     raise utils.InternalError("Income should not be used this way!")
 
   def __eq__(self, other: Any) -> bool:
@@ -96,7 +99,8 @@ class Income:
     return newIncome
 
   def __radd__(self: 'Income', other: 'Income') -> 'Income':
-    if other == 0: return self
+    if other == 0:
+      return self
     return self.__add__(other)
 
   def __iadd__(self: 'Income', other: 'Income') -> 'Income':
@@ -111,7 +115,8 @@ class Income:
     return newIncome
 
   def __rsub__(self: 'Income', other: 'Income') -> 'Income':
-    if other == 0: return self
+    if other == 0:
+      return self
     return self.__sub__(other)
 
   def __isub__(self: 'Income', other: 'Income') -> 'Income':
@@ -137,7 +142,7 @@ class Terrain(enum.Enum):
   DESERT = enum.auto()
   WATER = enum.auto()  # BLUE, unbuildable
 
-  def GetColor(self) -> str:
+  def get_color(self) -> str:
     if self == Terrain.PLAIN:
       return "BROWN"
     if self == Terrain.SWAMP:
@@ -158,12 +163,12 @@ class Terrain(enum.Enum):
                                    self.name)
 
   def __str__(self) -> str:
-    return "%s (%s)" % (super(Terrain, self).__str__(), self.GetColor())
+    return "%s (%s)" % (super(Terrain, self).__str__(), self.get_color())
 
 
 @enum.unique
 class PowerBowl(enum.Enum):
-  I = enum.auto()
+  I = enum.auto()  # noqa: E741
   II = enum.auto()
   III = enum.auto()
 
@@ -186,7 +191,7 @@ class TownKey(enum.Enum):
   POWER8 = enum.auto()  # 8 power.
   COIN6 = enum.auto()  # 6 coins.
 
-  def _GetHumanDescription(self) -> str:
+  def _get_human_description(self) -> str:
     if self == TownKey.WOKERS2:
       return "2 immediate workers"
     if self == TownKey.PRIEST:
@@ -202,13 +207,14 @@ class TownKey(enum.Enum):
 
   def __str__(self) -> str:
     return "%s [%s]" % (super(TownKey,
-                              self).__str__(), self._GetHumanDescription())
+                              self).__str__(), self._get_human_description())
 
 
 @enum.unique
 class BonusCard(enum.Enum):
-  """The nine possible bonus cards.  Each one tends to work at each Phase of the game.
-  Phase I is income, Phase II is during gameplay, and Phase III is at end of round.
+  """The nine possible bonus cards.  Each one tends to work at each Phase of
+  the game. Phase I is income, Phase II is during gameplay, and Phase III is at
+  end of round.
   """
   PRIEST = enum.auto()  # 1 priest income.
   WORKER_3POWER = enum.auto()  # 1 worker income and 3 power income.
@@ -226,7 +232,7 @@ class BonusCard(enum.Enum):
   def __init__(self, value: int):
     self.coins = 0
 
-  def PlayerIncome(self) -> Income:
+  def player_income(self) -> Income:
     if self == BonusCard.PRIEST:
       return Income(priests=1)
     if self == BonusCard.WORKER_3POWER:
@@ -248,7 +254,7 @@ class BonusCard(enum.Enum):
 
     raise utils.InternalError("FavorTile %s is not implemented!" % self)
 
-  def _GetHumanDescription(self) -> str:
+  def _get_human_description(self) -> str:
     if self == BonusCard.PRIEST:
       return "1 priest income%s." % ("" if self.coins == 0 else
                                      " <%s coins> " % self.coins)
@@ -281,7 +287,7 @@ class BonusCard(enum.Enum):
 
   def __str__(self) -> str:
     return "%s [%s]" % (super(BonusCard,
-                              self).__str__(), self._GetHumanDescription())
+                              self).__str__(), self._get_human_description())
 
   def __repr__(self) -> str:
     return self.__str__()
@@ -289,8 +295,10 @@ class BonusCard(enum.Enum):
 
 @enum.unique
 class ScoringTile(enum.Enum):
-  """Scoring Tiles apply to each round. They expecify getting additional VP during the
-  Action phase, cult bonus awared at the end of round (in Phase III)"""
+  """
+  Scoring Tiles apply to each round. They expecify getting additional V during
+  the Action phase, cult bonus awared at the end of round (in Phase III)
+  """
   TP_AIR4_SPADE = enum.auto()  # 2 VP per TP built, and get a spade per 4 Air.
   # 2 VP per Dwelling built, and 1 priest per 4 Water.
   DWELLING_WATER4_PRIEST = enum.auto()
@@ -307,36 +315,38 @@ class ScoringTile(enum.Enum):
   # 5 VP per stornghold, and get 1 worker per 2 fire.
   STRONGHOLD_FIRE2_WORKER = enum.auto()
 
-  def _GetHumanDescription(self) -> str:
+  def _get_human_description(self) -> str:
     if self == ScoringTile.TP_AIR4_SPADE:
       return "Phase II: 2 VP per TP built. Phase III: Get 1 spade per 4 Air."
     if self == ScoringTile.DWELLING_WATER4_PRIEST:
-      return "Phase II: 2 VP per Dwelling built. Phase III: Get 1 priest per 4 Water."
+      return "Phase II: 2 VP per Dwelling built. Phase III: Get 1 priest per 4 Water."  # noqa 501
     if self == ScoringTile.TP_WATER4_SPADE:
       return "Phase II: 2 VP per TP built. Phase III: Get a spade for 4 Water."
     if self == ScoringTile.TOWN_EARTH4_SPADE:
-      return "Phase II: 5 VP per town built. Phase III: Get 1 spade per 4 on Earth."
+      return "Phase II: 5 VP per town built. Phase III: Get 1 spade per 4 on Earth."  # noqa 501
     if self == ScoringTile.STRONGHOLD_AIR2_WORKER:
-      return "Phase II: 4 VP per stronghold. Phase III: Get 1 worker per 2 Air."
+      return "Phase II: 4 VP per stronghold. Phase III: Get 1 worker per 2 Air."  # noqa 501
     if self == ScoringTile.SPADE_EARTH_COIN:
-      return "Phase II: 2 VP per spade used. Phase III: Get 1 coint per 1 Earth."
+      return "Phase II: 2 VP per spade used. Phase III: Get 1 coint per 1 Earth."  # noqa 501
     if self == ScoringTile.DWELLING_FIRE4_POWER4:
-      return "Phase II: 2 VP per dwelling built. Phase III: Get 4 power per 4 Fire."
+      return "Phase II: 2 VP per dwelling built. Phase III: Get 4 power per 4 Fire."  # noqa 501
     if self == ScoringTile.STRONGHOLD_FIRE2_WORKER:
-      return "Phase II: 5 VP per stornghold. Phase III: Get 1 worker per 2 Fire."
+      return "Phase II: 5 VP per stornghold. Phase III: Get 1 worker per 2 Fire."  # noqa 501
     raise utils.UnimplementedError("Humand description of %s does not exist" %
                                    self.name)
 
   def __str__(self) -> str:
     return "%s [%s]" % (super(ScoringTile,
-                              self).__str__(), self._GetHumanDescription())
+                              self).__str__(), self._get_human_description())
 
 
 @enum.unique
 class FavorTile(enum.Enum):
-  """You may only have one favor tile of each type. Most of these are just passive income
-  and immediate advancement in the cult track. There are also some tiles with special
-  abilities"""
+  """
+  You may only have one favor tile of each type. Most of these are just passive
+  income and immediate advancement in the cult track. There are also some tiles
+  with special abilities.
+  """
   COIN3_FIRE = enum.auto()  # 3 coin income, 1 fire advancement.
   TP3VP_WATER = enum.auto()  # 3 VP per built dwelling, 1 water advancement.
   DWELLING2_EARTH = enum.auto()  # 2 VP per dwelling built, 1 earth.
@@ -353,7 +363,7 @@ class FavorTile(enum.Enum):
   EARTH3 = enum.auto()  # 3 earth.
   AIR3 = enum.auto()  # 3 air.
 
-  def PlayerIncome(self) -> Income:
+  def player_income(self) -> Income:
     if self == FavorTile.COIN3_FIRE:
       return Income(coins=3)
     if self == FavorTile.WORKER_POWER_EARTH2:
@@ -368,7 +378,7 @@ class FavorTile(enum.Enum):
       return Income()
     raise utils.InternalError("FavorTile %s is not implemented!" % self)
 
-  def _GetHumanDescription(self) -> str:
+  def _get_human_description(self) -> str:
     if self == FavorTile.COIN3_FIRE:
       return "3 coin income, 1 fire advancement."
     if self == FavorTile.TP3VP_WATER:
@@ -378,7 +388,7 @@ class FavorTile(enum.Enum):
     if self == FavorTile.TP1234_AIR:
       return "Get 2/3/3/4 VP per 1/2/3/4 TPs when passing. 1 Air."
     if self == FavorTile.TOWN_FIRE2:
-      return "Town founding only requires combined power of 6, instead of 7. 2 Fire."
+      return "Town founding only requires combined power of 6, instead of 7. 2 Fire."  # noqa 501
     if self == FavorTile.CULTACTION_AIR2:
       return "Special action to use cult track, plus 2 water."
     if self == FavorTile.WORKER_POWER_EARTH2:
@@ -406,7 +416,7 @@ class Structure(enum.Enum):
   TEMPLE = enum.auto()
   STRONGHOLD = enum.auto()
 
-  def IsUpgradeableTo(self, other: 'Structure') -> bool:
+  def is_upgradeable_to(self, other: 'Structure') -> bool:
     """Returns true if 'other' is a structure to which we can upgrade"""
     if other == Structure.TRADING_POST:
       return self == Structure.DWELLING

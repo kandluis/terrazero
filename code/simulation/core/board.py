@@ -29,23 +29,24 @@ def ParsePosition(msg: str) -> Optional[Position]:
   Returns:
     The parsed position, if possible. Otherwise None.
   """
-  MIN_ROW = "A"
-  MAX_ROW = "I"
-  MIN_COL = 1
-  MAX_COL = 13
+  _MIN_ROW = "A"
+  _MAX_ROW = "I"
+  _MIN_COL = 1
+  _MAX_COL = 13
   try:
     letter: str = msg[0].upper()
     column: int = int(msg[1:])
   except (IndexError, ValueError):
     return None
-  if (MIN_ROW <= letter and letter <= MAX_ROW and MIN_COL <= column
-      and column <= MAX_COL):
+  letter_is_valid = _MIN_ROW <= letter and letter <= _MAX_ROW
+  column_is_valid = _MIN_COL <= column and column <= _MAX_COL
+  if letter_is_valid and column_is_valid:
     return Position(row=letter, column=column)
   return None
 
 
 class GameBoard:
-  """Represents a TM Board. 
+  """Represents a TM Board.
 
   Contains no public member variables. All interaction with this class outside
   this modules should be done through the appropriate public methids.
@@ -54,11 +55,12 @@ class GameBoard:
   def __init__(self: 'GameBoard') -> None:
     """Initializes a GameBoard."""
     self._TERRAIN_MAP_FILE: str = "data/starting_map.csv"
-    # Map from (row, col) to terrain. Note that this is a raw representation of the
-    # terrain for the map, and likely does not correspond to the representation expected
-    # by the players. Use the helper methods in this class instead.
-    self._tiles: Dict[Tuple[int, int], common.Terrain] = self._LoadStartingMap(
-    )
+    # Map from (row, col) to terrain. Note that this is a raw representation of
+    # the terrain for the map, and likely does not correspond to the
+    # representation expected by the players. Use the helper methods in this
+    # class instead.
+    self._tiles: Dict[Tuple[int, int], common.
+                      Terrain] = self._load_starting_map()
     rows, cols = zip(*self._tiles.keys())
     # Maximum row and maximum column indexes.
     self._maxRowIndex, self._maxColIndex = max(rows), max(cols)
@@ -69,7 +71,7 @@ class GameBoard:
         common.Structure]] = collections.defaultdict(lambda: None)
 
   @staticmethod
-  def LinesToMap(lines: List[str]) -> Dict[Tuple[int, int], common.Terrain]:
+  def lines_to_map(lines: List[str]) -> Dict[Tuple[int, int], common.Terrain]:
     """See documentation of LoadStartingMap
 
     Exposed almost exclusively for testing.i
@@ -83,20 +85,20 @@ class GameBoard:
     for i, line in enumerate(lines):
       tilesnames: List[str] = [line.strip() for line in line.split(",")]
       # Odd tiles are padded at the beginning and end with water.
-      rowIndex: int = 0
+      row_index: int = 0
       if i % 2 == 1:
-        terrain[(i, rowIndex)] = common.Terrain.WATER
-        rowIndex += 1
+        terrain[(i, row_index)] = common.Terrain.WATER
+        row_index += 1
       for tilename in tilesnames:
         for _ in range(2):
-          terrain[(i, rowIndex)] = common.Terrain[tilename.upper()]
-          rowIndex += 1
+          terrain[(i, row_index)] = common.Terrain[tilename.upper()]
+          row_index += 1
       if i % 2 == 1:
-        terrain[(i, rowIndex)] = common.Terrain.WATER
+        terrain[(i, row_index)] = common.Terrain.WATER
     return terrain
 
-  def CanBeBuilt(self, pos: Position, structure: common.Structure,
-                 final_terrain: List[common.Terrain]) -> bool:
+  def can_be_built(self, pos: Position, structure: common.Structure,
+                   final_terrain: List[common.Terrain]) -> bool:
     """Checks if the given structure can built at row/col.
 
     Args:
@@ -104,58 +106,58 @@ class GameBoard:
       structure: The candidate structure being check.
       final_terrain
     This will return true if at least ONE of the given owners can build it"""
-    rawPos = self._ToRaw(pos)
+    rawPos = self._to_raw(pos)
     terrain = self._tiles[rawPos]
     if terrain not in final_terrain:
       return False
     exstingStructure = self._structures[rawPos]
     if structure == common.Structure.DWELLING:
-      return (exstingStructure is None)
-    return (exstingStructure is not None
-            and exstingStructure.IsUpgradeableTo(structure))
+      return exstingStructure is None
+    return exstingStructure is not None and exstingStructure.is_upgradeable_to(
+        structure)
 
-  def Build(self, pos: Position, structure: common.Structure) -> None:
-    """Builds the given structure at the specified location. Will throw if an invalid structure is built."""
-    rawPos = self._ToRaw(pos)
+  def build(self, pos: Position, structure: common.Structure) -> None:
+    """Builds the given structure at the specified location. Will throw if an
+    invalid structure is built."""
+    rawPos = self._to_raw(pos)
     terrain = self._tiles[rawPos]
-    exstingStructure = self._structures[rawPos]
-    if not self.CanBeBuilt(pos, structure, [terrain]):
+    if not self.can_be_built(pos, structure, [terrain]):
       raise utils.InternalError(
           "Attempting to build %s at %s which is invalid!" % (structure, pos))
     self._structures[rawPos] = structure
 
-  def GetTerrain(self, pos: Position) -> common.Terrain:
-    """Returns the terrain for the row, column specified, where row is one of A-I and column
-    is one of 1-13. Note that even rows only have 1-12"""
-    return self._tiles[self._ToRaw(pos)]
+  def get_terrain(self, pos: Position) -> common.Terrain:
+    """Returns the terrain for the row, column specified, where row is one of
+    A-I and column is one of 1-13. Note that even rows only have 1-12"""
+    return self._tiles[self._to_raw(pos)]
 
-  def GetStructure(self, pos: Position) -> Optional[common.Structure]:
-    return self._structures[self._ToRaw(pos)]
+  def get_structure(self, pos: Position) -> Optional[common.Structure]:
+    return self._structures[self._to_raw(pos)]
 
-  def GetNeighborTiles(self, pos: Position) -> Set[Position]:
-    rawRow, rawColumn = self._ToRaw(pos)
+  def get_neighbor_tiles(self, pos: Position) -> Set[Position]:
+    rawRow, rawColumn = self._to_raw(pos)
     # The tile side dependso n the row.
     otherRawColumn: int = rawColumn - 1 if rawRow % 2 == 0 else rawColumn + 1
     # We union the neighbors for both sides of the tile.
-    rawNeighbors: Set[Tuple[int, int]] = self._GetRawNeighbors(
-        rawRow, rawColumn) | self._GetRawNeighbors(rawRow, otherRawColumn)
+    rawNeighbors: Set[Tuple[int, int]] = self._get_raw_neighbors(
+        rawRow, rawColumn) | self._get_raw_neighbors(rawRow, otherRawColumn)
     # Now we just convert them back to their tile values and dedup. Don't
     # count yourself.
-    return {self._FromRaw(*rawNeighbor)
+    return {self._from_raw(*rawNeighbor)
             for rawNeighbor in rawNeighbors} - {pos}
 
-  def NeighborStructureOwners(
+  def neighbor_structure_owners(
       self, pos: Position) -> Set[Tuple[common.Structure, common.Terrain]]:
     results: Set[Tuple[common.Structure, common.Terrain]] = set()
-    for neighbor in self.GetNeighborTiles(pos):
-      terrain: common.Terrain = self.GetTerrain(neighbor)
-      structure: Optional[common.Structure] = self.GetStructure(neighbor)
+    for neighbor in self.get_neighbor_tiles(pos):
+      terrain: common.Terrain = self.get_terrain(neighbor)
+      structure: Optional[common.Structure] = self.get_structure(neighbor)
       if not structure:
         continue
       results.add((structure, terrain))
     return results
 
-  def _GetRawNeighbors(self, row: int, column: int) -> Set[Tuple[int, int]]:
+  def _get_raw_neighbors(self, row: int, column: int) -> Set[Tuple[int, int]]:
     neighbors: Set[Tuple[int, int]] = set()
     if row > 0:  # Look Up.
       neighbors.add((row - 1, column))
@@ -167,12 +169,12 @@ class GameBoard:
       neighbors.add((row, column + 1))
     return neighbors
 
-  def _ToRaw(self, pos: Position) -> Tuple[int, int]:
+  def _to_raw(self, pos: Position) -> Tuple[int, int]:
     rawRow: int = ord(pos.row.upper()) - ord('A')
     rawColumn: int = 2 * (pos.column - 1) + 1
     return rawRow, rawColumn
 
-  def _FromRaw(self, rawRow: int, rawColumn: int) -> Position:
+  def _from_raw(self, rawRow: int, rawColumn: int) -> Position:
     row: str = chr(ord('A') + rawRow)
     if rawRow % 2 == 0:
       column = int(rawColumn / 2) + 1
@@ -180,16 +182,16 @@ class GameBoard:
       column = int((rawColumn - 1) / 2) + 1
     return Position(row=row, column=column)
 
-  def _LoadStartingMap(self) -> Dict[Tuple[int, int], common.Terrain]:
+  def _load_starting_map(self) -> Dict[Tuple[int, int], common.Terrain]:
     """
     To make finding neighbors easier, we split the typical hexagonal map for TM
-    vertically into double the number of tiles. This means we have [0,25] values
-    along the top and [0,7] columns.
+    vertically into double the number of tiles. This means we have [0,25]
+    values along the top and [0,7] columns.
 
-    Essentially, all tiles are split into two. Odd-index rows are padded on both end
-    with water tiles.
+    Essentially, all tiles are split into two. Odd-index rows are padded on
+    both end with water tiles.
     """
     lines: List[str] = []
     with open(self._TERRAIN_MAP_FILE) as f:
       lines = f.readlines()
-    return GameBoard.LinesToMap(lines)
+    return GameBoard.lines_to_map(lines)

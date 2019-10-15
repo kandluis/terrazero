@@ -14,44 +14,44 @@ class IO(abc.ABC):
   """
 
   @abc.abstractmethod
-  def WelcomeMessage(self) -> None:
+  def welcome_message(self) -> None:
     pass
 
   @abc.abstractmethod
-  def RequestNumberOfPlayers(self) -> int:
+  def request_number_of_players(self) -> int:
     pass
 
   @abc.abstractmethod
-  def RequestPlayerNames(self, num_players: int) -> List[str]:
+  def request_player_names(self, num_players: int) -> List[str]:
     pass
 
   @abc.abstractmethod
-  def DisplayScoringTiles(self, tiles: List[common.ScoringTile]) -> None:
+  def display_scoring_tiles(self, tiles: List[common.ScoringTile]) -> None:
     pass
 
   @abc.abstractmethod
-  def DisplayBonusCards(self, cards: List[common.BonusCard]) -> None:
+  def display_bonus_cards(self, cards: List[common.BonusCard]) -> None:
     pass
 
   @abc.abstractmethod
-  def RequestPlayerFactions(
-      self, player_names: List[str],
-      available: List[faction.Faction]) -> List[faction.Faction]:
+  def request_player_factions(self, player_names: List[str],
+                              available: List[faction.Faction]
+                              ) -> List[faction.Faction]:
     pass
 
   @abc.abstractmethod
-  def InvalidInput(self) -> None:
+  def invalid_input(self) -> None:
     pass
 
   @abc.abstractmethod
-  def InformInitialDwellingPlacement(self) -> None:
+  def inform_initial_dwelling_placement(self) -> None:
     pass
 
   @abc.abstractmethod
-  def RequestLocation(self, pl: player.Player) -> board.Position:
+  def request_location(self, pl: player.Player) -> board.Position:
     pass
 
   @abc.abstractmethod
-  def RequestBonusCardSelection(self, pl: player.Player,
-                                available: List[common.BonusCard]) -> int:
+  def request_bonus_card_selection(self, pl: player.Player,
+                                   available: List[common.BonusCard]) -> int:
     pass

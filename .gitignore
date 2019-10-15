@@ -272,3 +272,6 @@ poster/figures/*
 
 # Ignore .input files
 *.input
+
+# Ignore DS_Store
+.DS_Store
