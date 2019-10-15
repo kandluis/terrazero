@@ -269,3 +269,6 @@ poster/figures/*
 
 # Ignore .pkl files
 .pkl
+
+# Ignore .input files
+*.input
